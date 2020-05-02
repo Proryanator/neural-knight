@@ -8,7 +8,7 @@ using System;
 /// Handles a bulk of the standard behaviour for you, but should you wish to add more,
 /// there are Events setup to do just that.
 /// </summary>
-public class HealthBase : MonoBehaviour {
+public class BaseHealth : MonoBehaviour {
 
     [Tooltip("How many lives this entity will have.")]
     [SerializeField] private int startingHealth = 3;
