@@ -8,16 +8,13 @@ using System;
 /// Handles a bulk of the standard behaviour for you, but should you wish to add more,
 /// there are Events setup to do just that.
 /// </summary>
-public class Damageable : MonoBehaviour {
+public class HealthBase : MonoBehaviour {
 
     [Tooltip("How many lives this entity will have.")]
-    [SerializeField] protected int startingHealth = 3;
-
-    [Tooltip("The object to spawn when the game object is considered 'dead'.")]
-    [SerializeField] private Transform _deathObject;
+    [SerializeField] private int startingHealth = 3;
 
     // we want to remember the original health of this object, should we need to re-initialize later
-    protected int currentHealth;
+    private int currentHealth;
 
     //-------------------------TAKING DAMAGE-------------------------//
     [Tooltip("How long to prevent the player from being hurt again.")]
@@ -40,21 +37,7 @@ public class Damageable : MonoBehaviour {
     public Action OnDeath;
 
     protected void Start() {
-        if (_deathObject == null) {
-            Debug.LogWarning("Did not set the object to spawn when this entity is considered dead!");
-        }
-
         currentHealth = startingHealth;
-    }
-
-    /// <summary>
-    /// Spawns the object you wanted at the location you wish.
-    /// </summary>
-    /// <param name="pos">The position to spawn the new death object at.</param>
-    /// <param name="destroyTime">How long that object will live in the world until being destroyed.</param>
-    public void SpawnDeathObject(Vector3 pos, float destroyTime) {
-        Transform deathObject = Instantiate(_deathObject, pos, Quaternion.identity);
-        Destroy(deathObject.gameObject, destroyTime);
     }
 
     /// <summary>
@@ -104,7 +87,7 @@ public class Damageable : MonoBehaviour {
     }
 
     /// <summary>
-    /// A routien to run and prevent spamming of the player when attacked.
+    /// A routine to run and prevent spamming of the player when attacked.
     /// </summary>
     private IEnumerator StartInvulnerabilityRoutine() {
         _canBeDamaged = false;
