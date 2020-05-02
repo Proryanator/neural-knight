@@ -4,5 +4,6 @@ using UnityEngine;
 namespace Systems{
 	public class AllTags : ScriptableObject{
 		public const string ENEMY = "Enemy";
+		public const string PLAYER = "Player";
 	}
 }
