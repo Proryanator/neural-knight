@@ -1,7 +1,7 @@
 ﻿using Systems;
 using UnityEngine;
 
-public class EnemyDamageHandler : MonoBehaviour{
+public class EnemyDamageCauser : MonoBehaviour{
 
 	public void OnCollisionEnter2D(Collision2D other){
 		// gather it's health object and damage it if we're supposed to
