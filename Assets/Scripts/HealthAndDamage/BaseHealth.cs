@@ -64,7 +64,9 @@ public class BaseHealth : MonoBehaviour {
         StandardDamage();
 
         // did the player die? If so, we may want to do some extra work.
-        if (currentHealth == 0 && OnDeath != null) {
+        if (currentHealth == 0 && OnDeath != null){
+	        // turn off the ability to be damaged once you've taken enough damage
+	        _canBeDamaged = false;
             OnDeath();
         } else {
             StartCoroutine(StartInvulnerabilityRoutine());
@@ -78,6 +80,7 @@ public class BaseHealth : MonoBehaviour {
     /// Also calls OnDamageTaken() event.
     /// </summary>
     private void StandardDamage() {
+	    Debug.Log("Damage taken!");
         currentHealth--;
 
         // if any events were subscribed to this event, call those now!
