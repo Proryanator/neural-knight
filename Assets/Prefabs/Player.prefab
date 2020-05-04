@@ -15,6 +15,8 @@ GameObject:
   - component: {fileID: 438028605}
   - component: {fileID: 438028607}
   - component: {fileID: 1472191497}
+  - component: {fileID: 8254116104680548243}
+  - component: {fileID: 8254116104680548244}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -197,7 +199,18 @@ MonoBehaviour:
     m_ActionId: 224615eb-97c5-47d5-8201-bfd5c5186c75
     m_ActionName: Player/Look[/Mouse/delta]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8254116104680548243}
+        m_MethodName: FireWeapon
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 4c9bfcc3-118b-47e6-8289-6859482df719
     m_ActionName: Player/Fire[/Mouse/leftButton]
   - m_PersistentCalls:
@@ -263,3 +276,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingHealth: 3
   _invulnerabilityPeriod: 1
+--- !u!114 &8254116104680548243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8254116104512433837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cdf7fede840f4481a03668006e554e1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8254116104680548244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8254116104512433837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 129fb55894c14fc0ad131ab0ceffb534, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _equippedWeapon: {fileID: 4497926614328223620, guid: 0ea91074ad1cc0e4e8159c86ed5f9639,
+    type: 3}

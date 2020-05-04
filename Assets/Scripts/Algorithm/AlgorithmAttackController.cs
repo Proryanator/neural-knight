@@ -25,6 +25,8 @@ public class AlgorithmAttackController : MonoBehaviour{
 	/// Fires the currently equipped weapon. Accesses the WeaponManager class to gain this information.
 	/// </summary>
 	public void FireWeapon(InputAction.CallbackContext context){
+		Debug.Log("Player fired their weapon!");
+		
 		// TODO: would attaching this to the same game object make this a bit flaky?
 		_weaponManager.GetEquippedWeapon().Fire();
 	}

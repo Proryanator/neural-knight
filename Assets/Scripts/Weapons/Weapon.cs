@@ -23,6 +23,6 @@ public class Weapon : MonoBehaviour{
 	/// </summary>
 	public void Fire(){
 		// TODO: add a fire rate at which you can fire this weapon
-		GameObject.Instantiate(_projectile);
+		// GameObject.Instantiate(_projectile);
 	}
 }
