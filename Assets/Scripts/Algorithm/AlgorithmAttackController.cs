@@ -1,4 +1,5 @@
 ﻿using System;
+using Proryanator.Controllers2D;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -9,9 +10,11 @@ using UnityEngine.InputSystem;
 public class AlgorithmAttackController : MonoBehaviour{
 
 	private WeaponManager _weaponManager;
+	private Base2DController _base2DController;
 
 	private void Start(){
-		_weaponManager = gameObject.GetComponent<WeaponManager>();
+		_weaponManager = GetComponent<WeaponManager>();
+		_base2DController = GetComponent<Base2DController>();
 	}
 
 	/// <summary>
@@ -27,7 +30,7 @@ public class AlgorithmAttackController : MonoBehaviour{
 	public void FireWeapon(InputAction.CallbackContext context){
 		Debug.Log("Player fired their weapon!");
 		
-		// TODO: would attaching this to the same game object make this a bit flaky?
-		_weaponManager.GetEquippedWeapon().Fire();
+		// TODO: get the actual direction to fire this projectile! How to do this without too much overhead?
+		_weaponManager.GetEquippedWeapon().Fire(Vector2.up);
 	}
 }
