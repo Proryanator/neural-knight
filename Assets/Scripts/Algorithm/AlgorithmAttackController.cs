@@ -10,11 +10,11 @@ using UnityEngine.InputSystem;
 public class AlgorithmAttackController : MonoBehaviour{
 
 	private WeaponManager _weaponManager;
-	private Base2DController _base2DController;
+	private New_TDC_FaceMouse _faceMouseController;
 
 	private void Start(){
 		_weaponManager = GetComponent<WeaponManager>();
-		_base2DController = GetComponent<Base2DController>();
+		_faceMouseController = GetComponent<New_TDC_FaceMouse>();
 	}
 
 	/// <summary>
@@ -28,6 +28,6 @@ public class AlgorithmAttackController : MonoBehaviour{
 	/// Fires the currently equipped weapon. Accesses the WeaponManager class to gain this information.
 	/// </summary>
 	public void FireWeapon(InputAction.CallbackContext context){
-		_weaponManager.GetEquippedWeapon().Fire(transform, _base2DController.GetDirection());
+		_weaponManager.GetEquippedWeapon().Fire(transform, _faceMouseController.GetFacingDirection());
 	}
 }
