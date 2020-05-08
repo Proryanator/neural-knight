@@ -3,6 +3,7 @@
 public class EnemyHealth : BaseHealth{
 	
 	protected new void Start(){
+		base.Start();
 		OnDeath += EnemyDeath;
 	}
 
