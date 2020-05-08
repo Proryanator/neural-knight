@@ -43,7 +43,7 @@ public class Projectile : MonoBehaviour{
 			Destroy(gameObject);
 		}
 
-		gameObject.transform.Translate(_direction * _speed);
+		gameObject.transform.Translate(Time.deltaTime * this._speed * _direction);
 	}
 
 	private void OnCollisionEnter2D(Collision2D other){

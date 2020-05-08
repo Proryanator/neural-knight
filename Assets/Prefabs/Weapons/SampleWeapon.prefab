@@ -46,6 +46,6 @@ MonoBehaviour:
   _weaponName: Sample Weapon
   _projectile: {fileID: 6407793947514954888, guid: 0cf5664c3823df14287547e8e3afff61,
     type: 3}
-  _fireRate: 0.2
-  _shotLife: 1
-  _shotSpeed: 1
+  _fireRate: 0.1
+  _shotLife: 10
+  _shotSpeed: 10

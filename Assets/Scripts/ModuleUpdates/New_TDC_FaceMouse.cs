@@ -41,8 +41,12 @@ public class New_TDC_FaceMouse : TopDownController {
     /// Should you want to only move the mouse when you move it, you'd want to set this up as a callback
     /// using Unity's new Input System.
     /// </summary>
-    public void LookAtMouse(InputAction.CallbackContext context) {
-        RotateTowardsMouse(GetMousePositionInWorldSpace());
+    public void LookAtMouse(InputAction.CallbackContext context){
+	    Vector2 directionTowardsMouse = GetMousePositionInWorldSpace();
+        RotateTowardsMouse(directionTowardsMouse);
+        
+        // remember this direction
+        _facingDirection = directionTowardsMouse;
     }
     
     protected new void FixedUpdate() {
