@@ -44,5 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponName: Sample Weapon
-  _projectile: {fileID: 0}
-  _fireRate: 10
+  _projectile: {fileID: 6407793947514954887, guid: 0cf5664c3823df14287547e8e3afff61,
+    type: 3}
+  _fireRate: 0.2
+  _shotLife: 1
+  _shotSpeed: 1

@@ -28,9 +28,6 @@ public class AlgorithmAttackController : MonoBehaviour{
 	/// Fires the currently equipped weapon. Accesses the WeaponManager class to gain this information.
 	/// </summary>
 	public void FireWeapon(InputAction.CallbackContext context){
-		Debug.Log("Player fired their weapon!");
-		
-		// TODO: get the actual direction to fire this projectile! How to do this without too much overhead?
-		_weaponManager.GetEquippedWeapon().Fire(Vector2.up);
+		_weaponManager.GetEquippedWeapon().Fire(transform, _base2DController.GetDirection());
 	}
 }

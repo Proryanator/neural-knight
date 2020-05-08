@@ -60,6 +60,9 @@ public class Projectile : MonoBehaviour{
 		if (baseHealth != null 
 		    && other.gameObject.CompareTag(AllTags.ENEMY)){
 			baseHealth.Damage();
+			
+			// let's say it always will de spawn upon hitting something else (what if it's you?)
+			Destroy(gameObject);
 		}
 	}
 }
