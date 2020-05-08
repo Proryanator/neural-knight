@@ -11,7 +11,7 @@ public class Weapon : MonoBehaviour{
 	[SerializeField] private string _weaponName = "DEFAULT WEAPON NAME";
 
 	[Tooltip("The game object that represents the projectile for this weapon.")]
-	[SerializeField] private Projectile _projectile;
+	[SerializeField] private Transform _projectile;
 
 	[Tooltip("The fire rate at which this weapon will fire, in seconds between fire.")]
 	[SerializeField] private float _fireRate = 2;
@@ -42,10 +42,11 @@ public class Weapon : MonoBehaviour{
 		
 		Debug.Log("Player fired their weapon!");
 
-		Instantiate(_projectile, spawnTransform.position, Quaternion.identity, spawnTransform);
+		Projectile projectile = Instantiate(_projectile, spawnTransform.position, Quaternion.identity)
+			.GetComponent<Projectile>();
 		
 		// set the direction of with which to fire the projectile, from the player's facing direction
-		_projectile.InitProjectile(direction, _shotLife, _shotSpeed);
+		projectile.InitProjectile(direction, _shotLife, _shotSpeed);
 		
 		// start the wait time for the fire rate
 		StartCoroutine(WaitFireRateRoutine());
