@@ -47,5 +47,5 @@ MonoBehaviour:
   _projectile: {fileID: 6407793947514954888, guid: 0cf5664c3823df14287547e8e3afff61,
     type: 3}
   _fireRate: 0.1
-  _shotLife: 10
+  _shotLife: 3
   _shotSpeed: 10
