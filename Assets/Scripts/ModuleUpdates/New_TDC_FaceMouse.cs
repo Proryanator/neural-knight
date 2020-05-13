@@ -22,7 +22,14 @@ public class New_TDC_FaceMouse : TopDownController {
 
     // stores the currently facing direction of the sprite, will initialize to the direction it starts as
     private Vector2 _facingDirection;
+
+    // caches the main camera so we don't have to make this call every time we look around
+    private Camera _mainCamera;
     
+    private void Awake(){
+	    _mainCamera = Camera.main;
+    }
+
     protected new void Start() {
         base.Start();
         
@@ -70,7 +77,7 @@ public class New_TDC_FaceMouse : TopDownController {
 
     protected Vector2 GetMousePositionInWorldSpace() {
         // get the mouse's world location, as seen by the camera
-        Vector2 mouseLocation = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 mouseLocation = _mainCamera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
 
         // calculate the direction, and the angle at which to face
         return mouseLocation - (Vector2)transform.position;
