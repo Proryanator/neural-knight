@@ -81,7 +81,7 @@ public abstract class BaseHealth : MonoBehaviour {
     /// Makes sure health stays within a 0-X range.
     /// </summary>
     private void ApplyDamageAndNotify(int damageApplied) {
-	    Debug.Log(damageApplied + " damage taken!");
+	    Debug.Log("[" + gameObject.name + "] had " + damageApplied + " damage applied.");
 	    _currentHealth -= damageApplied;
 	    
 	    // catch if we went under 0
