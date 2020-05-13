@@ -11,10 +11,11 @@ using System;
 public abstract class BaseHealth : MonoBehaviour {
 
     [Tooltip("How many lives this entity will have.")]
-    [SerializeField] private int startingHealth = 3;
+    [SerializeField] private int _startingHealth = 3;
 
     // we want to remember the original health of this object, should we need to re-initialize later
-    private int currentHealth;
+    // intended to be kept within the range of 0-startingHealth
+    private int _currentHealth;
 
     //-------------------------TAKING DAMAGE-------------------------//
     [Tooltip("How long to prevent the player from being hurt again.")]
@@ -37,7 +38,7 @@ public abstract class BaseHealth : MonoBehaviour {
     public Action OnDeath;
 
     protected void Start() {
-        currentHealth = startingHealth;
+        _currentHealth = _startingHealth;
     }
 
     /// <summary>
@@ -64,7 +65,7 @@ public abstract class BaseHealth : MonoBehaviour {
         ApplyDamageAndNotify(damageApplied);
 
         // did the player die? If so, we may want to do some extra work.
-        if (currentHealth == 0 && OnDeath != null){
+        if (_currentHealth == 0 && OnDeath != null){
 	        // turn off the ability to be damaged once you've taken enough damage
 	        _canBeDamaged = false;
             OnDeath();
@@ -76,19 +77,21 @@ public abstract class BaseHealth : MonoBehaviour {
     /// <summary>
     /// Applies the amount of damage you asked for
     /// and calls OnDamageTaken() event.
+    ///
+    /// Makes sure health stays within a 0-X range.
     /// </summary>
     private void ApplyDamageAndNotify(int damageApplied) {
 	    Debug.Log(damageApplied + " damage taken!");
-	    currentHealth -= damageApplied;
+	    _currentHealth -= damageApplied;
 	    
 	    // catch if we went under 0
-	    if (currentHealth < 0){
-		    currentHealth = 0;
+	    if (_currentHealth < 0){
+		    _currentHealth = 0;
 	    }
 
         // if any events were subscribed to this event, call those now!
         if (OnDamageTaken != null) {
-            OnDamageTaken(currentHealth);
+            OnDamageTaken(_currentHealth);
         }
     }
 
