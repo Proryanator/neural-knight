@@ -21,6 +21,9 @@ public class Projectile : MonoBehaviour{
 
 	// tracks when this projectile was spawned
 	private float _startTime;
+
+	// how much damage this will cause to an enemy that it hits
+	private int _projectileDamage;
 	
 	/// <summary>
 	/// Called by the weapon after each projectile is spawned. Sets the facing direction, as well as other information
@@ -30,10 +33,12 @@ public class Projectile : MonoBehaviour{
 	/// <param name="direction">The direction this projectile will fire. Doesn't need to be normalized, we'll do that here.</param>
 	/// <param name="lifeOfProjectile">How long this projectile will travel in the scene until it despawns.</param>
 	/// <param name="speed">The speed at which this will translate through the world.</param>
-	public void InitProjectile(Vector2 direction, float lifeOfProjectile, float speed){
+	/// <param name="damage">The amount of damage this projectile will cause
+	public void InitProjectile(Vector2 direction, float lifeOfProjectile, float speed, int damage){
 		_direction = direction.normalized;
 		_lifeOfProjectile = lifeOfProjectile;
 		_speed = speed;
+		_projectileDamage = damage;
 
 		_startTime = Time.time;
 	}
@@ -59,7 +64,7 @@ public class Projectile : MonoBehaviour{
 		
 		if (baseHealth != null 
 		    && other.gameObject.CompareTag(AllTags.ENEMY)){
-			baseHealth.Damage();
+			baseHealth.Damage(_projectileDamage);
 			
 			// let's say it always will de spawn upon hitting something else (what if it's you?)
 			Destroy(gameObject);

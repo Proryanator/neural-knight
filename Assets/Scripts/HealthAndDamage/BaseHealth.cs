@@ -48,7 +48,7 @@ public abstract class BaseHealth : MonoBehaviour {
     /// 
     /// If you want to do extra things to this, add to the event of 'OnDamageTaken'.
     /// </summary>
-    public void Damage() {
+    public void Damage(int damageApplied) {
         // call any other events defined to prevent damage!
         if (preventDamageTaken != null) {
             if (preventDamageTaken()) {
@@ -61,7 +61,7 @@ public abstract class BaseHealth : MonoBehaviour {
             return;
         }
 
-        StandardDamage();
+        ApplyDamageAndNotify(damageApplied);
 
         // did the player die? If so, we may want to do some extra work.
         if (currentHealth == 0 && OnDeath != null){
@@ -74,14 +74,17 @@ public abstract class BaseHealth : MonoBehaviour {
     }
 
     /// <summary>
-    /// Decrements the current health of the entity, and also creates
-    /// an invulnerability period for the entity too.
-    /// 
-    /// Also calls OnDamageTaken() event.
+    /// Applies the amount of damage you asked for
+    /// and calls OnDamageTaken() event.
     /// </summary>
-    private void StandardDamage() {
-	    Debug.Log("Damage taken!");
-        currentHealth--;
+    private void ApplyDamageAndNotify(int damageApplied) {
+	    Debug.Log(damageApplied + " damage taken!");
+	    currentHealth -= damageApplied;
+	    
+	    // catch if we went under 0
+	    if (currentHealth < 0){
+		    currentHealth = 0;
+	    }
 
         // if any events were subscribed to this event, call those now!
         if (OnDamageTaken != null) {
