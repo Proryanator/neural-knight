@@ -42,4 +42,9 @@ public class WeaponManager : MonoBehaviour{
 	public void AddAvailableWeapon(Weapon weapon){
 		_availableWeapons.Add(weapon);
 	}
+
+	private void Equip(Weapon weapon){
+		_equippedWeapon = weapon;
+	}
+	
 }
