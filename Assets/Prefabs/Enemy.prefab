@@ -14,6 +14,8 @@ GameObject:
   - component: {fileID: 5954398182306485705}
   - component: {fileID: 1900232146}
   - component: {fileID: 756925368672006184}
+  - component: {fileID: 321084056}
+  - component: {fileID: 321084057}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -113,6 +115,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff990425ea664a6d817a581d181b6b86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _enemyDamage: 1
 --- !u!50 &1900232146
 Rigidbody2D:
   serializedVersion: 4
@@ -146,5 +149,33 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b90d27841cf4aa284dffb9fe29c58e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 3
+  _startingHealth: 3
   _invulnerabilityPeriod: 1
+--- !u!114 &321084056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4568012251803743613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9f5cbdfc89a4fffb6472b4e3e7fdc05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &321084057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4568012251803743613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ac12429af39d4d9faca85f64806646c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _moveFreeForm: 1
+  _wanderSpeed: 5
+  _wanderMaxInterval: 10
+  _wanderMinInterval: 5
