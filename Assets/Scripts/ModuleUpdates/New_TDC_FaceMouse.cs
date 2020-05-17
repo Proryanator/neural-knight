@@ -41,8 +41,7 @@ public class New_TDC_FaceMouse : TopDownController {
     /// Gives you the current facing direction of the sprite.
     /// </summary>
     public Vector2 GetFacingDirection(){
-	    Debug.Log(_facingDirection);
-        return _facingDirection;
+	    return _facingDirection;
     }
     
     /// <summary>
