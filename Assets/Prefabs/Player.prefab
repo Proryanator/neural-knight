@@ -257,7 +257,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1333c7de7f4abe88985e1c717f6582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingHealth: 3
+  _startingHealth: 3
   _invulnerabilityPeriod: 1
 --- !u!114 &8254116104680548243
 MonoBehaviour:

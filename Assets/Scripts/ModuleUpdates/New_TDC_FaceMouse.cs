@@ -41,6 +41,7 @@ public class New_TDC_FaceMouse : TopDownController {
     /// Gives you the current facing direction of the sprite.
     /// </summary>
     public Vector2 GetFacingDirection(){
+	    Debug.Log(_facingDirection);
         return _facingDirection;
     }
     
@@ -49,30 +50,17 @@ public class New_TDC_FaceMouse : TopDownController {
     /// using Unity's new Input System.
     /// </summary>
     public void LookAtMouse(InputAction.CallbackContext context){
-	    Vector2 directionTowardsMouse = GetMousePositionInWorldSpace();
-        RotateTowardsMouse(directionTowardsMouse);
-        
-        // remember this direction
-        _facingDirection = directionTowardsMouse;
+	    CalculateAndLookAtMouse();
     }
-    
+
+
     protected new void FixedUpdate() {
         base.FixedUpdate();
 
         // if you want to face the mouse no matter what, this will happen!
-        if (_onlyFaceWithMouseInput) {
-            RotateTowardsMouse(GetMousePositionInWorldSpace());
+        if (_onlyFaceWithMouseInput){
+	        CalculateAndLookAtMouse();
         }
-    }
-
-    /// <summary>
-    /// Rotates the current object towards the mouse.
-    /// </summary>
-    private void RotateTowardsMouse(Vector2 directionTowardsMouse) {
-        float angle = Mathf.Atan2(directionTowardsMouse.y, directionTowardsMouse.x) * Mathf.Rad2Deg;
-
-        // taking initial direction into account, now rotate towards the mouse!
-        transform.rotation = GetRotationForStartingDirection(angle, _startingDirection);
     }
 
     protected Vector2 GetMousePositionInWorldSpace() {
@@ -81,6 +69,26 @@ public class New_TDC_FaceMouse : TopDownController {
 
         // calculate the direction, and the angle at which to face
         return mouseLocation - (Vector2)transform.position;
+    }
+    
+    /// <summary>
+    /// Wrapper method to do all calculations in 1 go.
+    /// </summary>
+    private void CalculateAndLookAtMouse(){
+	    RotateTowardsMouse(GetMousePositionInWorldSpace());    
+    }
+    
+    /// <summary>
+    /// Rotates the current object towards the mouse.
+    /// </summary>
+    private void RotateTowardsMouse(Vector2 directionTowardsMouse) {
+	    float angle = Mathf.Atan2(directionTowardsMouse.y, directionTowardsMouse.x) * Mathf.Rad2Deg;
+
+	    // taking initial direction into account, now rotate towards the mouse!
+	    transform.rotation = GetRotationForStartingDirection(angle, _startingDirection);
+        
+	    // this method will remember the direction you're facing
+	    _facingDirection = directionTowardsMouse;
     }
 
     protected Quaternion GetRotationForStartingDirection(float angle, FacingDirection direction) {
