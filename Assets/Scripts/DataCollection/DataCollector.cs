@@ -20,17 +20,7 @@ public class DataCollector : MonoBehaviour{
 			return;
 		}
 
-		// depending on the data type, we'll do something different
-		switch (dataPoint.GetDataPointType()){
-			case DataPointType.GoodData:
-				// simply add the points collected to the score of the player
-				ScoreSystem.GetInstance().AddPoints(dataPoint.GetCollectionValue());
-				break;
-			case DataPointType.BadData:
-				// TODO: implement what happens with bad data
-				break;
-			default:
-				throw new ArgumentOutOfRangeException();
-		}
+		// if there is a datapoint, collect it!
+		dataPoint.Collect();
 	}
 }
