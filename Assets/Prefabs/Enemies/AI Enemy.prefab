@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
-  _nextWayPointDistance: 3
+  _nextWayPointDistance: 0.5
   _reachedEndOfPath: 0
 --- !u!114 &-3204722969983000046
 MonoBehaviour:
