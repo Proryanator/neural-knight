@@ -61,7 +61,7 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 	/// TODO: for multi-player, get nearest player to track
 	/// </summary>
 	private Transform GetPlayerTarget(){
-		return GameObject.FindWithTag(AllTags.PLAYER).transform;
+		return GameObject.FindWithTag(AllTags.AI_TRACKER).transform;
 	}
 
 	/// <summary>

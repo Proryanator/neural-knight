@@ -37,8 +37,11 @@ public class AIMovementController : MonoBehaviour{
 		}
 		
 		// register for the 'OnDamageTaken', to make movement temporarily stop when damaged
+		// only if you have a health script!
 		BaseHealth health = GetComponent<BaseHealth>();
-		health.OnDamageTaken += StopMovement;
+		if (health != null){
+			health.OnDamageTaken += StopMovement;
+		}
 
 		_rigidbody2D = GetComponent<Rigidbody2D>();
 		if (_rigidbody2D == null){
