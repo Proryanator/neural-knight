@@ -6,9 +6,7 @@ using Random = System.Random;
 /// <summary>
 /// Class to handle the spawning in of prefab objects.
 ///
-/// For now, will randomly choose a spawn point to spawn said enemy.
-/// TODO: might be able to extend this (or have a sub-class that determines how to spawn enemies)
-/// to be able to spawn prefabs in waves from 1 spawn point, instead of randomly.
+/// Based on the chosen spawn rule, will spawn objects accordingly.
 ///
 /// This is designed to spawn X number of prefabs in a given 'round' if you will, and will
 /// not need to keep track of if enemies are destroyed or not.
@@ -31,7 +29,7 @@ public class SpawnManager : MonoBehaviour{
 	[SerializeField] private bool _restart = false;
 
 	[Tooltip("Choose the spawn rule to use for this spawner.")]
-	[SerializeField] private SpawnRule _spawnRule = SpawnRule.Random;
+	[SerializeField] private SpawnRuleEnum spawnRuleEnum = SpawnRuleEnum.Random;
 	
 	private int _currentSpawnCount = 0;
 	
@@ -78,7 +76,7 @@ public class SpawnManager : MonoBehaviour{
 			ScriptableObject.Destroy(_currentSpawnRule);
 		}
 
-		_currentSpawnRule = AbstractSpawnRule.GetRule(_spawnRule);
+		_currentSpawnRule = AbstractSpawnRule.GetRule(spawnRuleEnum);
 	}
 	
 	/// <summary>

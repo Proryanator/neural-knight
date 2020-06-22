@@ -3,6 +3,6 @@
 ///
 /// If it's not here, it's not a ready rule to use.
 /// </summary>
-public enum SpawnRule{
+public enum SpawnRuleEnum{
 	Random
 }

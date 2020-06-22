@@ -28,9 +28,9 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 	///
 	/// NOTE: it's up to the caller to cleanup their own objects before getting a new one.
 	/// </summary>
-	public static AbstractSpawnRule GetRule(SpawnRule rule){
-		switch (rule){
-			case SpawnRule.Random:
+	public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum){
+		switch (ruleEnum){
+			case SpawnRuleEnum.Random:
 				return ScriptableObject.CreateInstance<RandomSpawnRule>();
 			default:
 				return null;
