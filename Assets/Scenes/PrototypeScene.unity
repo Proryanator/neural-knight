@@ -293,9 +293,9 @@ MonoBehaviour:
     type: 3}
   _spawnDelay: 0
   _spawnRate: 1
-  _maxSpawnCount: 5
+  _maxSpawnCount: 10
   _restart: 0
-  spawnRuleEnum: 1
+  spawnRuleEnum: 0
 --- !u!1 &1035962938
 GameObject:
   m_ObjectHideFlags: 0
@@ -477,7 +477,7 @@ MonoBehaviour:
   manualDebugFloorRoof: 0
   showSearchTree: 0
   unwalkableNodeDebugSize: 0.3
-  logPathResults: 0
+  logPathResults: 1
   maxNearestNodeDistance: 100
   scanOnStartup: 1
   fullGetNearestSearch: 0
