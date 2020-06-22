@@ -18,7 +18,7 @@ public abstract class BaseHealth : MonoBehaviour {
     private int _currentHealth;
 
     //-------------------------TAKING DAMAGE-------------------------//
-    [Tooltip("How long to prevent the player from being hurt again.")]
+    [Tooltip("How long to prevent the object from being hurt again.")]
     [SerializeField] private float _invulnerabilityPeriod = 1f;
 
     // will be turned off/on depending on how long your invulnerability period is
