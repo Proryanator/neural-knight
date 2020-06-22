@@ -4,5 +4,6 @@
 /// If it's not here, it's not a ready rule to use.
 /// </summary>
 public enum SpawnRuleEnum{
-	Random
+	Random,
+	Bulk
 }

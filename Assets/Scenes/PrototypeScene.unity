@@ -170,6 +170,7 @@ MonoBehaviour:
   _spawnRate: 10
   _maxSpawnCount: 2
   _restart: 0
+  spawnRuleEnum: 0
 --- !u!1 &884684709
 GameObject:
   m_ObjectHideFlags: 0
@@ -294,6 +295,7 @@ MonoBehaviour:
   _spawnRate: 1
   _maxSpawnCount: 5
   _restart: 0
+  spawnRuleEnum: 1
 --- !u!1 &1035962938
 GameObject:
   m_ObjectHideFlags: 0

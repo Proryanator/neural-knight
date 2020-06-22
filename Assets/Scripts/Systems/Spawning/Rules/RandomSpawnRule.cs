@@ -1,7 +1,4 @@
-﻿using UnityEngine;
-using Random = System.Random;
-
-/// <summary>
+﻿/// <summary>
 /// Spawns the prefab at a random spawn point; it's that simple!
 /// </summary>
 public class RandomSpawnRule : AbstractSpawnRule {

@@ -41,7 +41,7 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 		for (int i = 0; i < spawnCount; i++){
 			GameObject.Instantiate(prefab, point.transform.position, Quaternion.identity);
 		}
-
+		
 		return spawnCount;
 	}
 
@@ -61,6 +61,9 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 		switch (ruleEnum){
 			case SpawnRuleEnum.Random:
 				rule = ScriptableObject.CreateInstance<RandomSpawnRule>();
+				break;
+			case SpawnRuleEnum.Bulk:
+				rule = ScriptableObject.CreateInstance<BulkSpawnRule>();
 				break;
 		}
 

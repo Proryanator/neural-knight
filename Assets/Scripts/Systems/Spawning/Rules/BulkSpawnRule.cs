@@ -8,6 +8,11 @@ public class BulkSpawnRule : AbstractSpawnRule{
 	private int _spawnCount = 3;
 	
 	public override int Spawn(int currentSpawnCount){
-		return SpawnAt(GetRandomSpawnPoint(), _spawnCount);
+		int amountToSpawn = _spawnCount;
+		if (currentSpawnCount + _spawnCount >= maxSpawnCount){
+			amountToSpawn = maxSpawnCount - currentSpawnCount;
+		}
+		
+		return SpawnAt(GetRandomSpawnPoint(), amountToSpawn);
 	}
 }
