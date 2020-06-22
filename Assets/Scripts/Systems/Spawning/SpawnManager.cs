@@ -41,8 +41,9 @@ public class SpawnManager : MonoBehaviour{
 	}
 
 	private void Update(){
+		// TODO: take me out, might be worth making tests for this
 		if (_restart){
-			Restart(10);
+			Restart(.3f, 10);
 			_restart = false;
 		}
 	}
@@ -51,14 +52,14 @@ public class SpawnManager : MonoBehaviour{
 		// start the spawning process!
 		StartCoroutine(Spawn());
 	}
-
+	
 	/// <summary>
 	/// Restarts the spawning. Should be called upon a new level loading!
 	///
 	/// NOTE: might be best for the spawn manager to get the next count from somewhere else,
 	/// let's say a file for example.
 	/// </summary>
-	public void Restart(int maxCount){
+	public void Restart(float spawnRate, int maxCount){
 		if (CanSpawn()){
 			Debug.LogWarning("You're attempting to restart spawning while spawning is already happening!");
 			return;
@@ -67,6 +68,7 @@ public class SpawnManager : MonoBehaviour{
 		// set max count, restart counter, and start co routine!
 		_maxSpawnCount = maxCount;
 		_currentSpawnCount = 0;
+		_spawnRate = spawnRate;
 		StartCoroutine(Spawn());
 	}
 
