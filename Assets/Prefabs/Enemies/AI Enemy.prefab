@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _startingHealth: 3
-  _invulnerabilityPeriod: 1
+  _invulnerabilityPeriod: 0
   _pointValue: 1
 --- !u!114 &5860791240615810683
 MonoBehaviour:
