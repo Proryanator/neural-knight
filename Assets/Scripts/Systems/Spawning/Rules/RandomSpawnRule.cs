@@ -5,9 +5,8 @@ using Random = System.Random;
 /// Spawns the prefab at a random spawn point; it's that simple!
 /// </summary>
 public class RandomSpawnRule : AbstractSpawnRule {
-	
-	public override void Spawn(Transform prefab, SpawnPoint[] points){
-		Random random = new Random();
-		SpawnAt(prefab, points[random.Next(points.Length)]);
+
+	public override int Spawn(int currentSpawnCount){
+		return SpawnAt(GetRandomSpawnPoint(), 1);
 	}
 }

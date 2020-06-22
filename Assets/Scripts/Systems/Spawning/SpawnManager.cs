@@ -76,7 +76,7 @@ public class SpawnManager : MonoBehaviour{
 			ScriptableObject.Destroy(_currentSpawnRule);
 		}
 
-		_currentSpawnRule = AbstractSpawnRule.GetRule(spawnRuleEnum);
+		_currentSpawnRule = AbstractSpawnRule.GetRule(spawnRuleEnum, _spawnPrefab, _spawnPointsInScene, _maxSpawnCount);
 	}
 	
 	/// <summary>
@@ -112,8 +112,7 @@ public class SpawnManager : MonoBehaviour{
 		yield return new WaitForSeconds(_spawnDelay);
 		
 		while (CanSpawn()){
-			_currentSpawnRule.Spawn(_spawnPrefab, _spawnPointsInScene);
-			_currentSpawnCount++;
+			_currentSpawnCount+=_currentSpawnRule.Spawn(_currentSpawnCount);
 			
 			yield return new WaitForSeconds(_spawnRate);
 		}
