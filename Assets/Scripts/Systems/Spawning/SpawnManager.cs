@@ -29,6 +29,8 @@ public class SpawnManager : MonoBehaviour{
 	// all spawn points in the scene, gathered upon Awake() of this script
 	private SpawnPoint[] _spawnPointsInScene;
 
+	[SerializeField] private bool _restart = false;
+	
 	private void Awake(){
 		// cache all spawn points found within the scene
 		_spawnPointsInScene = GameObject.FindObjectsOfType<SpawnPoint>();
@@ -38,18 +40,47 @@ public class SpawnManager : MonoBehaviour{
 		}
 	}
 
+	private void Update(){
+		if (_restart){
+			Restart(10);
+			_restart = false;
+		}
+	}
+
 	private void Start(){
 		// start the spawning process!
 		StartCoroutine(Spawn());
 	}
 
 	/// <summary>
+	/// Restarts the spawning. Should be called upon a new level loading!
+	///
+	/// NOTE: might be best for the spawn manager to get the next count from somewhere else,
+	/// let's say a file for example.
+	/// </summary>
+	public void Restart(int maxCount){
+		if (CanSpawn()){
+			Debug.LogWarning("You're attempting to restart spawning while spawning is already happening!");
+			return;
+		}
+		
+		// set max count, restart counter, and start co routine!
+		_maxSpawnCount = maxCount;
+		_currentSpawnCount = 0;
+		StartCoroutine(Spawn());
+	}
+
+	private bool CanSpawn(){
+		return _currentSpawnCount < _maxSpawnCount;
+	}
+	
+	/// <summary>
 	/// Will spawn prefabs at the given spawn rate.
 	///
 	/// Updates current count, and also updates if we've spawned too many.
 	/// </summary>
 	private IEnumerator Spawn(){
-		while (_currentSpawnCount < _maxSpawnCount){
+		while (CanSpawn()){
 			// just picks 1 random spawn point and spawns an enemy there!
 			Random random = new Random();
 			Transform spawnPoint = _spawnPointsInScene[random.Next(_spawnPointsInScene.Length)].transform;
