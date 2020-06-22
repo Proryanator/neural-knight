@@ -18,18 +18,28 @@ public class SpawnManager : MonoBehaviour{
 	[Tooltip("The prefab to spawn.")]
 	[SerializeField] private Transform _spawnPrefab;
 
+	[Tooltip("Makes spawn manager wait this amount of seconds before starting it's spawn process. Waits only once.")]
+	[SerializeField] private float _spawnDelay = 0f;
+	
 	[Tooltip("The rate at which prefabs will spawn in, in seconds.")]
 	[SerializeField] private float _spawnRate = 1;
 
-	private int _currentSpawnCount = 0;
-	
 	[Tooltip("The maximum number of prefabs to spawn.")]
 	[SerializeField] private int _maxSpawnCount = 5;
 
+	[Tooltip("Enable this to initiate restart of spawning. Intended for testing purposes only.")]
+	[SerializeField] private bool _restart = false;
+
+	[Tooltip("Choose the spawn rule to use for this spawner.")]
+	[SerializeField] private SpawnRule _spawnRule = SpawnRule.Random;
+	
+	private int _currentSpawnCount = 0;
+	
 	// all spawn points in the scene, gathered upon Awake() of this script
 	private SpawnPoint[] _spawnPointsInScene;
 
-	[SerializeField] private bool _restart = false;
+	// unless changed, defaults to the random rule
+	private AbstractSpawnRule _currentSpawnRule;
 	
 	private void Awake(){
 		// cache all spawn points found within the scene
@@ -49,8 +59,26 @@ public class SpawnManager : MonoBehaviour{
 	}
 
 	private void Start(){
+		// setup spawn rules
+		SetSpawnRule();
+		
 		// start the spawning process!
 		StartCoroutine(Spawn());
+	}
+
+	/// <summary>
+	/// Using the set SpawnRule, set the rule object.
+	/// If one was already set, destroys that one and re-instantiates one.
+	///
+	/// Intended to be called from outside the spawn manager to change this at runtime.
+	/// </summary>
+	public void SetSpawnRule(){
+		// destroy old rule if it existed
+		if (_currentSpawnRule != null){
+			ScriptableObject.Destroy(_currentSpawnRule);
+		}
+
+		_currentSpawnRule = AbstractSpawnRule.GetRule(_spawnRule);
 	}
 	
 	/// <summary>
@@ -82,13 +110,11 @@ public class SpawnManager : MonoBehaviour{
 	/// Updates current count, and also updates if we've spawned too many.
 	/// </summary>
 	private IEnumerator Spawn(){
-		while (CanSpawn()){
-			// just picks 1 random spawn point and spawns an enemy there!
-			Random random = new Random();
-			Transform spawnPoint = _spawnPointsInScene[random.Next(_spawnPointsInScene.Length)].transform;
+		// one-time spawn delay, if any
+		yield return new WaitForSeconds(_spawnDelay);
 		
-			// now, spawn the prefab at this location!
-			GameObject.Instantiate(_spawnPrefab, spawnPoint.position, Quaternion.identity);
+		while (CanSpawn()){
+			_currentSpawnRule.Spawn(_spawnPrefab, _spawnPointsInScene);
 			_currentSpawnCount++;
 			
 			yield return new WaitForSeconds(_spawnRate);

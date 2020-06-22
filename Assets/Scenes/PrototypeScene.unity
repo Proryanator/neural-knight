@@ -166,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPrefab: {fileID: 5279645652737427395, guid: 831c0ad8f4af8394b897e02c1aef4a32,
     type: 3}
+  _spawnDelay: 3
   _spawnRate: 10
   _maxSpawnCount: 2
   _restart: 0
@@ -289,6 +290,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPrefab: {fileID: 7940233600692648348, guid: e86a31184bf30804caef6c091e5902ce,
     type: 3}
+  _spawnDelay: 0
   _spawnRate: 1
   _maxSpawnCount: 5
   _restart: 0
