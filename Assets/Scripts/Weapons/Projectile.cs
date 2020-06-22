@@ -24,6 +24,9 @@ public class Projectile : MonoBehaviour{
 
 	// how much damage this will cause to an enemy that it hits
 	private int _projectileDamage;
+
+	// how much force will be applied to enemies when the projectile lands
+	private float _shotForce;
 	
 	/// <summary>
 	/// Called by the weapon after each projectile is spawned. Sets the facing direction, as well as other information
@@ -34,11 +37,12 @@ public class Projectile : MonoBehaviour{
 	/// <param name="lifeOfProjectile">How long this projectile will travel in the scene until it despawns.</param>
 	/// <param name="speed">The speed at which this will translate through the world.</param>
 	/// <param name="damage">The amount of damage this projectile will cause
-	public void InitProjectile(Vector2 direction, float lifeOfProjectile, float speed, int damage){
+	public void InitProjectile(Vector2 direction, float lifeOfProjectile, float speed, int damage, float shotForce){
 		_direction = direction.normalized;
 		_lifeOfProjectile = lifeOfProjectile;
 		_speed = speed;
 		_projectileDamage = damage;
+		_shotForce = shotForce;
 
 		_startTime = Time.time;
 	}
@@ -65,6 +69,9 @@ public class Projectile : MonoBehaviour{
 		if (baseHealth != null 
 		    && other.gameObject.CompareTag(AllTags.ENEMY)){
 			baseHealth.Damage(_projectileDamage);
+			
+			// apply force to the object in the direction of your fired projectile
+			other.gameObject.GetComponent<Rigidbody2D>().AddForce(_direction * _shotForce, ForceMode2D.Impulse);
 		}
 		
 		// always destroy yourself if you collide with something!

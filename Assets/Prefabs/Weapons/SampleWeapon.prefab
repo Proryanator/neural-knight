@@ -49,3 +49,5 @@ MonoBehaviour:
   _fireRate: 0.1
   _shotLife: 3
   _shotSpeed: 10
+  _shotDamage: 1
+  _shotForce: 10

@@ -7,12 +7,15 @@ using UnityEngine;
 /// Forces this data object to follow the player using A* path-finding.
 /// </summary>
 [RequireComponent(typeof(Seeker))]
+[RequireComponent(typeof(Rigidbody2D))]
 public class FollowPlayerPattern : AbstractAIMovementPattern{
 
 	[Tooltip("Speed at which to walk towards the player.")]
 	[SerializeField] private float _speed = 5f;
 	
 	private Seeker _seeker;
+
+	private Rigidbody2D _rigidbody2D;
 	
 	// the player object that we'll be following
 	// NOTE: we might need to adjust this to find the 'nearest' player instead of the default player,
@@ -33,7 +36,7 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 	
 	private void Start(){
 		_seeker = GetComponent<Seeker>();
-
+		_rigidbody2D = GetComponent<Rigidbody2D>();
 		_playerTarget = GetPlayerTarget();
 
 		if (_playerTarget == null){
@@ -92,7 +95,8 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 			((Vector2) _path.vectorPath[_currentWayPoint] - (Vector2) transform.position).normalized;
 		
 		// now we simply translate in that direction based on the speed!
-		transform.Translate(Time.deltaTime * _speed * directionToMove);
+		// transform.Translate(Time.deltaTime * );
+		_rigidbody2D.velocity = (_speed * directionToMove);
 		
 		// determine if we've reached the next way-point, track the next one
 		float distance = Vector2.Distance(transform.position, _path.vectorPath[_currentWayPoint]);

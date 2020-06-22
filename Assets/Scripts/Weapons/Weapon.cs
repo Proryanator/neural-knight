@@ -25,6 +25,9 @@ public class Weapon : MonoBehaviour{
 	[Tooltip("How much this shot will cause damage to those that it hits.")]
 	[SerializeField] private int _shotDamage = 1;
 
+	[Tooltip("How much force is applied to the enemy upon colliding.")]
+	[SerializeField] private float _shotForce = 5f;
+
 	// whether we're waiting for the next chance to fire or not, prevents spamming of input
 	private bool _intervalBetweenShots = false;
 	
@@ -50,7 +53,7 @@ public class Weapon : MonoBehaviour{
 			.GetComponent<Projectile>();
 		
 		// set the direction of with which to fire the projectile, from the player's facing direction
-		projectile.InitProjectile(direction, _shotLife, _shotSpeed, _shotDamage);
+		projectile.InitProjectile(direction, _shotLife, _shotSpeed, _shotDamage, _shotForce);
 		
 		// start the wait time for the fire rate
 		StartCoroutine(WaitFireRateRoutine());
