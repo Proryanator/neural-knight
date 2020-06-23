@@ -137,7 +137,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &254744209
 Transform:
   m_ObjectHideFlags: 0
@@ -167,6 +167,9 @@ MonoBehaviour:
   _spawnPrefab: {fileID: 5279645652737427395, guid: 831c0ad8f4af8394b897e02c1aef4a32,
     type: 3}
   _spawnDelay: 3
+  _initialEnemySpawnRate: 2
+  _minEnemySpawnRate: 0.2
+  _initialSpawnCount: 3
   spawnRuleEnum: 0
 --- !u!1 &884684709
 GameObject:
@@ -289,6 +292,9 @@ MonoBehaviour:
   _spawnPrefab: {fileID: 7940233600692648348, guid: e86a31184bf30804caef6c091e5902ce,
     type: 3}
   _spawnDelay: 0
+  _initialEnemySpawnRate: 1
+  _minEnemySpawnRate: 0.2
+  _initialSpawnCount: 5
   spawnRuleEnum: 0
 --- !u!1 &1035962938
 GameObject:
@@ -864,8 +870,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce53dbaf03cd4b2d86340bed2c562369, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialEnemySpawnRate: 1
-  _minEnemySpawnRate: 0.2
   _initialEnemySpawnCount: 3
 --- !u!1 &2120389753
 GameObject:

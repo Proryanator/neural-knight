@@ -14,12 +14,6 @@ public class LevelManager : MonoBehaviour{
 
 	// the current spawn rate; changed when levels start
 	private float _currentSpawnRate = 0f;
-	
-	[Tooltip("The initial spawn rate that the game will start with. Increases from here.")]
-	[SerializeField] private float _initialEnemySpawnRate = 2;
-	
-	[Tooltip("The lowest/quickest that the game will progress to, for spawning enemies. Will not get faster than this.")]
-	[SerializeField] private float _minEnemySpawnRate = .2f;
 
 	// the current spawn count; changed when levels start
 	private int _currentSpawnCount = 0;
@@ -30,12 +24,12 @@ public class LevelManager : MonoBehaviour{
 	// the current game level, incremented through some game behavior 
 	private int _gameLevel = 1;
 	
-	// notifies when the level number changes
-	public Action<int> OnLevelChange;
-
-	// subscribe to this to get information about when the level starts, including starting spawn rates, counts, etc.
-	public Action<float, int> OnLevelStart;
+	// notifies when a level ends
+	public Action<int> OnLevelFinish;
 	
+	// notifies when a level starts
+	public Action<int> OnLevelStart;
+
 	private void Awake(){
 		if (_instance == null){
 			_instance = this;
@@ -45,9 +39,6 @@ public class LevelManager : MonoBehaviour{
 	}
 
 	private void Start(){
-		_currentSpawnRate = _initialEnemySpawnRate;
-		_currentSpawnCount = _initialEnemySpawnCount;
-		
 		// for now, we just start the game
 		// TODO: might add logic here to allow for starting the level when the player is ready (perhaps to allow
 		// for upgrades or something?
@@ -66,9 +57,8 @@ public class LevelManager : MonoBehaviour{
 	public void StartLevel(){
 		Debug.Log("Starting Level [" + _gameLevel + "]!");
 
-		// notify everything that needs to know about the current rates
 		if (OnLevelStart != null){
-			OnLevelStart(_currentSpawnRate, _currentSpawnCount);
+			OnLevelStart(_gameLevel);
 		}
 	}
 
@@ -80,17 +70,16 @@ public class LevelManager : MonoBehaviour{
 		// first, let's increment the level counter to the next level
 		IncrementLevel();
 		
-		// TODO: change the values for the start of the next level!
+		// and for now, just starts the next level!
+		StartLevel();
 	}
 
 	private void IncrementLevel(){
 		_gameLevel++;
 		
 		// if there are any listeners, notify them that the level has changed!
-		if (OnLevelChange != null){
-			OnLevelChange(_gameLevel);
+		if (OnLevelFinish != null){
+			OnLevelFinish(_gameLevel);
 		}
-
-		
 	}
 }

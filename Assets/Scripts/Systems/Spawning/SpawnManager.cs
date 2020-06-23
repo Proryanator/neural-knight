@@ -15,22 +15,39 @@ public class SpawnManager : MonoBehaviour{
 	
 	[Tooltip("The prefab to spawn.")]
 	[SerializeField] private Transform _spawnPrefab;
-
-	// TODO: should this also be controlled by the LevelManager?
+	
 	[Tooltip("Makes spawn manager wait this amount of seconds before starting it's spawn process. Waits only once.")]
 	[SerializeField] private float _spawnDelay = 0f;
+
+	#region SpawnRates
 	
 	// the rate at which prefabs will spawn in, in seconds
 	private float _spawnRate = -1f;
+	
+	[Tooltip("The initial spawn rate that the game will start with. Increases from here.")]
+	[SerializeField] private float _initialEnemySpawnRate = 2;
+	
+	[Tooltip("The lowest/quickest that the spawn manager will progress to, will not get faster than this.")]
+	[SerializeField] private float _minEnemySpawnRate = .2f;
+
+	#endregion
+
+	#region SpawnCounts
 
 	// the maximum number of prefabs to spawn
 	private int _maxSpawnCount = -1;
+	
+	// how many we've spawned so far
+	private int _currentSpawnCount = 0;
+	
+	[Tooltip("The starting spawn count.")]
+	[SerializeField] private int _initialMaxSpawnCount = 3;
+
+	#endregion
 
 	[Tooltip("Choose the spawn rule to use for this spawner.")]
 	[SerializeField] private SpawnRuleEnum spawnRuleEnum = SpawnRuleEnum.Random;
-	
-	private int _currentSpawnCount = 0;
-	
+
 	// all spawn points in the scene, gathered upon Awake() of this script
 	private SpawnPoint[] _spawnPointsInScene;
 
@@ -46,13 +63,22 @@ public class SpawnManager : MonoBehaviour{
 		}
 		
 		// subscribe to the level starting method; this is what initiates/restarts spawning!
+		LevelManager.GetInstance().OnLevelFinish += AdjustSpawnRates;
+		
+		// also, when a new level starts, we'll also start spawning again
 		LevelManager.GetInstance().OnLevelStart += StartSpawning;
+	}
+
+	private void Start(){
+		// initialize the values based on initials
+		_spawnRate = _initialEnemySpawnRate;
+		_maxSpawnCount = _initialMaxSpawnCount;
 	}
 
 	/// <summary>
 	/// Starts the spawning. Intended to be setup externally!
 	/// </summary>
-	private void StartSpawning(float spawnRate, int maxCount){
+	private void StartSpawning(int gameLevel){
 		// setup spawn rules
 		SetSpawnRule();
 
@@ -62,10 +88,12 @@ public class SpawnManager : MonoBehaviour{
 		}
 		
 		// set max count, restart counter, and start co routine!
-		_maxSpawnCount = maxCount;
 		_currentSpawnCount = 0;
-		_spawnRate = spawnRate;
 		StartCoroutine(Spawn());
+	}
+
+	private void AdjustSpawnRates(int gameLevel){
+		// TODO: implement me
 	}
 	
 	/// <summary>

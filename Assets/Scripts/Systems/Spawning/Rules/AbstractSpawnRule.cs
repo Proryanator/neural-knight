@@ -40,6 +40,8 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 	protected int SpawnAt(SpawnPoint point, int spawnCount){
 		for (int i = 0; i < spawnCount; i++){
 			GameObject.Instantiate(prefab, point.transform.position, Quaternion.identity);
+			
+			// set this object's
 		}
 		
 		return spawnCount;
