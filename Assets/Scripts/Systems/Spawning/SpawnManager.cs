@@ -8,25 +8,23 @@ using Random = System.Random;
 ///
 /// Based on the chosen spawn rule, will spawn objects accordingly.
 ///
-/// This is designed to spawn X number of prefabs in a given 'round' if you will, and will
-/// not need to keep track of if enemies are destroyed or not.
+/// Subscribes to the level manager's method; when a level changes, the spawn
+/// values will be set for this manager accordingly.
 /// </summary>
 public class SpawnManager : MonoBehaviour{
 	
 	[Tooltip("The prefab to spawn.")]
 	[SerializeField] private Transform _spawnPrefab;
 
+	// TODO: should this also be controlled by the LevelManager?
 	[Tooltip("Makes spawn manager wait this amount of seconds before starting it's spawn process. Waits only once.")]
 	[SerializeField] private float _spawnDelay = 0f;
 	
-	[Tooltip("The rate at which prefabs will spawn in, in seconds.")]
-	[SerializeField] private float _spawnRate = 1;
+	// the rate at which prefabs will spawn in, in seconds
+	private float _spawnRate = -1f;
 
-	[Tooltip("The maximum number of prefabs to spawn.")]
-	[SerializeField] private int _maxSpawnCount = 5;
-
-	[Tooltip("Enable this to initiate restart of spawning. Intended for testing purposes only.")]
-	[SerializeField] private bool _restart = false;
+	// the maximum number of prefabs to spawn
+	private int _maxSpawnCount = -1;
 
 	[Tooltip("Choose the spawn rule to use for this spawner.")]
 	[SerializeField] private SpawnRuleEnum spawnRuleEnum = SpawnRuleEnum.Random;
@@ -46,46 +44,18 @@ public class SpawnManager : MonoBehaviour{
 		if (_spawnPointsInScene.Length == 0){
 			Debug.LogWarning("There are no spawn points in this scene, and yet you have a Spawn Manager.");
 		}
+		
+		// subscribe to the level starting method; this is what initiates/restarts spawning!
+		LevelManager.GetInstance().OnLevelStart += StartSpawning;
 	}
 
-	private void Update(){
-		// TODO: take me out, might be worth making tests for this
-		if (_restart){
-			Restart(.3f, 10);
-			_restart = false;
-		}
-	}
-
-	private void Start(){
+	/// <summary>
+	/// Starts the spawning. Intended to be setup externally!
+	/// </summary>
+	private void StartSpawning(float spawnRate, int maxCount){
 		// setup spawn rules
 		SetSpawnRule();
-		
-		// start the spawning process!
-		StartCoroutine(Spawn());
-	}
 
-	/// <summary>
-	/// Using the set SpawnRule, set the rule object.
-	/// If one was already set, destroys that one and re-instantiates one.
-	///
-	/// Intended to be called from outside the spawn manager to change this at runtime.
-	/// </summary>
-	public void SetSpawnRule(){
-		// destroy old rule if it existed
-		if (_currentSpawnRule != null){
-			ScriptableObject.Destroy(_currentSpawnRule);
-		}
-
-		_currentSpawnRule = AbstractSpawnRule.GetRule(spawnRuleEnum, _spawnPrefab, _spawnPointsInScene, _maxSpawnCount);
-	}
-	
-	/// <summary>
-	/// Restarts the spawning. Should be called upon a new level loading!
-	///
-	/// NOTE: might be best for the spawn manager to get the next count from somewhere else,
-	/// let's say a file for example.
-	/// </summary>
-	public void Restart(float spawnRate, int maxCount){
 		if (CanSpawn()){
 			Debug.LogWarning("You're attempting to restart spawning while spawning is already happening!");
 			return;
@@ -96,6 +66,21 @@ public class SpawnManager : MonoBehaviour{
 		_currentSpawnCount = 0;
 		_spawnRate = spawnRate;
 		StartCoroutine(Spawn());
+	}
+	
+	/// <summary>
+	/// Using the set SpawnRule, set the rule object.
+	/// If one was already set, destroys that one and re-instantiates one.
+	///
+	/// Intended to be called from outside the spawn manager to change this at runtime.
+	/// </summary>
+	private void SetSpawnRule(){
+		// destroy old rule if it existed
+		if (_currentSpawnRule != null){
+			ScriptableObject.Destroy(_currentSpawnRule);
+		}
+
+		_currentSpawnRule = AbstractSpawnRule.GetRule(spawnRuleEnum, _spawnPrefab, _spawnPointsInScene, _maxSpawnCount);
 	}
 
 	private bool CanSpawn(){
