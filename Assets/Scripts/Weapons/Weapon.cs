@@ -45,8 +45,6 @@ public class Weapon : MonoBehaviour{
 		if (_intervalBetweenShots){
 			return;
 		}
-		
-		Debug.Log("Player fired their weapon!");
 
 		// TODO: we'll probably want to spawn these shots under something later on so it's not just all up in the scene :D
 		Projectile projectile = Instantiate(_projectile, spawnTransform.position, Quaternion.identity)
