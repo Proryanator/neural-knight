@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 208394133013271910}
   - component: {fileID: -3204722969983000046}
   - component: {fileID: 154141508}
+  - component: {fileID: -6315897755756118273}
   m_Layer: 0
   m_Name: AI Enemy
   m_TagString: Enemy
@@ -224,3 +225,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dataPointType: 1
   _collectionValue: -1
+--- !u!114 &-6315897755756118273
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7940233600692648350}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03954d60d36f43b6ab6e2619c85b4042, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

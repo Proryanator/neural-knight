@@ -111,7 +111,7 @@ public class SpawnManager : MonoBehaviour{
 		_currentSpawnRule = AbstractSpawnRule.GetRule(spawnRuleEnum, _spawnPrefab, _spawnPointsInScene, _maxSpawnCount);
 	}
 
-	private bool CanSpawn(){
+	public bool CanSpawn(){
 		return _currentSpawnCount < _maxSpawnCount;
 	}
 	

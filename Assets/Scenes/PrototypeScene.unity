@@ -169,7 +169,7 @@ MonoBehaviour:
   _spawnDelay: 3
   _initialEnemySpawnRate: 2
   _minEnemySpawnRate: 0.2
-  _initialSpawnCount: 3
+  _initialMaxSpawnCount: 1
   spawnRuleEnum: 0
 --- !u!1 &884684709
 GameObject:
@@ -294,7 +294,7 @@ MonoBehaviour:
   _spawnDelay: 0
   _initialEnemySpawnRate: 1
   _minEnemySpawnRate: 0.2
-  _initialSpawnCount: 5
+  _initialMaxSpawnCount: 3
   spawnRuleEnum: 0
 --- !u!1 &1035962938
 GameObject:

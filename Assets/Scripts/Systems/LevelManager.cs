@@ -24,6 +24,9 @@ public class LevelManager : MonoBehaviour{
 	// the current game level, incremented through some game behavior 
 	private int _gameLevel = 1;
 	
+	// we need a cache of all spawn managers for checking if a level has ended
+	private SpawnManager[] _allSpawnManagers;
+	
 	// notifies when a level ends
 	public Action<int> OnLevelFinish;
 	
@@ -36,6 +39,8 @@ public class LevelManager : MonoBehaviour{
 		}else if (_instance != this){
 			Destroy(gameObject);
 		}
+
+		_allSpawnManagers = GameObject.FindObjectsOfType<SpawnManager>();
 	}
 
 	private void Start(){
@@ -63,10 +68,31 @@ public class LevelManager : MonoBehaviour{
 	}
 
 	/// <summary>
+	/// Performs a check to see if the level is considered 'ended' or not.
+	///
+	/// Checks if all spawn managers are done spawning. If they are, checks to see
+	/// if any children are still left in the scene.
+	/// </summary>
+	public void LevelEndCheck(){
+		// if any of the spawn managers is still spawning, we're not done
+		foreach (SpawnManager manager in _allSpawnManagers){
+			if (manager.CanSpawn()){
+				return;
+			}
+		}
+		
+		// if all the spawned objects are missing, then the level is over!
+		// TODO: this is an expensive call, refactor to do it a better way
+		if (GameObject.FindObjectsOfType<DataPoint>().Length == 0){
+			EndLevel();
+		}
+	}
+	
+	/// <summary>
 	/// Initiates the end of a level. This does any level cleanup,
 	/// including preparing for the next level.
 	/// </summary>
-	public void EndLevel(){
+	private void EndLevel(){
 		// first, let's increment the level counter to the next level
 		IncrementLevel();
 		
