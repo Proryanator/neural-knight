@@ -61,18 +61,18 @@ public class SpawnManager : MonoBehaviour{
 		if (_spawnPointsInScene.Length == 0){
 			Debug.LogWarning("There are no spawn points in this scene, and yet you have a Spawn Manager.");
 		}
-		
-		// subscribe to the level starting method; this is what initiates/restarts spawning!
-		LevelManager.GetInstance().OnLevelFinish += AdjustSpawnRates;
-		
-		// also, when a new level starts, we'll also start spawning again
-		LevelManager.GetInstance().OnLevelStart += StartSpawning;
 	}
 
 	private void Start(){
 		// initialize the values based on initials
 		_spawnRate = _initialEnemySpawnRate;
 		_maxSpawnCount = _initialMaxSpawnCount;
+		
+		// subscribe to the level starting method; this is what initiates/restarts spawning!
+		LevelManager.GetInstance().OnLevelFinish += AdjustSpawnRates;
+		
+		// also, when a new level starts, we'll also start spawning again
+		LevelManager.GetInstance().OnLevelStart += StartSpawning;
 	}
 
 	/// <summary>
@@ -82,18 +82,28 @@ public class SpawnManager : MonoBehaviour{
 		// setup spawn rules
 		SetSpawnRule();
 
-		if (CanSpawn()){
-			Debug.LogWarning("You're attempting to restart spawning while spawning is already happening!");
-			return;
-		}
-		
 		// set max count, restart counter, and start co routine!
 		_currentSpawnCount = 0;
 		StartCoroutine(Spawn());
 	}
 
+	/**
+	 * Contains the logic to up the spawn count using a super basic algorithm.
+	 *
+	 * This can always be updated later on when researching other games like
+	 * BLOPS2, boxhead, etc.
+	 */
 	private void AdjustSpawnRates(int gameLevel){
-		// TODO: implement me
+		_maxSpawnCount = _initialMaxSpawnCount + (2 * gameLevel);
+		
+		// let's also make spawning faster every 5 levels
+		int levelBoundary = 5;
+		if (gameLevel % levelBoundary == 0){
+			_spawnRate = _initialEnemySpawnRate - ((gameLevel / levelBoundary) * .2f);
+		}
+
+		// make sure we don't go lower (or higher) than the original spawn rate
+		Mathf.Clamp(_spawnRate, _minEnemySpawnRate, _initialEnemySpawnRate);
 	}
 	
 	/// <summary>

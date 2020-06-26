@@ -871,6 +871,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialEnemySpawnCount: 3
+  _levelStartDelay: 5
 --- !u!1 &2120389753
 GameObject:
   m_ObjectHideFlags: 0
