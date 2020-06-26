@@ -47,7 +47,7 @@ MonoBehaviour:
   _spawnPrefab: {fileID: 7940233600692648348, guid: e86a31184bf30804caef6c091e5902ce,
     type: 3}
   _spawnRuleEnum: 0
-  _spawnAdjusterEnum: 0
+  _spawnAdjusterEnum: 1
 --- !u!114 &6368441875460624617
 MonoBehaviour:
   m_ObjectHideFlags: 0
