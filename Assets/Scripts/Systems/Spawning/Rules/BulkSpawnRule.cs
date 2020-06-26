@@ -5,10 +5,10 @@
 /// </summary>
 public class BulkSpawnRule : AbstractSpawnRule{
 
-	private int _spawnCount = 3;
+	private uint _spawnCount = 3;
 	
-	public override int Spawn(int currentSpawnCount){
-		int amountToSpawn = _spawnCount;
+	public override uint Spawn(uint currentSpawnCount){
+		uint amountToSpawn = _spawnCount;
 		if (currentSpawnCount + _spawnCount >= maxSpawnCount){
 			amountToSpawn = maxSpawnCount - currentSpawnCount;
 		}

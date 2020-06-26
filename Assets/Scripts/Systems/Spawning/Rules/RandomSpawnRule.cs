@@ -3,7 +3,7 @@
 /// </summary>
 public class RandomSpawnRule : AbstractSpawnRule {
 
-	public override int Spawn(int currentSpawnCount){
+	public override uint Spawn(uint currentSpawnCount){
 		return SpawnAt(GetRandomSpawnPoint(), 1);
 	}
 }

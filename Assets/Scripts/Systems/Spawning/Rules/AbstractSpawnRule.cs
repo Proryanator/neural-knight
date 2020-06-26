@@ -15,9 +15,9 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 
 	protected Transform prefab;
 	protected SpawnPoint[] spawnPoints;
-	protected int maxSpawnCount;
+	protected uint maxSpawnCount;
 
-	public void Init(Transform prefab, SpawnPoint[] spawnPoints, int maxSpawnCount){
+	public void Init(Transform prefab, SpawnPoint[] spawnPoints, uint maxSpawnCount){
 		this.prefab = prefab;
 		this.spawnPoints = spawnPoints;
 		this.maxSpawnCount = maxSpawnCount;
@@ -29,7 +29,7 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 	///
 	/// Returns the number of prefabs spawned!
 	/// </summary>
-	public abstract int Spawn(int currentSpawnCount);
+	public abstract uint Spawn(uint currentSpawnCount);
 
 	/// <summary>
 	/// Simply spawns the prefab at the spawn point location. Handled once in 1 place for
@@ -37,8 +37,8 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 	///
 	/// Spawns how ever many you ask it to, and returns that number.
 	/// </summary>
-	protected int SpawnAt(SpawnPoint point, int spawnCount){
-		for (int i = 0; i < spawnCount; i++){
+	protected uint SpawnAt(SpawnPoint point, uint spawnCount){
+		for (uint i = 0; i < spawnCount; i++){
 			GameObject.Instantiate(prefab, point.transform.position, Quaternion.identity);
 		}
 		
@@ -55,7 +55,7 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 	///
 	/// NOTE: it's up to the caller to cleanup their own objects before getting a new one.
 	/// </summary>
-	public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum, Transform prefab, SpawnPoint[] spawnPoints, int maxSpawnCount){
+	public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum, Transform prefab, SpawnPoint[] spawnPoints, uint maxSpawnCount){
 		AbstractSpawnRule rule = null;
 		
 		switch (ruleEnum){
