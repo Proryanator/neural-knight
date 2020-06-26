@@ -10,6 +10,9 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 
 	[Tooltip("Speed at which to walk towards the player.")]
 	[SerializeField] private float _speed = 5f;
+
+	[Tooltip("The speed at which to update the path. A higher value will be more realistic but more costly.")]
+	[SerializeField] private float _repeatRate = .5f;
 	
 	private Seeker _seeker;
 
@@ -42,7 +45,7 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 		}
 		else{
 			// create a path
-			InvokeRepeating("UpdatePath", 0f, .5f);
+			InvokeRepeating("UpdatePath", 0f, _repeatRate);
 		}
 	}
 
