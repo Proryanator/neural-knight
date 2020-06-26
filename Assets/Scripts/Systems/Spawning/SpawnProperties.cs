@@ -9,11 +9,11 @@ public class SpawnProperties : MonoBehaviour{
 
 	[SerializeField] private float _spawnDelay = 0f;
 	
-	private float _spawnSpeed;
+	[SerializeField] private float _spawnSpeed;
 	[SerializeField] private float _minSpawnSpeed;
 	[SerializeField] private float _maxSpawnSpeed;
 	
-	private uint _spawnCount;
+	[SerializeField] private uint _spawnCount;
 	[SerializeField] private uint _minSpawnCount = 0;
 	[SerializeField] private uint _maxSpawnCount = uint.MaxValue;
 
