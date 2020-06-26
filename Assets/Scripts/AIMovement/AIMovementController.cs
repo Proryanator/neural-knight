@@ -38,7 +38,7 @@ public class AIMovementController : MonoBehaviour{
 		
 		// register for the 'OnDamageTaken', to make movement temporarily stop when damaged
 		// only if you have a health script!
-		BaseHealth health = GetComponent<BaseHealth>();
+		AbstractBaseHealth health = GetComponent<AbstractBaseHealth>();
 		if (health != null){
 			health.OnDamageTaken += StopMovement;
 		}
@@ -57,6 +57,20 @@ public class AIMovementController : MonoBehaviour{
 		_aiMovementPattern.Move();
 	}
 
+	/// <summary>
+	/// Allows you to set the movement pattern for this controller.
+	/// </summary>
+	public void SetMovementPattern(AbstractAIMovementPattern pattern){
+		_aiMovementPattern = pattern;
+	}
+
+	/// <summary>
+	/// Restores what the original movement pattern was for this controller.
+	/// </summary>
+	public void RestoreOriginalMovementPattern(){
+		_aiMovementPattern = _initialAIMovementPattern;
+	}
+	
 	/// <summary>
 	/// Temporarily uses the no movement controller, until the time is up.
 	///
@@ -84,19 +98,5 @@ public class AIMovementController : MonoBehaviour{
 		
 		// remove any forces if any were applied
 		_rigidbody2D.velocity = Vector2.zero;
-	}
-	
-	/// <summary>
-	/// Allows you to set the movement pattern for this controller.
-	/// </summary>
-	public void SetMovementPattern(AbstractAIMovementPattern pattern){
-		_aiMovementPattern = pattern;
-	}
-
-	/// <summary>
-	/// Restores what the original movement pattern was for this controller.
-	/// </summary>
-	public void RestoreOriginalMovementPattern(){
-		_aiMovementPattern = _initialAIMovementPattern;
 	}
 }

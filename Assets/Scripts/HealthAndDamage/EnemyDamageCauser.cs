@@ -1,5 +1,4 @@
-﻿using Systems;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class EnemyDamageCauser : MonoBehaviour{
 
@@ -8,7 +7,7 @@ public class EnemyDamageCauser : MonoBehaviour{
 	
 	public void OnCollisionEnter2D(Collision2D other){
 		// gather it's health object and damage it if we're supposed to
-		BaseHealth health = other.gameObject.GetComponent<BaseHealth>();
+		AbstractBaseHealth health = other.gameObject.GetComponent<AbstractBaseHealth>();
 		
 		if (health != null && CauseDamage(other)){
 			health.Damage(_enemyDamage);

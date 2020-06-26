@@ -1,6 +1,4 @@
-﻿using System;
-using Systems;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Moves this game object a distance defined here, until a point when the object dies.
@@ -64,11 +62,11 @@ public class Projectile : MonoBehaviour{
 	/// </summary>
 	private void DamageShotObject(Collision2D other){
 		// is this object damageable by the projectile?
-		BaseHealth baseHealth = other.gameObject.GetComponent<BaseHealth>();
+		AbstractBaseHealth abstractBaseHealth = other.gameObject.GetComponent<AbstractBaseHealth>();
 		
-		if (baseHealth != null 
+		if (abstractBaseHealth != null 
 		    && other.gameObject.CompareTag(AllTags.ENEMY)){
-			baseHealth.Damage(_projectileDamage);
+			abstractBaseHealth.Damage(_projectileDamage);
 			
 			// apply force to the object in the direction of your fired projectile
 			other.gameObject.GetComponent<Rigidbody2D>().AddForce(_direction * _shotForce, ForceMode2D.Impulse);

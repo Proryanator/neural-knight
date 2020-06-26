@@ -1,6 +1,4 @@
-﻿using System;
-using Systems;
-using Pathfinding;
+﻿using Pathfinding;
 using UnityEngine;
 
 /// <summary>
@@ -48,33 +46,6 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 		}
 	}
 
-	private void UpdatePath(){
-		// only if you're done calculating your previous path, do this again!
-		if (_seeker.IsDone()){
-			_seeker.StartPath(transform.position, _playerTarget.position, OnPathComplete);
-		}
-	}
-
-	/// <summary>
-	/// Will return a player that you want to track.
-	///
-	/// TODO: for multi-player, get nearest player to track
-	/// </summary>
-	private Transform GetPlayerTarget(){
-		return GameObject.FindWithTag(AllTags.AI_TRACKER).transform;
-	}
-
-	/// <summary>
-	/// A callback method to be used so we don't freeze up the game when looking for the new path.
-	/// </summary>
-	private void OnPathComplete(Path path){
-		// if we didn't get any errors, we'll save the path and track our current waypoint 
-		if (!path.error){
-			_path = path;
-			_currentWayPoint = 0;
-		}
-	}
-	
 	public override void Move(){
 		// if there isn't a path, return
 		if (_path == null){
@@ -103,6 +74,33 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 		
 		if (distance < _nextWayPointDistance){
 			_currentWayPoint++;
+		}
+	}
+	
+	private void UpdatePath(){
+		// only if you're done calculating your previous path, do this again!
+		if (_seeker.IsDone()){
+			_seeker.StartPath(transform.position, _playerTarget.position, OnPathComplete);
+		}
+	}
+
+	/// <summary>
+	/// Will return a player that you want to track.
+	///
+	/// TODO: for multi-player, get nearest player to track
+	/// </summary>
+	private Transform GetPlayerTarget(){
+		return GameObject.FindWithTag(AllTags.AI_TRACKER).transform;
+	}
+
+	/// <summary>
+	/// A callback method to be used so we don't freeze up the game when looking for the new path.
+	/// </summary>
+	private void OnPathComplete(Path path){
+		// if we didn't get any errors, we'll save the path and track our current waypoint 
+		if (!path.error){
+			_path = path;
+			_currentWayPoint = 0;
 		}
 	}
 }

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class EnemyHealth : BaseHealth{
+public class EnemyHealth : AbstractBaseHealth{
 
 	// TODO: not the best place to store this point value, can probably
 	// figure out where to store this later!

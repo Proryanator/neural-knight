@@ -3,8 +3,6 @@ using UnityEngine;
 
 /**
  * Collects a data point object, and passes it to the respective location to store the points/etc.
- *
- * Does not handle anything to do with the object colliding (or should it?)
  */
 public class DataCollector : MonoBehaviour{
 	

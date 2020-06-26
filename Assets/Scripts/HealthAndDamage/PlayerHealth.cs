@@ -1,7 +1,6 @@
-﻿using Systems;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class PlayerHealth : BaseHealth{
+public class PlayerHealth : AbstractBaseHealth{
 
 	protected new void Start(){
 		base.Start();
