@@ -1101,16 +1101,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1436162198}
     m_Modifications:
-    - target: {fileID: 6368441875460624617, guid: 1dbf21718e907c043bf5dafdb42332e1,
-        type: 3}
-      propertyPath: _spawnSpeed
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6368441875460624617, guid: 1dbf21718e907c043bf5dafdb42332e1,
-        type: 3}
-      propertyPath: _maxSpawnCount
-      value: 100
-      objectReference: {fileID: 0}
     - target: {fileID: 6368441875460624620, guid: 1dbf21718e907c043bf5dafdb42332e1,
         type: 3}
       propertyPath: m_Name
