@@ -257,9 +257,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _spawnDelay: 0
-  _spawnSpeed: 0
-  _minSpawnSpeed: 0
-  _maxSpawnSpeed: 0
+  _spawnSpeed: 1
+  _minSpawnSpeed: 0.2
+  _maxSpawnSpeed: 2
   _spawnCount: 0
   _minSpawnCount: 0
   _maxSpawnCount: 4294967295
