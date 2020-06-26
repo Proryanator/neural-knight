@@ -11,15 +11,16 @@ using Random = System.Random;
 /// Subscribes to the level manager's method; when a level changes, the spawn
 /// values will be set for this manager accordingly.
 /// </summary>
+[RequireComponent(typeof(SpawnProperties))]
 public class SpawnManager : MonoBehaviour{
 	
 	[Tooltip("The prefab to spawn.")]
 	[SerializeField] private Transform _spawnPrefab;
+	
+	// this is accessed upon awake! Gets initial values for the script
+	private SpawnProperties _initialProps;
 
-	[Tooltip("The starting parameters for this spawn manager.")]
-	[SerializeField] private SpawnProperties _initialSpawnProperties;
-
-	// holds the current useable spawn properties; initialized by initial ones
+	// holds the current use-able spawn properties; initialized by initial ones
 	private SpawnProperties _props;
 
 	[Tooltip("Choose the spawn rule to use for this spawner.")]
@@ -34,6 +35,8 @@ public class SpawnManager : MonoBehaviour{
 	private SpawnPoint[] _spawnPointsInScene;
 
 	private void Awake(){
+		_initialProps = GetComponent<SpawnProperties>();
+		
 		// cache all spawn points found within the scene
 		_spawnPointsInScene = GameObject.FindObjectsOfType<SpawnPoint>();
 
@@ -43,7 +46,8 @@ public class SpawnManager : MonoBehaviour{
 	}
 
 	private void Start(){
-		_props = _initialSpawnProperties;
+		// we'll start with the initial properties
+		_props = _initialProps;
 		
 		// subscribe to the level starting method; this is what initiates/restarts spawning!
 		LevelManager.GetInstance().OnLevelFinish += AdjustSpawnProperties;

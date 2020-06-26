@@ -121,56 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &254744208
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 254744209}
-  - component: {fileID: 254744210}
-  m_Layer: 0
-  m_Name: GoodSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &254744209
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254744208}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1436162198}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &254744210
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 254744208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c38b5eee00d42ec8bb15f17723c8eb1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _spawnPrefab: {fileID: 5279645652737427395, guid: 831c0ad8f4af8394b897e02c1aef4a32,
-    type: 3}
-  _spawnDelay: 3
-  _initialEnemySpawnRate: 2
-  _minEnemySpawnRate: 0.2
-  _initialMaxSpawnCount: 1
-  spawnRuleEnum: 0
 --- !u!1 &884684709
 GameObject:
   m_ObjectHideFlags: 0
@@ -256,6 +206,7 @@ GameObject:
   m_Component:
   - component: {fileID: 998324058}
   - component: {fileID: 998324059}
+  - component: {fileID: 998324060}
   m_Layer: 0
   m_Name: EnemySpawner
   m_TagString: Untagged
@@ -291,11 +242,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _spawnPrefab: {fileID: 7940233600692648348, guid: e86a31184bf30804caef6c091e5902ce,
     type: 3}
+  _spawnRuleEnum: 0
+  _spawnAdjusterEnum: 0
+--- !u!114 &998324060
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998324057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7c30bd20da394b1092d7f287c4485770, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _spawnDelay: 0
-  _initialEnemySpawnRate: 1
-  _minEnemySpawnRate: 0.2
-  _initialMaxSpawnCount: 3
-  spawnRuleEnum: 0
+  _spawnSpeed: 0
+  _minSpawnSpeed: 0
+  _maxSpawnSpeed: 0
+  _spawnCount: 0
+  _minSpawnCount: 0
+  _maxSpawnCount: 4294967295
 --- !u!1 &1035962938
 GameObject:
   m_ObjectHideFlags: 0
@@ -612,7 +579,6 @@ Transform:
   - {fileID: 1404803981}
   - {fileID: 1671738327}
   - {fileID: 998324058}
-  - {fileID: 254744209}
   - {fileID: 1766917564}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -856,7 +822,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1436162198}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1766917565
 MonoBehaviour:
@@ -871,7 +837,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _initialEnemySpawnCount: 3
-  _levelStartDelay: 5
 --- !u!1 &2120389753
 GameObject:
   m_ObjectHideFlags: 0
