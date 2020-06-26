@@ -82,7 +82,7 @@ public class SpawnManager : MonoBehaviour{
 	 * BLOPS2, boxhead, etc.
 	 */
 	private void AdjustSpawnProperties(int gameLevel){
-		_spawnAdjuster.AdjustSpawnProperties(_props, gameLevel);
+		_props = _spawnAdjuster.AdjustSpawnProperties(_props, gameLevel);
 	}
 	
 	/// <summary>

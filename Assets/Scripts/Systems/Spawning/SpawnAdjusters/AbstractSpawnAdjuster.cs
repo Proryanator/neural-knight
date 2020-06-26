@@ -6,7 +6,7 @@ public abstract class AbstractSpawnAdjuster : ScriptableObject{
 	/// Given a SpawnProperties, does something to the values, based on the current game level.
 	/// </summary>
 	/// <returns>An adjusted SpawnProperties object.</returns>
-	public abstract SpawnProperties AdjustSpawnProperties(SpawnProperties currentProps, int gameLevel);
+	public abstract SpawnProperties AdjustSpawnProperties(SpawnProperties props, int gameLevel);
 	
 	/// <summary>
 	/// Returns you a new instance of the given spawn adjuster.

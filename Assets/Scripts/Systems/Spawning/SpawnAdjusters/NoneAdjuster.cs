@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
 public class NoneAdjuster : AbstractSpawnAdjuster{
-	public override SpawnProperties AdjustSpawnProperties(SpawnProperties currentProps, int gameLevel){
+	public override SpawnProperties AdjustSpawnProperties(SpawnProperties props, int gameLevel){
 		// does not actually affect the properties!
-		return currentProps;
+		return props;
 	}
 }

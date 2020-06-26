@@ -1,19 +1,19 @@
 ﻿using UnityEngine;
 
 public class EnemyCountAndRateAdjuster : AbstractSpawnAdjuster{
-	public override SpawnProperties AdjustSpawnProperties(SpawnProperties currentProps, int gameLevel){
-		/*_maxSpawnCount = _initialMaxSpawnCount + (2 * gameLevel);
-		
+	public override SpawnProperties AdjustSpawnProperties(SpawnProperties props, int gameLevel){
+		props.maxSpawnCount += (uint)(2 * gameLevel);
+
 		// let's also make spawning faster every 5 levels
-		int levelBoundary = 5;
+		// TODO: how could we configure this from the inspector?
+		int levelBoundary = 3;
 		if (gameLevel % levelBoundary == 0){
-			_spawnRate = _initialEnemySpawnRate - ((gameLevel / levelBoundary) * .2f);
+			props.spawnSpeed -= ((gameLevel / levelBoundary) * .2f);
 		}
 
 		// make sure we don't go lower (or higher) than the original spawn rate
-		Mathf.Clamp(_spawnRate, _minEnemySpawnRate, _initialEnemySpawnRate);*/
+		props.ClampSpawnSpeed();
 
-		
-		return currentProps;
+		return props;
 	}
 }

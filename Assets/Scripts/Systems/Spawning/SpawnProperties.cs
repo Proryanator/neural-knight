@@ -51,4 +51,11 @@ public class SpawnProperties : MonoBehaviour{
 		get => _maxSpawnCount;
 		set => _maxSpawnCount = value;
 	}
+
+	/// <summary>
+	/// Clamps the spawn speed to be between the set limits.
+	/// </summary>
+	public void ClampSpawnSpeed(){
+		spawnSpeed = Mathf.Clamp(spawnSpeed, minSpawnSpeed, maxSpawnSpeed);
+	}
 }
