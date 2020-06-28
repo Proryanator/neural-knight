@@ -3,9 +3,19 @@ using UnityEngine;
 
 /**
  * Collects a data point object, and passes it to the respective location to store the points/etc.
+ *
+ * Intended to be placed on a player object!
  */
+[RequireComponent(typeof(PlayerPoints))]
 public class DataCollector : MonoBehaviour{
 	
+	// cached value of the player points
+	private PlayerPoints _playerPoints;
+	
+	private void Awake(){
+		_playerPoints = gameObject.GetComponent<PlayerPoints>();
+	}
+
 	public void OnCollisionEnter2D(Collision2D other){
 		CollectDataPoint(other);
 	}
@@ -17,8 +27,7 @@ public class DataCollector : MonoBehaviour{
 		if (dataPoint == null){
 			return;
 		}
-
-		// if there is a datapoint, collect it!
-		dataPoint.Collect();
+		
+		dataPoint.Collect(_playerPoints);
 	}
 }

@@ -138,7 +138,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &663537860
 Transform:
   m_ObjectHideFlags: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c30bd20da394b1092d7f287c4485770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnDelay: 2
+  _spawnDelay: 0
   _spawnSpeed: 0.5
   _minSpawnSpeed: 0.1
   _maxSpawnSpeed: 2
@@ -1054,7 +1054,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5992963410c74052b3a3b72a3eb93d7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _score: 0
 --- !u!1 &1725899431
 GameObject:
   m_ObjectHideFlags: 0

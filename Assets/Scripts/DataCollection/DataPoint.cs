@@ -19,10 +19,10 @@ public class DataPoint : MonoBehaviour{
 	///
 	/// Handles the differences (if any) when collected.
 	/// </summary>
-	public void Collect(){
+	public void Collect(PlayerPoints playerPoints){
 		switch (_dataPointType){
 			case DataPointType.GoodData:
-				ScoreSystem.GetInstance().AddPoints(_collectionValue);
+				playerPoints.AddPoints(_collectionValue);
 				Destroy(gameObject);
 				break;
 			case DataPointType.BadData:
