@@ -4,7 +4,7 @@ using UnityEngine;
 public class PlayerPoints : MonoBehaviour{
 
 	// stores the player's points!
-	private int _points;
+	[SerializeField] private int _points;
 	
 	/// <summary>
 	/// Subscribe to this if you want to know when the score changes!
