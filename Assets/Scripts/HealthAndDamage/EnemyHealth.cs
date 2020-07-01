@@ -9,12 +9,12 @@ public class EnemyHealth : AbstractBaseHealth{
 	
 	protected new void Start(){
 		base.Start();
-		// OnDeath += EnemyDeath;
+		OnDeath += EnemyDeath;
 	}
 
 	// TODO: not sure how to handle this if we're supposed to pass in the player's id :/
-	/*private void EnemyDeath(){
-		ScoreSystem.GetInstance().AddPoints(_pointValue);
+	private void EnemyDeath(){
+		// ScoreSystem.GetInstance().AddPoints(_pointValue);
 		Destroy(gameObject);
-	}*/
+	}
 }
