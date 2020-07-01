@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4497926614328223619}
   - component: {fileID: 4497926614328223620}
   m_Layer: 0
-  m_Name: SampleWeapon
+  m_Name: SmallShot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3b03f3f8847407d93d88dad36f94109, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponName: Sample Weapon
+  _weaponName: SingleShot
   _projectile: {fileID: 6407793947514954888, guid: 0cf5664c3823df14287547e8e3afff61,
     type: 3}
   _fireRate: 0.1

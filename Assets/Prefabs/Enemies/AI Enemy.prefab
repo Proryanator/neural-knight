@@ -152,9 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b90d27841cf4aa284dffb9fe29c58e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingHealth: 1
+  _startingHealth: 3
   _invulnerabilityPeriod: 0
-  _pointValue: 1
 --- !u!114 &5860791240615810683
 MonoBehaviour:
   m_ObjectHideFlags: 0

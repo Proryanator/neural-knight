@@ -8,7 +8,7 @@ using UnityEngine;
 public class WeaponManager : MonoBehaviour{
 
 	[Tooltip("Weapon to start the player with, if any.")]
-	[SerializeField] private Weapon _weaponPrefab;
+	[SerializeField] private Weapon[] _weaponPrefabs;
 	
 	/// <summary>
 	/// The currently equipped weapon, null if nothing is equipped.
@@ -19,15 +19,13 @@ public class WeaponManager : MonoBehaviour{
 
 	/// <summary>
 	/// Weapons that the player can equip.
-	/// TODO: this might be a pre-defined array to maintain the order shown in the UI, but
-	/// for now this will do.
 	/// </summary>
 	private SortedSet<Weapon> _availableWeapons;
 
 	private void Start(){
 		// if we set a prefab instance to start with, we'll instantiate that weapon
-		if (_weaponPrefab != null){
-			_equippedWeapon = Instantiate(_weaponPrefab, transform.position, Quaternion.identity, transform);
+		if (_weaponPrefabs != null){
+			_equippedWeapon = Instantiate(_weaponPrefabs[0], transform.position, Quaternion.identity, transform);
 		}
 	}
 
