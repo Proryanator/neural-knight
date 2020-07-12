@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
-/// Controls leg movement and behaviors.
+/// Prevents rotations from parents from being applied to this object.
 /// </summary>
-public class LegsRotation : MonoBehaviour{
+public class PreventParentRotation : MonoBehaviour{
 
 	private Quaternion _initialRotation;
 

@@ -12,7 +12,7 @@ using Proryanator.Controllers2D;
 /// NOTE: if you're getting weird behaviour where you're colliding with objects and
 /// not facing the mouse, most likely you haven't restricted rotation on the 'z'.
 /// </summary>
-public class New_TDC_FaceMouse : TopDownController {
+public class New_TDC_FaceMouse : New_TopDownController {
 
     [Tooltip("You must adjust this correctly for the direction your sprite faces by default, otherwise mouse facing won't work.")]
     [SerializeField] private FacingDirection _startingDirection = FacingDirection.RIGHT;
