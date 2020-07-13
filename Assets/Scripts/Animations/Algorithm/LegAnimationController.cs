@@ -18,7 +18,6 @@ public class LegAnimationController : MonoBehaviour{
 	private Animator _animator;
 
 	// also needing a reference to the controller! Will be in the parent
-	// TODO: when we've moved those updates into the module, you can make this generic to TopDownController!
 	private Base2DController _controller;
 
 	private void Awake(){
