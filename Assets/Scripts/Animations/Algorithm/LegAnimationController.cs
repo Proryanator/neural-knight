@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Numerics;
 using Proryanator.Controllers2D;
 using UnityEngine;
+using Debug = UnityEngine.Debug;
 using Quaternion = UnityEngine.Quaternion;
 using Vector2 = UnityEngine.Vector2;
 using Vector3 = UnityEngine.Vector3;
@@ -20,6 +22,9 @@ public class LegAnimationController : MonoBehaviour{
 	// also needing a reference to the controller! Will be in the parent
 	private TDC_FaceMouse _faceMouseController;
 
+	[Tooltip("If true, draws a debug line in the direction of the legs facing direction.")]
+	[SerializeField] private bool _drawLegDirection = false;
+	
 	// this is the angle threshold that you're allowed to be in for your legs to be moving
 	// in the same direction; otherwise, you'll be moving backwards (with the angle
 	// to face calculated here too
@@ -53,6 +58,10 @@ public class LegAnimationController : MonoBehaviour{
 	/// </summary>
 	private void RotateLegsTowardMovementDirection(Vector2 moveDirection) {
 		transform.rotation = ChooseLegDirection(moveDirection);
+
+		if (_drawLegDirection){
+			Debug.DrawLine(transform.position, Vector3.Cross(Vector2.up, transform.rotation.eulerAngles), Color.red);
+		}
 	}
 	
 	/// <summary>
@@ -66,15 +75,16 @@ public class LegAnimationController : MonoBehaviour{
 	/// </summary>
 	/// <returns>The correct rotation based on your current move direction + facing direction.</returns>
 	private Quaternion ChooseLegDirection(Vector2 moveDirection){
-		Quaternion newRotation = Quaternion.identity;
-		
 		// TODO: this is set in the TDC_FaceMouse controller, we should expose this variable
 		FacingDirection _spriteFacingDirection = FacingDirection.UP;
 		Vector2 facingDirection = _faceMouseController.GetFacingDirection();
 		
+		// new rotation, defaults to the direction of the facing direction
+		Quaternion newRotation = GetRotationForStartingDirection(GetAngle(facingDirection), _spriteFacingDirection);
+		
 		// no movement? Face legs in the direction of facing mouse
 		if (moveDirection.Equals(Vector2.zero)){
-			return GetRotationForStartingDirection(GetAngle(facingDirection), _spriteFacingDirection);
+			return newRotation;
 		}
 		
 		Quaternion rotationToFaceMovement = GetRotationForStartingDirection(GetAngle(moveDirection), _spriteFacingDirection);
@@ -87,7 +97,22 @@ public class LegAnimationController : MonoBehaviour{
 		if (angleBetweenThem < _turnAngleThreshold){
 			newRotation = rotationToFaceMovement;
 		}else if (angleBetweenThem < 90){
-			Debug.Log("Within 90 part, what to do?");
+			// the angle will depend on the angle between and whether it is to the right or left
+			switch (GetAngleDirection(facingDirection, moveDirection)){
+				case AngleDirection.Left:
+					float leftAngle = GetAngle(facingDirection) + (angleBetweenThem - _turnAngleThreshold);
+					newRotation = GetRotationForStartingDirection(leftAngle, _spriteFacingDirection);
+					break;
+				case AngleDirection.Right:
+					float rightAngle = GetAngle(facingDirection) - (angleBetweenThem - _turnAngleThreshold);
+					newRotation = GetRotationForStartingDirection(rightAngle, _spriteFacingDirection);
+					break;
+				case AngleDirection.Aligned:
+					// if they're the same direction, we've already set the new rotation correctly
+					break;
+				default:
+					throw new ArgumentOutOfRangeException();
+			}
 		}else{
 			Debug.Log("Angle is past 90 threshold, facing legs inverse of move direction.");
 			newRotation = Quaternion.Inverse(rotationToFaceMovement);
@@ -102,5 +127,27 @@ public class LegAnimationController : MonoBehaviour{
 
 	private float GetAngle(Vector2 direction){
 		return Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+	}
+
+	/// <summary>
+	/// Calculates if the given vector is to the left or right of another.
+	///
+	/// COUGH acquired from stack overflow, thank you!
+	/// </summary>
+	/// <returns>Left if angle is left, right if right, aligned if they're the exact same.</returns>
+	private AngleDirection GetAngleDirection(Vector2 facingDirection, Vector2 moveDirection){
+		float direction = -facingDirection.x * moveDirection.y + facingDirection.y * moveDirection.x;
+
+		if (direction == 0){
+			return AngleDirection.Aligned;
+		}
+
+		if (Mathf.Sign(direction) == -1){
+			return AngleDirection.Left;
+		}
+		
+		// otherwise, this is to the right
+
+		return AngleDirection.Right;
 	}
 }
