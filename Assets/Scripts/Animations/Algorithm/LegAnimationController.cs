@@ -79,6 +79,8 @@ public class LegAnimationController : MonoBehaviour{
 	///
 	/// If there is movement but outside of the threshold, apply 'backwards'
 	/// movement logic.
+	///
+	/// Also, will change the speed to be either positive or negative, depending on the direction.
 	/// </summary>
 	/// <returns>The correct rotation based on your current move direction + facing direction.</returns>
 	private Quaternion ChooseLegDirection(Vector2 moveDirection){
@@ -103,7 +105,8 @@ public class LegAnimationController : MonoBehaviour{
 		// if we're within the normal threshold allowed, then just return the direction of movement
 		// otherwise, we're considered 'moving backwards'
 		if (absoluteAngleBetween < _turnAngleThreshold){
-			newRotation = rotationToFaceMovement;
+			_animator.SetFloat("Direction", 1);
+			return rotationToFaceMovement;
 		}else if (absoluteAngleBetween < 90){
 			// the angle will depend on the angle between and whether it is to the right or left
 			switch (GetAngleDirection(facingDirection, moveDirection)){
@@ -128,7 +131,9 @@ public class LegAnimationController : MonoBehaviour{
 				newRotation = Quaternion.Inverse(rotationToFaceMovement);
 			}
 		}
-		
+
+		// make sure to reverse the animation if we get to this point
+		_animator.SetFloat("Direction", -1);
 		return newRotation;
 	}
 
