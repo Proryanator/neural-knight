@@ -204,23 +204,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &308249176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8254116104271405069}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7e38642c8d74721b315cfbb73cab312, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveForceMultiplier: 50
-  _useForce: 0
-  _maxVelocity: 13
-  _startingDirection: 270
-  _onlyFaceWithMouseInput: 1
 --- !u!50 &733808542
 Rigidbody2D:
   serializedVersion: 4
@@ -270,7 +253,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 308249176}
+      - m_Target: {fileID: 0}
         m_MethodName: SetDirection
         m_Mode: 0
         m_Arguments:
@@ -285,7 +268,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 308249176}
+      - m_Target: {fileID: 0}
         m_MethodName: LookAtMouse
         m_Mode: 0
         m_Arguments:
@@ -685,9 +668,9 @@ GameObject:
   - component: {fileID: 1712919209}
   - component: {fileID: 8254116103902882099}
   - component: {fileID: 8254116103902882100}
-  - component: {fileID: 308249176}
   - component: {fileID: 6676034568768044320}
   - component: {fileID: 2136451404}
+  - component: {fileID: 8254116104271405070}
   m_Layer: 8
   m_Name: PlayerWithAnimation
   m_TagString: Player
@@ -695,6 +678,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8254116104271405070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8254116104271405069}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bf2538902c610429712ce6f351b228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveForceMultiplier: 50
+  _useForce: 0
+  _maxVelocity: 13
+  _startingDirection: 270
+  _onlyFaceWithMouseInput: 1
 --- !u!4 &8254116104271405071
 Transform:
   m_ObjectHideFlags: 0
