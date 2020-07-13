@@ -19,16 +19,16 @@ public class LegAnimationController : MonoBehaviour{
 
 	// also needing a reference to the controller! Will be in the parent
 	// TODO: when we've moved those updates into the module, you can make this generic to TopDownController!
-	private New_TopDownController _controller;
+	private Base2DController _controller;
 
 	private void Awake(){
 		_animator = GetComponent<Animator>();
-		_controller = GetComponentInParent<New_TopDownController>();
+		_controller = GetComponentInParent<Base2DController>();
 	}
 
 	// NOTE: using fixed update, to make sure it's called in-line with the physics based movement system
 	private void FixedUpdate(){
-		Vector2 moveDirection = _controller.GetMovingDirection();
+		Vector2 moveDirection = _controller.GetDirection();
 		// determine the movement direction, and face this object in that direction
 		RotateLegsTowardMovementDirection(moveDirection);
 		

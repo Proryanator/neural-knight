@@ -10,11 +10,11 @@ using UnityEngine.InputSystem;
 public class AlgorithmAttackController : MonoBehaviour{
 
 	private WeaponManager _weaponManager;
-	private New_TDC_FaceMouse _faceMouseController;
+	private TDC_FaceMouse _faceMouseController;
 
 	private void Start(){
 		_weaponManager = GetComponent<WeaponManager>();
-		_faceMouseController = GetComponent<New_TDC_FaceMouse>();
+		_faceMouseController = GetComponent<TDC_FaceMouse>();
 	}
 
 	/// <summary>
