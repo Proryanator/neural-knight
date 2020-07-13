@@ -46,9 +46,9 @@ GameObject:
   - component: {fileID: 1472191497}
   - component: {fileID: 8254116104680548243}
   - component: {fileID: 8254116104680548244}
-  - component: {fileID: 603540728}
   - component: {fileID: 6676034567935325056}
   - component: {fileID: 1324443628}
+  - component: {fileID: 1311518968233182855}
   m_Layer: 8
   m_Name: Player
   m_TagString: Player
@@ -186,7 +186,7 @@ MonoBehaviour:
   m_ActionEvents:
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 603540728}
+      - m_Target: {fileID: 0}
         m_MethodName: SetDirection
         m_Mode: 0
         m_Arguments:
@@ -201,7 +201,7 @@ MonoBehaviour:
     m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
   - m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 603540728}
+      - m_Target: {fileID: 0}
         m_MethodName: LookAtMouse
         m_Mode: 0
         m_Arguments:
@@ -320,23 +320,6 @@ MonoBehaviour:
   - {fileID: 5262572383103863687, guid: 301f11facb8718b49b8fde700c8f3104, type: 3}
   - {fileID: 4497926614328223620, guid: 0ea91074ad1cc0e4e8159c86ed5f9639, type: 3}
   _equippedWeapon: {fileID: 0}
---- !u!114 &603540728
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8254116104512433837}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e7e38642c8d74721b315cfbb73cab312, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveForceMultiplier: 50
-  _useForce: 0
-  _maxVelocity: 13
-  _startingDirection: 270
-  _onlyFaceWithMouseInput: 1
 --- !u!114 &6676034567935325056
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -362,3 +345,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 462ef99de6a349bdb9a558376a088321, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1311518968233182855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8254116104512433837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5bf2538902c610429712ce6f351b228, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveForceMultiplier: 50
+  _useForce: 0
+  _maxVelocity: 13
+  _startingDirection: 270
+  _onlyFaceWithMouseInput: 1
