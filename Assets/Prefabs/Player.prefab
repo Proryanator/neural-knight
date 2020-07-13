@@ -170,7 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Actions: {fileID: 0}
+  m_Actions: {fileID: -944628639613478452, guid: ff7056325dc24fc4c8ff23bccc7437ef,
+    type: 3}
   m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
@@ -272,7 +273,7 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e84b7656-5a34-4301-99b3-40793b4f3d34
     m_ActionName: UI/TrackedDeviceSelect
-  m_NeverAutoSwitchControlSchemes: 0
+  m_NeverAutoSwitchControlSchemes: 1
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
@@ -315,8 +316,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 129fb55894c14fc0ad131ab0ceffb534, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _weaponPrefab: {fileID: 4497926614328223620, guid: 0ea91074ad1cc0e4e8159c86ed5f9639,
-    type: 3}
+  _weaponPrefabs:
+  - {fileID: 5262572383103863687, guid: 301f11facb8718b49b8fde700c8f3104, type: 3}
+  - {fileID: 4497926614328223620, guid: 0ea91074ad1cc0e4e8159c86ed5f9639, type: 3}
   _equippedWeapon: {fileID: 0}
 --- !u!114 &603540728
 MonoBehaviour:
@@ -347,6 +349,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 24aaf0b6efc34dfeae0d93cb1b1b512a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _points: 0
 --- !u!114 &1324443628
 MonoBehaviour:
   m_ObjectHideFlags: 0
