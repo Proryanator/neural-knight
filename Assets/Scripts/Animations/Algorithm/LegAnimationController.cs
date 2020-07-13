@@ -90,21 +90,22 @@ public class LegAnimationController : MonoBehaviour{
 		Quaternion rotationToFaceMovement = GetRotationForStartingDirection(GetAngle(moveDirection), _spriteFacingDirection);
 		
 		// what's the angle between the facing direction and the moving direction?
-		float angleBetweenThem = Vector2.Angle(moveDirection, facingDirection);
-		
+		float angleBetweenThem = Vector2.SignedAngle(moveDirection, facingDirection);
+		float absoluteAngleBetween = Mathf.Abs(angleBetweenThem);
+		// Debug.Log("Angle between facing direction and moving direction: " + angleBetweenThem);
 		// if we're within the normal threshold allowed, then just return the direction of movement
 		// otherwise, we're considered 'moving backwards'
-		if (angleBetweenThem < _turnAngleThreshold){
+		if (absoluteAngleBetween < _turnAngleThreshold){
 			newRotation = rotationToFaceMovement;
-		}else if (angleBetweenThem < 90){
+		}else if (absoluteAngleBetween < 90){
 			// the angle will depend on the angle between and whether it is to the right or left
 			switch (GetAngleDirection(facingDirection, moveDirection)){
 				case AngleDirection.Left:
-					float leftAngle = GetAngle(facingDirection) + (angleBetweenThem - _turnAngleThreshold);
+					float leftAngle = GetAngle(facingDirection) + (absoluteAngleBetween - _turnAngleThreshold);
 					newRotation = GetRotationForStartingDirection(leftAngle, _spriteFacingDirection);
 					break;
 				case AngleDirection.Right:
-					float rightAngle = GetAngle(facingDirection) - (angleBetweenThem - _turnAngleThreshold);
+					float rightAngle = GetAngle(facingDirection) - (absoluteAngleBetween - _turnAngleThreshold);
 					newRotation = GetRotationForStartingDirection(rightAngle, _spriteFacingDirection);
 					break;
 				case AngleDirection.Aligned:
@@ -114,10 +115,10 @@ public class LegAnimationController : MonoBehaviour{
 					throw new ArgumentOutOfRangeException();
 			}
 		}else{
-			Debug.Log("Angle is past 90 threshold, facing legs inverse of move direction.");
 			newRotation = Quaternion.Inverse(rotationToFaceMovement);
 		}
 
+		Debug.Log("New Rotation: " + newRotation.eulerAngles);
 		return newRotation;
 	}
 
