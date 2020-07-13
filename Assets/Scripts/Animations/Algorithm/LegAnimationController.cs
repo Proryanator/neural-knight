@@ -84,8 +84,7 @@ public class LegAnimationController : MonoBehaviour{
 	/// </summary>
 	/// <returns>The correct rotation based on your current move direction + facing direction.</returns>
 	private Quaternion ChooseLegDirection(Vector2 moveDirection){
-		// TODO: this is set in the TDC_FaceMouse controller, we should expose this variable
-		FacingDirection _spriteFacingDirection = FacingDirection.UP;
+		FacingDirection _spriteFacingDirection = _faceMouseController.GetStartingDirection();
 		Vector2 facingDirection = _faceMouseController.GetFacingDirection();
 		
 		// new rotation, defaults to the direction of the facing direction
