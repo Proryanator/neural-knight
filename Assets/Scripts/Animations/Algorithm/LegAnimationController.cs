@@ -21,9 +21,9 @@ public class LegAnimationController : MonoBehaviour{
 
 	// also needing a reference to the controller! Will be in the parent
 	private TDC_FaceMouse _faceMouseController;
-
+	
 	[Tooltip("If true, draws a debug line in the direction of the legs facing direction.")]
-	[SerializeField] private bool _drawLegDirection = false;
+	[SerializeField] private bool _drawDebugLines = false;
 	
 	// this is the angle threshold that you're allowed to be in for your legs to be moving
 	// in the same direction; otherwise, you'll be moving backwards (with the angle
@@ -59,8 +59,15 @@ public class LegAnimationController : MonoBehaviour{
 	private void RotateLegsTowardMovementDirection(Vector2 moveDirection) {
 		transform.rotation = ChooseLegDirection(moveDirection);
 
-		if (_drawLegDirection){
-			Debug.DrawLine(transform.position, Vector3.Cross(Vector2.up, transform.rotation.eulerAngles), Color.red);
+		if (_drawDebugLines){
+			// draw the facing direction's line
+			Debug.DrawLine(transform.position, (Vector2)transform.position + (_faceMouseController.GetFacingDirection().normalized * 5), Color.green);
+			// draw the movement direction's line
+			Debug.DrawLine(transform.position, (Vector2)transform.position + (moveDirection.normalized * 5), Color.blue);
+			// draw the facing direction of the legs
+			Vector3 directionOfLegs = Vector3.Cross(Vector2.up, transform.rotation.eulerAngles);
+			// Debug.Log("Direction of legs: " + directionOfLegs);
+			Debug.DrawLine(transform.position, directionOfLegs, Color.red);
 		}
 	}
 	
@@ -115,10 +122,13 @@ public class LegAnimationController : MonoBehaviour{
 					throw new ArgumentOutOfRangeException();
 			}
 		}else{
-			newRotation = Quaternion.Inverse(rotationToFaceMovement);
+			// this fixes an issue with facing upwards, but walking down.
+			// might want to look into this later on
+			if (Quaternion.Inverse(rotationToFaceMovement).eulerAngles.z != 180){
+				newRotation = Quaternion.Inverse(rotationToFaceMovement);
+			}
 		}
-
-		Debug.Log("New Rotation: " + newRotation.eulerAngles);
+		
 		return newRotation;
 	}
 

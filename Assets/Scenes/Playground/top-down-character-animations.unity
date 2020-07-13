@@ -214,7 +214,7 @@ PrefabInstance:
     - target: {fileID: 1526640807747819260, guid: 7d9ea9d5ddff58341a64d253a3db5466,
         type: 3}
       propertyPath: _maxVelocity
-      value: 0
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1526640807747819261, guid: 7d9ea9d5ddff58341a64d253a3db5466,
         type: 3}
@@ -300,7 +300,12 @@ PrefabInstance:
     - target: {fileID: 7467871314026679089, guid: 7d9ea9d5ddff58341a64d253a3db5466,
         type: 3}
       propertyPath: _drawLegDirection
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7467871314026679089, guid: 7d9ea9d5ddff58341a64d253a3db5466,
+        type: 3}
+      propertyPath: _drawDebugLines
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d9ea9d5ddff58341a64d253a3db5466, type: 3}
