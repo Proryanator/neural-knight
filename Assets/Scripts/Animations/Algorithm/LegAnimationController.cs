@@ -44,7 +44,6 @@ public class LegAnimationController : MonoBehaviour{
 		_animator = GetComponent<Animator>();
 		_faceMouseController = GetComponentInParent<TDC_FaceMouse>();
 		_spriteFacingDirection = _faceMouseController.GetStartingDirection();
-
 	}
 
 	// NOTE: using fixed update, to make sure it's called in-line with the physics based movement system
@@ -76,8 +75,8 @@ public class LegAnimationController : MonoBehaviour{
 		_facingDirection = _faceMouseController.GetFacingDirection();
 		
 		// new rotation, defaults to the direction of the facing direction
-		_rotationTowardsFacingDirection = GetRotationForStartingDirection(GetAngle(_facingDirection), _spriteFacingDirection);
-		_rotationTowardsMovement = GetRotationForStartingDirection(GetAngle(_moveDirection), _spriteFacingDirection);
+		_rotationTowardsFacingDirection = GetRotationWithStartingDirection(GetAngle(_facingDirection), _spriteFacingDirection);
+		_rotationTowardsMovement = GetRotationWithStartingDirection(GetAngle(_moveDirection), _spriteFacingDirection);
 	}
 	
 	/// <summary>
@@ -85,16 +84,14 @@ public class LegAnimationController : MonoBehaviour{
 	/// </summary>
 	private void RotateLegsTowardMovementDirection() {
 		transform.rotation = ChooseLegDirection();
-
+		
 		if (_drawDebugLines){
 			// draw the facing direction's line
 			Debug.DrawLine(transform.position, (Vector2)transform.position + (_faceMouseController.GetFacingDirection().normalized * 5), Color.green);
 			// draw the movement direction's line
 			Debug.DrawLine(transform.position, (Vector2)transform.position + (_moveDirection.normalized * 5), Color.blue);
 			// draw the facing direction of the legs
-			Vector3 directionOfLegs = Vector3.Cross(Vector2.up, transform.rotation.eulerAngles);
-			// Debug.Log("Direction of legs: " + directionOfLegs);
-			Debug.DrawLine(transform.position, directionOfLegs, Color.red);
+			Debug.DrawLine(transform.position, transform.up * 5, Color.red);
 		}
 	}
 	
@@ -111,10 +108,9 @@ public class LegAnimationController : MonoBehaviour{
 	/// </summary>
 	/// <returns>The correct rotation based on your current move direction + facing direction.</returns>
 	private Quaternion ChooseLegDirection(){
-		Quaternion forwardRotation = GetForwardAngleIfMovingForward();
-		if (forwardRotation != Quaternion.identity){
-			Debug.Log("Facing forward.");
-			return forwardRotation;
+		Tuple<Quaternion, Boolean> isForward = GetForwardAngleIfMovingForward();
+		if (isForward.Item2){
+			return isForward.Item1;
 		}
 		
 		// we're considered 'backwards' at this point, so reverse the animation and calculate the angle
@@ -127,25 +123,29 @@ public class LegAnimationController : MonoBehaviour{
 	///
 	/// Returns Quaternion.identify if you're not facing forward.
 	/// </summary>
-	private Quaternion GetForwardAngleIfMovingForward(){
+	private Tuple<Quaternion, Boolean> GetForwardAngleIfMovingForward(){
 		// no movement? Face legs in the direction of facing mouse
-		if (_moveDirection.Equals(Vector2.zero) || GetAngleDirection(_facingDirection, _moveDirection) == AngleDirection.Aligned){
-			Debug.Log("No movement or perfectly aligned, facing towards movement direction.");
-			return _rotationTowardsFacingDirection;
+		if (_moveDirection.Equals(Vector2.zero) || _rotationTowardsMovement.Equals(_rotationTowardsFacingDirection)){
+			return Tuple.Create(_rotationTowardsFacingDirection, true);
 		}
 
 		// what's the angle between the facing direction and the moving direction?
-		float angleBetweenThem = Vector2.SignedAngle(_moveDirection, _facingDirection);
+		// note: this angle will always be 180/-180, as the angle between 2 vectors is stuck here
+		float angleBetweenThem = Quaternion.Angle(_rotationTowardsMovement, _rotationTowardsFacingDirection);
 		float absoluteAngleBetween = Mathf.Abs(angleBetweenThem);
 
+		Debug.Log("Absolute angle between: " + absoluteAngleBetween);
+		
 		// if we're within the normal threshold allowed, then just return the direction of movement
 		if (absoluteAngleBetween < _turnAngleThreshold){
+			Debug.Log("Moving in direction of movement: " + _rotationTowardsMovement.eulerAngles);
 			_animator.SetFloat("Direction", 1);
-			return _rotationTowardsMovement;
+			
+			return Tuple.Create(_rotationTowardsMovement, true);
 		}
 		
 		// if we get here, we're not moving forward
-		return Quaternion.identity;
+		return Tuple.Create(Quaternion.identity, false);
 	}
 	
 	/// <summary>
@@ -172,11 +172,11 @@ public class LegAnimationController : MonoBehaviour{
 				break;
 		}
 		
-		return GetRotationForStartingDirection(angle, _spriteFacingDirection);
+		return GetRotationWithStartingDirection(angle, _spriteFacingDirection);
 	}
-
-	private Quaternion GetRotationForStartingDirection(float angle, FacingDirection direction) {
-		return Quaternion.AngleAxis((angle + (float) direction) % 360, Vector3.forward);
+	
+	private Quaternion GetRotationWithStartingDirection(float angle, FacingDirection direction) {
+		return Quaternion.AngleAxis((angle + (float)(direction)) % 360, Vector3.forward);
 	}
 
 	private float GetAngle(Vector2 direction){
@@ -201,7 +201,6 @@ public class LegAnimationController : MonoBehaviour{
 		}
 		
 		// otherwise, this is to the right
-
 		return AngleDirection.Right;
 	}
 }
