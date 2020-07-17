@@ -152,31 +152,9 @@ public class LegAnimationController : MonoBehaviour{
 		float absoluteAngleBetween = Mathf.Abs(Quaternion.Angle(_rotationTowardsMovement, _rotationTowardsFacingDirection));
 		
 		if (absoluteAngleBetween > 90){
-			Quaternion inversed = Quaternion.Inverse(_rotationTowardsMovement); 
-			if (!Mathf.Approximately(inversed.eulerAngles.z, 180) && !Mathf.Approximately(inversed.eulerAngles.z, 0)){
-				return inversed;
-			}
-			
-			// Debug.Log("Original: " + _rotationTowardsMovement.eulerAngles.z);
-			// Debug.Log("Inverse: " + inversed.eulerAngles.z);
-			// for the cases where this didn't do anything!
-			// this fix would only work in the direct up/down direction
-			// when adding controller support, this might not work
-			if (Mathf.Approximately(inversed.eulerAngles.z, _rotationTowardsMovement.eulerAngles.z)){
-				if (Mathf.Approximately(_rotationTowardsMovement.eulerAngles.z, 0)){
-					// Debug.Log("Facing down, applying fix!");
-					return GetRotationWithStartingDirection(270, _spriteFacingDirection);
-				}
-
-				if (Mathf.Approximately(_rotationTowardsMovement.eulerAngles.z,180)){
-					// Debug.Log("Facing up, applying fix!");
-					return GetRotationWithStartingDirection(90, _spriteFacingDirection);
-				}
-			}
-
-			// when facing up, the original/inverse are both 180
-			
-			// when facing down, the inverse is both 0 and 0...
+			// this FIXES all things: by adding 270, we convert to our own space of angles!
+			// then, rotate based on the starting sprite direction
+			return GetRotationWithStartingDirection(_rotationTowardsMovement.eulerAngles.z + 270, _spriteFacingDirection);
 		}
 		
 		// NOTE: case of whether you're perfect aligned is handled in the forward check, not here
