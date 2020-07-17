@@ -21,6 +21,8 @@ public class LegAnimationController : MonoBehaviour{
 
 	// also needing a reference to the controller! Will be in the parent
 	private TDC_FaceMouse _faceMouseController;
+
+	[SerializeField] private float _legRotationSpeed = 1f;
 	
 	[Tooltip("If true, draws a debug line in the direction of the legs facing direction.")]
 	[SerializeField] private bool _drawDebugLines = false;
@@ -83,7 +85,10 @@ public class LegAnimationController : MonoBehaviour{
 	/// Rotates the legs towards the movement direction.
 	/// </summary>
 	private void RotateLegsTowardMovementDirection() {
-		transform.rotation = ChooseLegDirection();
+		Quaternion newRotation = ChooseLegDirection();
+		
+		// apply a lerp to the rotation, to make it smoother
+		transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.fixedDeltaTime * _legRotationSpeed);
 		
 		if (_drawDebugLines){
 			// draw the facing direction's line
