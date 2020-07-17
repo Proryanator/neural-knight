@@ -211,16 +211,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1526640807747819260, guid: 7d9ea9d5ddff58341a64d253a3db5466,
-        type: 3}
-      propertyPath: _onlyFaceWithMouseInput
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1526640807747819260, guid: 7d9ea9d5ddff58341a64d253a3db5466,
-        type: 3}
-      propertyPath: _maxVelocity
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 1526640807747819261, guid: 7d9ea9d5ddff58341a64d253a3db5466,
         type: 3}
       propertyPath: m_LocalPosition.x
