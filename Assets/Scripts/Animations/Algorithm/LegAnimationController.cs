@@ -161,11 +161,9 @@ public class LegAnimationController : MonoBehaviour{
 		float angle = 0f;
 		switch (GetAngleDirection(_facingDirection, _moveDirection)){
 			case AngleDirection.Left:
-				Debug.Log("Angle is to the left");
 				angle = GetAngle(_facingDirection) + (absoluteAngleBetween - _turnAngleThreshold);
 				break;
 			case AngleDirection.Right:
-				Debug.Log("Angle is to the right");
 				angle = GetAngle(_facingDirection) - (absoluteAngleBetween - _turnAngleThreshold);
 				break;
 		}
