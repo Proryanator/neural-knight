@@ -85,11 +85,17 @@ public class LegAnimationController : MonoBehaviour{
 	/// Rotates the legs towards the movement direction.
 	/// </summary>
 	private void RotateLegsTowardMovementDirection() {
-		Quaternion newRotation = ChooseLegDirection();
-		
-		// apply a lerp to the rotation, to make it smoother
-		transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.fixedDeltaTime * _legRotationSpeed);
-		
+		// no movement? Face legs in the direction of facing mouse
+		if (_moveDirection.Equals(Vector2.zero) || _rotationTowardsMovement.Equals(_rotationTowardsFacingDirection)){
+			transform.rotation = _rotationTowardsFacingDirection;
+		}
+		else{
+			// otherwise let's calculate the leg direction
+			Quaternion newRotation = ChooseLegDirection();
+			// apply a lerp to the rotation, to make it smoother
+			transform.rotation = Quaternion.Lerp(transform.rotation, newRotation, Time.fixedDeltaTime * _legRotationSpeed);
+		}
+
 		if (_drawDebugLines){
 			// draw the facing direction's line
 			Debug.DrawLine(transform.position, (Vector2)transform.position + (_faceMouseController.GetFacingDirection().normalized * 5), Color.green);
@@ -127,13 +133,10 @@ public class LegAnimationController : MonoBehaviour{
 	/// Gets you the proper leg facing direction based on whether you're facing forward.
 	///
 	/// Returns Quaternion.identify if you're not facing forward.
+	///
+	/// Returns the rotation, as well as true/false if you're moving backwards or not
 	/// </summary>
 	private Tuple<Quaternion, bool> GetForwardAngleIfMovingForward(){
-		// no movement? Face legs in the direction of facing mouse
-		if (_moveDirection.Equals(Vector2.zero) || _rotationTowardsMovement.Equals(_rotationTowardsFacingDirection)){
-			return Tuple.Create(_rotationTowardsFacingDirection, true);
-		}
-
 		// what's the angle between the facing direction and the moving direction?
 		// note: this angle will always be 180/-180, as the angle between 2 vectors is stuck here
 		float angleBetweenThem = Quaternion.Angle(_rotationTowardsMovement, _rotationTowardsFacingDirection);
