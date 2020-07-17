@@ -91,7 +91,7 @@ public class LegAnimationController : MonoBehaviour{
 			// draw the movement direction's line
 			Debug.DrawLine(transform.position, (Vector2)transform.position + (_moveDirection.normalized * 5), Color.blue);
 			// draw the facing direction of the legs
-			Debug.DrawLine(transform.position, transform.up * 5, Color.red);
+			Debug.DrawLine(transform.position, (Vector2) transform.position + ((Vector2) transform.up * 5), Color.red);
 		}
 	}
 	

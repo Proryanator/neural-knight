@@ -1018,11 +1018,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1526640807747819260, guid: 7d9ea9d5ddff58341a64d253a3db5466,
-        type: 3}
-      propertyPath: _maxVelocity
-      value: 14
-      objectReference: {fileID: 0}
     - target: {fileID: 1526640807747819261, guid: 7d9ea9d5ddff58341a64d253a3db5466,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1083,8 +1078,7 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerWithAnimation
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 7467871313260720402, guid: 7d9ea9d5ddff58341a64d253a3db5466, type: 3}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d9ea9d5ddff58341a64d253a3db5466, type: 3}
 --- !u!1 &1671738326
 GameObject:
@@ -1499,38 +1493,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!1 &2016331756 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1526640807747819263, guid: 7d9ea9d5ddff58341a64d253a3db5466,
-    type: 3}
-  m_PrefabInstance: {fileID: 1621189192}
-  m_PrefabAsset: {fileID: 0}
---- !u!61 &2016331764
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016331756}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1}
-  m_EdgeRadius: 0
 --- !u!1 &2120389753
 GameObject:
   m_ObjectHideFlags: 0
