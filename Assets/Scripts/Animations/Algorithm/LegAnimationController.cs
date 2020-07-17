@@ -22,6 +22,7 @@ public class LegAnimationController : MonoBehaviour{
 	// also needing a reference to the controller! Will be in the parent
 	private TDC_FaceMouse _faceMouseController;
 
+	[Tooltip("The lower the number, the slower the rotation lerping. The higher the number, the quicker it'll lerp. Only applies when moving.")]
 	[SerializeField] private float _legRotationSpeed = 1f;
 	
 	[Tooltip("If true, draws a debug line in the direction of the legs facing direction.")]
