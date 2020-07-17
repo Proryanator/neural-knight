@@ -24,6 +24,15 @@ public class LegAnimationController : MonoBehaviour{
 	
 	[Tooltip("If true, draws a debug line in the direction of the legs facing direction.")]
 	[SerializeField] private bool _drawDebugLines = false;
+
+	// storing statistics about the current movement here
+	private FacingDirection _spriteFacingDirection;
+	private Vector2 _moveDirection;
+	private Vector2 _facingDirection;
+	
+	// some standard rotation values, also calculated per frame
+	private Quaternion _rotationTowardsFacingDirection;
+	private Quaternion _rotationTowardsMovement;
 	
 	// this is the angle threshold that you're allowed to be in for your legs to be moving
 	// in the same direction; otherwise, you'll be moving backwards (with the angle
@@ -34,18 +43,22 @@ public class LegAnimationController : MonoBehaviour{
 	private void Awake(){
 		_animator = GetComponent<Animator>();
 		_faceMouseController = GetComponentInParent<TDC_FaceMouse>();
+		_spriteFacingDirection = _faceMouseController.GetStartingDirection();
+
 	}
 
 	// NOTE: using fixed update, to make sure it's called in-line with the physics based movement system
 	private void FixedUpdate(){
-		Vector2 moveDirection = _faceMouseController.GetDirection();
+		// get and store relevant information about player's movement
+		GetMovementInfo();
+		
 		// determine the movement direction, and face this object in that direction
-		RotateLegsTowardMovementDirection(moveDirection);
+		RotateLegsTowardMovementDirection();
 		
 		// set the movement speed of the animator, if any
 		// if any input is received (as in, if it's not a zero vector), this will be set
 		// TODO: might want to make this the actual amount you're moving, to allow for speed to vary the animation speed
-		if (!moveDirection.Equals(Vector2.zero)){
+		if (!_moveDirection.Equals(Vector2.zero)){
 			_animator.SetFloat("Speed", 1f);
 		}
 		else{
@@ -54,16 +67,30 @@ public class LegAnimationController : MonoBehaviour{
 	}
 
 	/// <summary>
+	/// Reads + calculates some information about current facing direction + movement.
+	///
+	/// All used later to calculate the direction of the legs.
+	/// </summary>
+	private void GetMovementInfo(){
+		_moveDirection = _faceMouseController.GetDirection();
+		_facingDirection = _faceMouseController.GetFacingDirection();
+		
+		// new rotation, defaults to the direction of the facing direction
+		_rotationTowardsFacingDirection = GetRotationForStartingDirection(GetAngle(_facingDirection), _spriteFacingDirection);
+		_rotationTowardsMovement = GetRotationForStartingDirection(GetAngle(_moveDirection), _spriteFacingDirection);
+	}
+	
+	/// <summary>
 	/// Rotates the legs towards the movement direction.
 	/// </summary>
-	private void RotateLegsTowardMovementDirection(Vector2 moveDirection) {
-		transform.rotation = ChooseLegDirection(moveDirection);
+	private void RotateLegsTowardMovementDirection() {
+		transform.rotation = ChooseLegDirection();
 
 		if (_drawDebugLines){
 			// draw the facing direction's line
 			Debug.DrawLine(transform.position, (Vector2)transform.position + (_faceMouseController.GetFacingDirection().normalized * 5), Color.green);
 			// draw the movement direction's line
-			Debug.DrawLine(transform.position, (Vector2)transform.position + (moveDirection.normalized * 5), Color.blue);
+			Debug.DrawLine(transform.position, (Vector2)transform.position + (_moveDirection.normalized * 5), Color.blue);
 			// draw the facing direction of the legs
 			Vector3 directionOfLegs = Vector3.Cross(Vector2.up, transform.rotation.eulerAngles);
 			// Debug.Log("Direction of legs: " + directionOfLegs);
@@ -83,57 +110,69 @@ public class LegAnimationController : MonoBehaviour{
 	/// Also, will change the speed to be either positive or negative, depending on the direction.
 	/// </summary>
 	/// <returns>The correct rotation based on your current move direction + facing direction.</returns>
-	private Quaternion ChooseLegDirection(Vector2 moveDirection){
-		FacingDirection _spriteFacingDirection = _faceMouseController.GetStartingDirection();
-		Vector2 facingDirection = _faceMouseController.GetFacingDirection();
-		
-		// new rotation, defaults to the direction of the facing direction
-		Quaternion newRotation = GetRotationForStartingDirection(GetAngle(facingDirection), _spriteFacingDirection);
-		
-		// no movement? Face legs in the direction of facing mouse
-		if (moveDirection.Equals(Vector2.zero)){
-			return newRotation;
+	private Quaternion ChooseLegDirection(){
+		Quaternion forwardRotation = GetForwardAngleIfMovingForward();
+		if (forwardRotation != Quaternion.identity){
+			Debug.Log("Facing forward.");
+			return forwardRotation;
 		}
 		
-		Quaternion rotationToFaceMovement = GetRotationForStartingDirection(GetAngle(moveDirection), _spriteFacingDirection);
-		
-		// what's the angle between the facing direction and the moving direction?
-		float angleBetweenThem = Vector2.SignedAngle(moveDirection, facingDirection);
-		float absoluteAngleBetween = Mathf.Abs(angleBetweenThem);
-		// Debug.Log("Angle between facing direction and moving direction: " + angleBetweenThem);
-		// if we're within the normal threshold allowed, then just return the direction of movement
-		// otherwise, we're considered 'moving backwards'
-		if (absoluteAngleBetween < _turnAngleThreshold){
-			_animator.SetFloat("Direction", 1);
-			return rotationToFaceMovement;
-		}else if (absoluteAngleBetween < 90){
-			// the angle will depend on the angle between and whether it is to the right or left
-			switch (GetAngleDirection(facingDirection, moveDirection)){
-				case AngleDirection.Left:
-					float leftAngle = GetAngle(facingDirection) + (absoluteAngleBetween - _turnAngleThreshold);
-					newRotation = GetRotationForStartingDirection(leftAngle, _spriteFacingDirection);
-					break;
-				case AngleDirection.Right:
-					float rightAngle = GetAngle(facingDirection) - (absoluteAngleBetween - _turnAngleThreshold);
-					newRotation = GetRotationForStartingDirection(rightAngle, _spriteFacingDirection);
-					break;
-				case AngleDirection.Aligned:
-					// if they're the same direction, we've already set the new rotation correctly
-					break;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
-		}else{
-			// this fixes an issue with facing upwards, but walking down.
-			// might want to look into this later on
-			if (Quaternion.Inverse(rotationToFaceMovement).eulerAngles.z != 180){
-				newRotation = Quaternion.Inverse(rotationToFaceMovement);
-			}
+		// we're considered 'backwards' at this point, so reverse the animation and calculate the angle
+		_animator.SetFloat("Direction", -1);
+		return GetBackwardAngle();
+	}
+
+	/// <summary>
+	/// Gets you the proper leg facing direction based on whether you're facing forward.
+	///
+	/// Returns Quaternion.identify if you're not facing forward.
+	/// </summary>
+	private Quaternion GetForwardAngleIfMovingForward(){
+		// no movement? Face legs in the direction of facing mouse
+		if (_moveDirection.Equals(Vector2.zero) || GetAngleDirection(_facingDirection, _moveDirection) == AngleDirection.Aligned){
+			Debug.Log("No movement or perfectly aligned, facing towards movement direction.");
+			return _rotationTowardsFacingDirection;
 		}
 
-		// make sure to reverse the animation if we get to this point
-		_animator.SetFloat("Direction", -1);
-		return newRotation;
+		// what's the angle between the facing direction and the moving direction?
+		float angleBetweenThem = Vector2.SignedAngle(_moveDirection, _facingDirection);
+		float absoluteAngleBetween = Mathf.Abs(angleBetweenThem);
+
+		// if we're within the normal threshold allowed, then just return the direction of movement
+		if (absoluteAngleBetween < _turnAngleThreshold){
+			_animator.SetFloat("Direction", 1);
+			return _rotationTowardsMovement;
+		}
+		
+		// if we get here, we're not moving forward
+		return Quaternion.identity;
+	}
+	
+	/// <summary>
+	/// Calculates the angle to rotate your legs when considered 'backwards'.
+	/// </summary>
+	private Quaternion GetBackwardAngle(){
+		float absoluteAngleBetween = Mathf.Abs(Vector2.SignedAngle(_moveDirection, _facingDirection));
+		if (absoluteAngleBetween > 90){
+			// this fixes an issue with facing upwards, but walking down.
+			// might want to look into this later on
+			if (Quaternion.Inverse((_rotationTowardsMovement)).eulerAngles.z != 180){
+				return Quaternion.Inverse(_rotationTowardsMovement);
+			}
+		}
+		
+		// NOTE: case of whether you're perfect aligned is handled in the forward check, not here
+		float angle = 0f;
+		switch (GetAngleDirection(_facingDirection, _moveDirection)){
+			case AngleDirection.Left:
+				angle = GetAngle(_facingDirection) + (absoluteAngleBetween - _turnAngleThreshold);
+				break;
+			case AngleDirection.Right:
+				angle = GetAngle(_facingDirection) - (absoluteAngleBetween - _turnAngleThreshold);
+				break;
+		}
+		
+		return GetRotationForStartingDirection(angle, _spriteFacingDirection);
 	}
 
 	private Quaternion GetRotationForStartingDirection(float angle, FacingDirection direction) {
