@@ -94,7 +94,7 @@ public class SpawnManager : MonoBehaviour{
 			ScriptableObject.Destroy(_spawnRule);
 		}
 
-		_spawnRule = AbstractSpawnRule.GetRule(_spawnRuleEnum, _spawnPrefab, _spawnCollection.GetSpawnPoints(), _props.maxSpawnCount);
+		_spawnRule = AbstractSpawnRule.GetRule(_spawnRuleEnum, _spawnPrefab, _spawnCollection.GetActiveSpawnPoints(), _props.maxSpawnCount);
 	}
 
 	private void SetSpawnAdjuster(){

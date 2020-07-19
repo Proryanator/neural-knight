@@ -20,8 +20,18 @@ public class SpawnCollection : MonoBehaviour{
 		_spawnPointObjects = _children.ToArray();
 	}
 
-	public Transform[] GetSpawnPoints(){
-		return _spawnPointObjects;
+	/// <summary>
+	/// Gives you the list of spawn points that are active under the collection.
+	/// </summary>
+	public Transform[] GetActiveSpawnPoints(){
+		List<Transform> _activeSpawnPoints = new List<Transform>();
+		foreach (Transform trans in _spawnPointObjects){
+			if (trans.gameObject.activeSelf){
+				_activeSpawnPoints.Add(trans);
+			}
+		}
+		
+		return _activeSpawnPoints.ToArray();
 	}
 
 }
