@@ -9,18 +9,16 @@ using UnityEngine;
 /// </summary>
 public class MoveToCenterController : MonoBehaviour{
 	
-	private PlayAreaMovementStarter _playAreaMovementStarter;
 	private AIMovementController _aiMovementController;
 	
 	private void Awake(){
 		_aiMovementController = GetComponent<AIMovementController>();
-		_playAreaMovementStarter = PlayAreaMovementStarter.Instance();
 	}
 
 	public void Start(){
 		// if this object is not inside of the play area, call special function
 		// on trigger enter of the play area, this will be turned off
-		if (!_playAreaMovementStarter.IsInsidePlayArea(transform)){
+		if (!PlayAreaMovementStarter.Instance().IsInsidePlayArea(transform)){
 			Debug.Log("I'm outside the play area, gonna move to the center.");
 			_aiMovementController.EnableCenterPattern();
 		}
