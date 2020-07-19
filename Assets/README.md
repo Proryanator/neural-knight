@@ -40,4 +40,6 @@ Allowing enemies and other entities to pass through.
 
 <b>Enemy Spawning</b>
 
+Spawn points will be 'outside the play area', and will spawn enemies there. When an enemy is outside the play area,
+they will use the AI path movement pattern, and lock onto an object tagged with 'MapCentralPoint'. The enemy will them move towards that object, until they are considered 'inside the play area' via a trigger call.
 <b>Level Manager</b>

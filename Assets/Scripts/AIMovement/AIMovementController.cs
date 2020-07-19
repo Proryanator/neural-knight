@@ -7,6 +7,7 @@ using UnityEngine;
 ///
 /// Allows for swapping out movement types at runtime.
 /// </summary>
+[RequireComponent(typeof(MoveToCenterController))]
 public class AIMovementController : MonoBehaviour{
 
 	private AbstractAIMovementPattern _initialAIMovementPattern;
@@ -58,17 +59,36 @@ public class AIMovementController : MonoBehaviour{
 	}
 
 	/// <summary>
-	/// Allows you to set the movement pattern for this controller.
+	/// Call this to attach the move to central pattern, and start using that.
 	/// </summary>
-	public void SetMovementPattern(AbstractAIMovementPattern pattern){
-		_aiMovementPattern = pattern;
+	public void EnableCenterPattern(){
+		_aiMovementPattern = gameObject.AddComponent<MoveToCenterMovementPattern>();
 	}
 
 	/// <summary>
+	/// Calls this to restore the original movement pattern, and remove the component of center pattern.
+	/// </summary>
+	public void DisableCenterPattern(){
+		if (_aiMovementPattern.GetType() != typeof(MoveToCenterMovementPattern)){
+			Debug.LogWarning("You're not supposed to call this method unless you first called 'EnableCenterPattern!'");
+			return;
+		}
+		
+		Destroy(_aiMovementPattern);
+		RestoreOriginalMovementPattern();
+	}
+
+	/// <summary>a
 	/// Restores what the original movement pattern was for this controller.
 	/// </summary>
 	public void RestoreOriginalMovementPattern(){
 		_aiMovementPattern = _initialAIMovementPattern;
+		
+		// if this object has a rigid body, reset forces too
+		Rigidbody2D rigidbody2D = GetComponent<Rigidbody2D>();
+		if (rigidbody2D != null){
+			rigidbody2D.velocity = Vector2.zero;
+		}
 	}
 	
 	/// <summary>
