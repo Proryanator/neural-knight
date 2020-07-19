@@ -32,6 +32,14 @@ At some point there will be a texture attached to this to show players that you 
 The parent is using a trigger, and thus nothing collides with it. The child, uses the layer 'Player Boundary', and this layer only collides with the player and it's shots.
 Allowing enemies and other entities to pass through.
 
+<i>Play Area</i>
+
+Defines the playable area, via a collider. Currently this is used to change a controller for the enemy movement when outside the playable area.
+ 
+The play area must be large enough to get incoming entities, but not so small that enemies moving around inside of it would re-trigger it.
+
+This would cause some uneeded logic + calls to happen.
+ 
 <b>Map Asset Specifications</b>
 <br>
 - Doorway/space size: 270/50 px (respectively vertical or horizontal)
@@ -39,11 +47,20 @@ Allowing enemies and other entities to pass through.
 - Horizontal pieces: 1920px 
 
 <b>Enemy Spawning</b>
+<i>Spawn Points</i>
+Spawn points are just objects that are children of a SpawnCollection object (an actual script). That script simply gives you all the active children in the heirarchy.
+This will be useful if at some point this game has room generation, with walls that have no doors being generated, and needing to have those spawners turned off.
 
 Spawn points will be 'outside the play area', and will spawn enemies there. When an enemy is outside the play area,
-they will use the AI path movement pattern, and lock onto an object tagged with 'MapCentralPoint'. The enemy will them move towards that object, until they are considered 'inside the play area' via a trigger call.
+they will be set to a movement pattern that locks onto an object tagged with 'MapCentralPoint'. The enemy will them move towards that object, until they are considered 'inside the play area' via a trigger call,
+which will then set them to their original movement pattern.
 
-The play area must be large enough to get incoming entities, but not so small that enemies moving around inside of it would re-trigger it.
+This allows for straight movement towards the center of the map upon spawning.
 
-This would cause some uneeded logic + cals to happen.
+<i>SpawnManagers</i>
+ 
+These have information defined about them in a SpawnProperties object, things like spawn delay, speed, and max/min values.
+
+This is read by the SpawnManager, and is used to determine if spawning is still happening.
+
 <b>Level Manager</b>
