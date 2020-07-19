@@ -42,4 +42,8 @@ Allowing enemies and other entities to pass through.
 
 Spawn points will be 'outside the play area', and will spawn enemies there. When an enemy is outside the play area,
 they will use the AI path movement pattern, and lock onto an object tagged with 'MapCentralPoint'. The enemy will them move towards that object, until they are considered 'inside the play area' via a trigger call.
+
+The play area must be large enough to get incoming entities, but not so small that enemies moving around inside of it would re-trigger it.
+
+This would cause some uneeded logic + cals to happen.
 <b>Level Manager</b>
