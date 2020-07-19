@@ -14,10 +14,10 @@ using Random = System.Random;
 public abstract class AbstractSpawnRule : ScriptableObject{
 
 	protected Transform prefab;
-	protected SpawnPoint[] spawnPoints;
+	protected Transform[] spawnPoints;
 	protected uint maxSpawnCount;
 
-	public void Init(Transform prefab, SpawnPoint[] spawnPoints, uint maxSpawnCount){
+	public void Init(Transform prefab, Transform[] spawnPoints, uint maxSpawnCount){
 		this.prefab = prefab;
 		this.spawnPoints = spawnPoints;
 		this.maxSpawnCount = maxSpawnCount;
@@ -37,15 +37,15 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 	///
 	/// Spawns how ever many you ask it to, and returns that number.
 	/// </summary>
-	protected uint SpawnAt(SpawnPoint point, uint spawnCount){
+	protected uint SpawnAt(Transform point, uint spawnCount){
 		for (uint i = 0; i < spawnCount; i++){
-			GameObject.Instantiate(prefab, point.transform.position, Quaternion.identity);
+			GameObject.Instantiate(prefab, point.position, Quaternion.identity);
 		}
 		
 		return spawnCount;
 	}
 
-	protected SpawnPoint GetRandomSpawnPoint(){
+	protected Transform GetRandomSpawnPoint(){
 		Random random = new Random();
 		return spawnPoints[random.Next(spawnPoints.Length)];
 	}
@@ -55,8 +55,13 @@ public abstract class AbstractSpawnRule : ScriptableObject{
 	///
 	/// NOTE: it's up to the caller to cleanup their own objects before getting a new one.
 	/// </summary>
-	public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum, Transform prefab, SpawnPoint[] spawnPoints, uint maxSpawnCount){
+	public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum, Transform prefab, Transform[] spawnPoints, uint maxSpawnCount){
 		AbstractSpawnRule rule = null;
+
+		if (spawnPoints == null || spawnPoints.Length == 0){
+			Debug.LogWarning("You passed in a null or empty array of spawn points, spawning won't work.");
+			return null;
+		}
 		
 		switch (ruleEnum){
 			case SpawnRuleEnum.Random:

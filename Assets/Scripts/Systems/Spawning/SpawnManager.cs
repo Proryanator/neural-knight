@@ -31,17 +31,14 @@ public class SpawnManager : MonoBehaviour{
 	[SerializeField] private SpawnAdjusterEnum _spawnAdjusterEnum = SpawnAdjusterEnum.NoAdjustment;
 	private AbstractSpawnAdjuster _spawnAdjuster;
 	
-	// all spawn points in the scene, gathered upon Awake() of this script
-	private SpawnPoint[] _spawnPointsInScene;
+	[Tooltip("The object that holds spawn points that all have the same kind of spawned object.")]
+	[SerializeField] private SpawnCollection _spawnCollection;
 
 	private void Awake(){
 		_initialProps = GetComponent<SpawnProperties>();
-		
-		// cache all spawn points found within the scene
-		_spawnPointsInScene = GameObject.FindObjectsOfType<SpawnPoint>();
 
-		if (_spawnPointsInScene.Length == 0){
-			Debug.LogWarning("There are no spawn points in this scene, and yet you have a Spawn Manager.");
+		if (_spawnCollection == null){
+			Debug.LogWarning("The SpawnCollector was not set for this spawn manager, did you forget?");
 		}
 	}
 
@@ -97,7 +94,7 @@ public class SpawnManager : MonoBehaviour{
 			ScriptableObject.Destroy(_spawnRule);
 		}
 
-		_spawnRule = AbstractSpawnRule.GetRule(_spawnRuleEnum, _spawnPrefab, _spawnPointsInScene, _props.maxSpawnCount);
+		_spawnRule = AbstractSpawnRule.GetRule(_spawnRuleEnum, _spawnPrefab, _spawnCollection.GetSpawnPoints(), _props.maxSpawnCount);
 	}
 
 	private void SetSpawnAdjuster(){
