@@ -7,6 +7,16 @@ Here's information on mechanics and game design that you may need to reference a
 ## Game Mechanics ##
 Put information in here on how CURRENT game mechanics work. As new mechanics are added, do update this.
 
+### Player ###
+<b>Movement:</b>
+    You always face the direction of the mouse, and you fire in that direction too.
+    Your legs face either your facing direction, or make you 'walk backwards' based on your current movement.
+
+Shooting:
+    Player shots will damage enemies, and will disappear on good data contact + hitting walls. Shots also
+    have a set lifetime that will fade at some point and die off.
+    
+
 
 ### Maps ###
 Maps will be a big part of this game. Let's add how maps will work, and how new ones will be made.
