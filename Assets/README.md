@@ -81,3 +81,8 @@ These have information defined about them in a SpawnProperties object, things li
 This is read by the SpawnManager, and is used to determine if spawning is still happening.
 
 <b>Level Manager</b>
+
+
+## Art Sources ##
+I may borrow art during the development process for the sake of playing with mechanics, let's keep track of those here.
+Basic Ground texture: https://www.artstation.com/artwork/OywBxv

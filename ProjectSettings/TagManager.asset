@@ -44,9 +44,15 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Ground
+    uniqueID: 965543627
+    locked: 0
   - name: Legs
     uniqueID: 2659478309
     locked: 0
-  - name: Body
+  - name: Body/Entity
     uniqueID: 2514085835
+    locked: 0
+  - name: Obstacles
+    uniqueID: 1854704607
     locked: 0
