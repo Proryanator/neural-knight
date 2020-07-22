@@ -37,14 +37,12 @@ public class SpawnManager : MonoBehaviour{
 	private void Awake(){
 		_initialProps = GetComponent<SpawnProperties>();
 
+		// we'll start with the initial properties
+		_props = _initialProps;
+		
 		if (_spawnCollection == null){
 			Debug.LogWarning("The SpawnCollector was not set for this spawn manager, did you forget?");
 		}
-	}
-
-	private void Start(){
-		// we'll start with the initial properties
-		_props = _initialProps;
 		
 		// subscribe to the level starting method; this is what initiates/restarts spawning!
 		LevelManager.GetInstance().OnLevelFinish += AdjustSpawnProperties;

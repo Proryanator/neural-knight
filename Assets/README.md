@@ -39,6 +39,13 @@ Defines the playable area, via a collider. Currently this is used to change a co
 The play area must be large enough to get incoming entities, but not so small that enemies moving around inside of it would re-trigger it.
 
 This would cause some uneeded logic + calls to happen.
+
+Layer to keep entities inside of playable map: EntityBoundary + Entity.
+These layers will be used to keep entities that wander around the map inside of the playable area.
+When an entity spawns, it does a check with the play area to see if it's inside.
+
+If it's inside, it'll be set to the 'Entity' layer.
+If not, it'll remain as it was before.
  
 <b>Map Asset Specifications</b>
 <br>

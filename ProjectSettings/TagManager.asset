@@ -19,10 +19,10 @@ TagManager:
   - Player
   - Player Projectiles
   - Obstacle
-  - DamagedEnemy
+  - Damaged Enemy
   - Player Boundary
-  - 
-  - 
+  - Entity Boundary
+  - Entity
   - 
   - 
   - 
