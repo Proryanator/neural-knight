@@ -86,3 +86,27 @@ This is read by the SpawnManager, and is used to determine if spawning is still 
 ## Art Sources ##
 I may borrow art during the development process for the sake of playing with mechanics, let's keep track of those here.
 Basic Ground texture: https://www.artstation.com/artwork/OywBxv
+
+
+## Art Direction ##
+
+Design concepts for the motherboard map:
+
+    The motherboard map is cold, and is heated up by incoming data, as well as the movement/actions of the player.
+    
+        ->Let's use a cool/slightly less saturated color for the background of the map.
+        
+    We will use computer components to add design into the map:
+        ->Create a base tile/background color, that has the base color of the grid.
+        ->Create create some circuitry that could easilly be moved/placed around the map
+        ->Create good data entry points: circles of motherboards that signifies the entry
+            of a sautered wire; or where data would enter in. These should be large and standout
+            from other areas of the map.
+        ->Create circuit lines coming from those data points going out to outside the visible map area
+            (NOTE: we can make many variations of this circuit board style connectors to add spice to the
+            map design later on).
+        ->Create some tiles that have resistors
+            
+         
+    
+    
