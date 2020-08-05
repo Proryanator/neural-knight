@@ -55,7 +55,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.32591438, y: 10.064959}
+  m_Size: {x: 0.12826157, y: 2.348627}
   m_EdgeRadius: 0
 --- !u!1 &719168138
 GameObject:
@@ -242,7 +242,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: -2032187774689554106, guid: baa4e864515201e41b0bffb3b070ad5f,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -250,7 +251,7 @@ SpriteRenderer:
   m_Size: {x: 0.64, y: 0.18}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!95 &2838029318793810761
@@ -391,12 +392,12 @@ PrefabInstance:
     - target: {fileID: 159202630651426442, guid: 8a232433e22e3d14eaf7451995619fde,
         type: 3}
       propertyPath: m_Offset.x
-      value: 0.2010355
+      value: 0.19384122
       objectReference: {fileID: 0}
     - target: {fileID: 159202630651426442, guid: 8a232433e22e3d14eaf7451995619fde,
         type: 3}
       propertyPath: m_Size.x
-      value: 1.402071
+      value: 1.7897534
       objectReference: {fileID: 0}
     - target: {fileID: 159202630651426443, guid: 8a232433e22e3d14eaf7451995619fde,
         type: 3}
