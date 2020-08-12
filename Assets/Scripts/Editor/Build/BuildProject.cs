@@ -19,7 +19,7 @@ public class BuildProject{
 		options.targetGroup = BuildTargetGroup.Standalone;
 		
 		// will this create that folder if it doesn't exist?
-		options.locationPathName = "Builds";
+		// options.locationPathName = "Builds";
 
 		BuildPipeline.BuildPlayer(options);
 	}
