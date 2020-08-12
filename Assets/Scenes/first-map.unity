@@ -1023,11 +1023,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1462546619052515278, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: data.dataString
-      value: UEsDBBQAAAgIAACQn+sIbb7SSwIAAPQEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzk3HUDJAb61DSA8EJjSTiy9CWmMNsuTRR/jI8N+7km3s0MkJse/t6r3dlT+IULYC5rRZGMGXmgP5OSDhTL4NOvAJjnSn1UacoeW8Ce6KQKKR80Kd0BgfhjSrS3BGsF9qJwM5waBXItemnPMdpNo6i+GcSgsIGe1CtsLQx4Ac8eduFlJOeBpNwumMp1kyuOCRgXJgOmpLbGk1yysmaVkBD5I78nDasIc1TaGZhhGEMy2lsI0S4k5VdJrSynr0gQQuKDqL1wd+AWJXuKCyn7zKcwuukWTo6UEYbFBdlfzWdddKave1rncqfRSQjMZRVF11+R/hbhjh3Ojyqb14mIRLXCHY/oWeGLWu19d++OGzcq8OVO7pVsJbAepZL4z2iiPojA+p3sLooft79ZYWwPZdvJZ6E/TV19MJHi7R/jGVotwG6Pu4Dmykjg2PsweDo/mDguNm2KYERoOKVwt/6a6/Qg3wKIx1CDUuVZC31d4EKpnHngU33qXaKDD9ChUoKt1pjXXc7RBvsK+zHml4Lc3tDdY+gpuUGO74SXIDrfXhOi1b6MMSbLHyTgoFXasD8IyNSrVS9Y71LbVpG29yynppOy/4590iNJlMEzaZsTHnlM/43XQ4G43zH9v7ZDqZ3U+3JC6fUOiTynUttGkPjk11xRUuWvsRGSwMreK+c0MPC3Eute2YQuV6wwyAWtUVrsLB4CX4LvmcC2zQBpwTKg6cfGREarYHnl0LZdHp/OgMzboqGanEu3YhkpE0fjUyciGXf1BLAwQUAAAICAAAkJ/rPsX6Mm0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0UqKBuYVBsrllsklKSmKKZYquhaGlkUmacZKpgYW5palFklIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAkJ/rCG2+0ksCAAD0BAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAkJ/rPsX6Mm0AAAB4AAAACQAkAAAAAAAAAAAAAACYAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAFADAAAAAA==
-      objectReference: {fileID: 0}
     - target: {fileID: 1462546619155307732, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
         type: 3}
       propertyPath: m_Name
@@ -1088,57 +1083,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1462546619389283459, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 1462546619389283461, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
         type: 3}
       propertyPath: _spawnCollection
       value: 
       objectReference: {fileID: 558446947}
-    - target: {fileID: 1462546619389283462, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: _spawnDelay
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 1462546619638176430, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 1462546619725017883, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
         type: 3}
       propertyPath: _spawnCollection
       value: 
       objectReference: {fileID: 634665086}
-    - target: {fileID: 1462546619725017883, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: _spawnPrefab
-      value: 
-      objectReference: {fileID: 8166806440850022983, guid: 02af7080d8da9804ab59ec7507b510ca,
-        type: 3}
-    - target: {fileID: 1462546619725017884, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: _spawnCount
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1462546619725017884, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: _spawnSpeed
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1462546619725017884, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: _maxSpawnCount
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 1462546619725017884, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
-        type: 3}
-      propertyPath: _spawnDelay
-      value: 4
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfa05f94e7af05e48aff5f58b2ac6be4, type: 3}
 --- !u!4 &944819558 stripped

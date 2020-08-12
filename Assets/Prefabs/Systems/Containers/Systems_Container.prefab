@@ -51,7 +51,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1462546619638176431
 Transform:
   m_ObjectHideFlags: 0
@@ -172,6 +172,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 364227904266615771, guid: 9d24d66e71936784a8a3da53538d4f8e,
+        type: 3}
+      propertyPath: _spawnDelay
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 364227904266615774, guid: 9d24d66e71936784a8a3da53538d4f8e,
         type: 3}
       propertyPath: m_Name
@@ -257,6 +262,11 @@ PrefabInstance:
       propertyPath: showGraphs
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 642425884379134927, guid: a24b89217a7c1034a96e53858f0c6a02,
+        type: 3}
+      propertyPath: data.dataString
+      value: UEsDBBQAAAgIAACQn+sIbb7SSwIAAPQEAAALACQAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQF1VE1z2jAQ/SuMzk3HUDJAb61DSA8EJjSTiy9CWmMNsuTRR/jI8N+7km3s0MkJse/t6r3dlT+IULYC5rRZGMGXmgP5OSDhTL4NOvAJjnSn1UacoeW8Ce6KQKKR80Kd0BgfhjSrS3BGsF9qJwM5waBXItemnPMdpNo6i+GcSgsIGe1CtsLQx4Ac8eduFlJOeBpNwumMp1kyuOCRgXJgOmpLbGk1yysmaVkBD5I78nDasIc1TaGZhhGEMy2lsI0S4k5VdJrSynr0gQQuKDqL1wd+AWJXuKCyn7zKcwuukWTo6UEYbFBdlfzWdddKave1rncqfRSQjMZRVF11+R/hbhjh3Ojyqb14mIRLXCHY/oWeGLWu19d++OGzcq8OVO7pVsJbAepZL4z2iiPojA+p3sLooft79ZYWwPZdvJZ6E/TV19MJHi7R/jGVotwG6Pu4Dmykjg2PsweDo/mDguNm2KYERoOKVwt/6a6/Qg3wKIx1CDUuVZC31d4EKpnHngU33qXaKDD9ChUoKt1pjXXc7RBvsK+zHml4Lc3tDdY+gpuUGO74SXIDrfXhOi1b6MMSbLHyTgoFXasD8IyNSrVS9Y71LbVpG29yynppOy/4590iNJlMEzaZsTHnlM/43XQ4G43zH9v7ZDqZ3U+3JC6fUOiTynUttGkPjk11xRUuWvsRGSwMreK+c0MPC3Eute2YQuV6wwyAWtUVrsLB4CX4LvmcC2zQBpwTKg6cfGREarYHnl0LZdHp/OgMzboqGanEu3YhkpE0fjUyciGXf1BLAwQUAAAICAAAkJ/rPsX6Mm0AAAB4AAAACQAkAG1ldGEuanNvbgoAIAAAAAAAAQAYAACAPtXesZ0BAIA+1d6xnQEAgD7V3rGdAatWKkstKs7Mz1OyUjDRM9IzNNVRUEovSizIKAaKGII4pZkpIHa0UqKBuYVBsrllsklKSmKKZYquhaGlkUmacZKpgYW5palFklIsUH1JZUGqX2JuKkRPQGJJRlpmXkpmXrqee1FmijvIaKXYWgBQSwECLQAUAAAICAAAkJ/rCG2+0ksCAAD0BAAACwAkAAAAAAAAAAAAAAAAAAAAZ3JhcGgwLmpzb24KACAAAAAAAAEAGAAAgD7V3rGdAQCAPtXesZ0BAIA+1d6xnQFQSwECLQAUAAAICAAAkJ/rPsX6Mm0AAAB4AAAACQAkAAAAAAAAAAAAAACYAgAAbWV0YS5qc29uCgAgAAAAAAABABgAAIA+1d6xnQEAgD7V3rGdAQCAPtXesZ0BUEsFBgAAAAACAAIAuAAAAFADAAAAAA==
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a24b89217a7c1034a96e53858f0c6a02, type: 3}
 --- !u!4 &1462546619052515277 stripped
@@ -272,11 +282,27 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1462546619155307734}
     m_Modifications:
+    - target: {fileID: 6368441875460624617, guid: 1dbf21718e907c043bf5dafdb42332e1,
+        type: 3}
+      propertyPath: _spawnSpeed
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6368441875460624617, guid: 1dbf21718e907c043bf5dafdb42332e1,
+        type: 3}
+      propertyPath: _maxSpawnCount
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 6368441875460624620, guid: 1dbf21718e907c043bf5dafdb42332e1,
         type: 3}
       propertyPath: m_Name
       value: EnemySpawner
       objectReference: {fileID: 0}
+    - target: {fileID: 6368441875460624622, guid: 1dbf21718e907c043bf5dafdb42332e1,
+        type: 3}
+      propertyPath: _spawnPrefab
+      value: 
+      objectReference: {fileID: 8166806440850022983, guid: 02af7080d8da9804ab59ec7507b510ca,
+        type: 3}
     - target: {fileID: 6368441875460624623, guid: 1dbf21718e907c043bf5dafdb42332e1,
         type: 3}
       propertyPath: m_LocalPosition.x
