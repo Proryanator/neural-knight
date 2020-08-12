@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class EnemyHealth : AbstractBaseHealth{
 
@@ -6,6 +7,9 @@ public class EnemyHealth : AbstractBaseHealth{
 	// figure out where to store this later!
 	/*[Tooltip("The points gained by the player upon killing this enemy.")]
 	[SerializeField] private int _pointValue = 1;*/
+
+	[Tooltip("If true, destroys the parent object, not this object.")]
+	[SerializeField] private bool _parentDeath = false;
 	
 	protected new void Start(){
 		base.Start();
@@ -14,7 +18,11 @@ public class EnemyHealth : AbstractBaseHealth{
 
 	// TODO: not sure how to handle this if we're supposed to pass in the player's id :/
 	private void EnemyDeath(){
-		// ScoreSystem.GetInstance().AddPoints(_pointValue);
-		Destroy(gameObject);
+		if (_parentDeath){
+			Destroy(transform.parent.gameObject);
+		}
+		else{
+			Destroy(gameObject);
+		}
 	}
 }
