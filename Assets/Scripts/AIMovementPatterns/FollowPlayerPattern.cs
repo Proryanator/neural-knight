@@ -1,4 +1,5 @@
 ﻿using Pathfinding;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 /// <summary>
@@ -14,10 +15,15 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 	[Tooltip("The speed at which to update the path. A higher value will be more realistic but more costly.")]
 	[SerializeField] private float _repeatRate = .5f;
 	
+	[Tooltip("The direction the sprite is facing initially.")]
+	[SerializeField] private FacingDirection _startingDirection;
+	
 	private Seeker _seeker;
 
 	private Rigidbody2D _rigidbody2D;
-	
+
+	private Vector2 _movementDirection;
+
 	// the player object that we'll be following
 	// NOTE: we might need to adjust this to find the 'nearest' player instead of the default player,
 	// when working with multiple players
@@ -60,26 +66,31 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 			_reachedEndOfPath = true;
 			return;
 		}
-		
+
 		// you haven't reached the end of your way-point yet!
 		_reachedEndOfPath = false;
 
 		// let's calculate the direction we'll want to travel
-		Vector2 directionToMove =
+		_movementDirection =
 			((Vector2) _path.vectorPath[_currentWayPoint] - (Vector2) transform.position).normalized;
-		
+
 		// now we simply translate in that direction based on the speed!
 		// transform.Translate(Time.deltaTime * );
-		_rigidbody2D.velocity = (_speed * directionToMove);
-		
+		_rigidbody2D.velocity = (_speed * _movementDirection);
+
 		// determine if we've reached the next way-point, track the next one
 		float distance = Vector2.Distance(transform.position, _path.vectorPath[_currentWayPoint]);
-		
+
 		if (distance < _nextWayPointDistance){
 			_currentWayPoint++;
 		}
+
+		// only do this if there is no movement information
+		if (!_movementDirection.normalized.Equals(Vector2.zero)){
+			RotateTowardsDirection(_movementDirection);
+		}
 	}
-	
+
 	private void UpdatePath(){
 		// only if you're done calculating your previous path, do this again!
 		if (_seeker.IsDone()){
@@ -105,5 +116,21 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 			_path = path;
 			_currentWayPoint = 0;
 		}
+	}
+	
+	/// <summary>
+	/// Rotates the current object towards the mouse.
+	///
+	/// I copied this from the controller, might want to stick this in Utils.
+	/// </summary>
+	private void RotateTowardsDirection(Vector2 direction) {
+		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+		
+		// taking initial direction into account, now rotate towards the mouse!
+		transform.rotation = GetRotationForStartingDirection(angle, _startingDirection);
+	}
+	
+	private Quaternion GetRotationForStartingDirection(float angle, FacingDirection direction) {
+		return Quaternion.AngleAxis((angle + (float)direction) % 360, Vector3.forward);
 	}
 }
