@@ -14,6 +14,7 @@ public class WormController : MonoBehaviour{
 
 	// holds the actual body parts, initialized at wake
 	private WormBodyController[] _bodyControllers;
+	private WormBodyController _firstBodyPart;
 	
 	[Tooltip("Seconds to delay rotation of body.")]
 	[SerializeField] private float _rotationDelay = 1f;
@@ -22,10 +23,33 @@ public class WormController : MonoBehaviour{
 		// collect the head and body parts
 		_head = GetComponentInChildren<AbstractAIMovementPattern>().gameObject.transform;
 		_bodyControllers = GetComponentsInChildren<WormBodyController>();
+		_firstBodyPart = _bodyControllers[0];
+		
+		// tell all body parts where the head is, and which body part is next (if any)
+		for (int i = 0; i < _bodyControllers.Length; i++){
+			WormBodyController body = _bodyControllers[i];
+			body.InitBody(_head);
 
-		// tell all body parts where the head is
-		foreach (WormBodyController body in _bodyControllers){
-			body.InitBody(_head, _rotationDelay);
+			// set the next body controller to the next one in the list, just not for the last one
+			if (i != _bodyControllers.Length - 1){
+				body.SetNextBodyController(_bodyControllers[i+1]);
+			}
+		}
+	}
+
+	private void Start(){
+		// start a co-routine that will run ever so often to tell the body what to do
+		StartCoroutine(WaitAndTellBody(_rotationDelay));
+	}
+
+	/**
+	 * Waits the amount of time, of which no more rotations can be taken for this object.
+	 */
+	private IEnumerator WaitAndTellBody(float delay){
+		while (true){
+			// pass this information to the first body part
+			_firstBodyPart.RotateTowardsLeader(_head.rotation, delay);
+			yield return new WaitForSeconds(delay);
 		}
 	}
 }

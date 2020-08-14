@@ -1093,6 +1093,11 @@ PrefabInstance:
       propertyPath: _spawnCollection
       value: 
       objectReference: {fileID: 634665086}
+    - target: {fileID: 1462546619725017884, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
+        type: 3}
+      propertyPath: _maxSpawnCount
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dfa05f94e7af05e48aff5f58b2ac6be4, type: 3}
 --- !u!4 &944819558 stripped
