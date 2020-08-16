@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
-using Random = System.Random;
 
 /// <summary>
 /// Class to handle the spawning in of prefab objects.
@@ -70,12 +68,14 @@ public class SpawnManager : MonoBehaviour{
 		StartCoroutine(Spawn());
 	}
 
-	/**
-	 * Contains the logic to up the spawn count using a super basic algorithm.
-	 *
-	 * This can always be updated later on when researching other games like
-	 * BLOPS2, boxhead, etc.
-	 */
+	
+	
+	/// <summary>
+	/// Contains the logic to up the spawn count using a super basic algorithm.
+	/// This can always be updated later on when researching other games like
+	/// BLOPS2, boxhead, etc.
+	/// </summary>
+	/// <param name="gameLevel"></param>
 	private void AdjustSpawnProperties(int gameLevel){
 		_props = _spawnAdjuster.AdjustSpawnProperties(_props, gameLevel);
 	}

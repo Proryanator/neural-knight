@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -42,9 +40,9 @@ public class WormController : MonoBehaviour{
 		StartCoroutine(WaitAndTellBody(_rotationDelay));
 	}
 
-	/**
-	 * Waits the amount of time, of which no more rotations can be taken for this object.
-	 */
+	/// <summary>
+	/// Waits the amount of time, of which no more rotations can be taken for this object.
+	/// </summary>
 	private IEnumerator WaitAndTellBody(float delay){
 		while (true){
 			// pass this information to the first body part

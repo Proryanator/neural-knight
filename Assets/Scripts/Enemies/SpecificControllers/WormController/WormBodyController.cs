@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -38,9 +37,10 @@ public class WormBodyController : MonoBehaviour{
 
 	}
 
-	/**
-	 * Waits the amount of time, of which no more rotations can be taken for this object.
-	 */
+
+	/// <summary>
+	/// Waits the amount of time, of which no more rotations can be taken for this object.
+	/// </summary>
 	private IEnumerator WaitDelayAmount(Quaternion leaderRotation, float delay){
 		yield return new WaitForSeconds(delay);
 		

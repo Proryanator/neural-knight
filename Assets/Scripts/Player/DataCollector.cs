@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using DataCollection;
+using UnityEngine;
 
-namespace DataCollection{
-	/**
- * Collects a data point object, and passes it to the respective location to store the points/etc.
- *
- * Intended to be placed on a player object!
- */
+namespace Player{
+	/// <summary>
+	/// Collects a data point object, and passes it to the respective location to store the points/etc.
+	/// </summary>
 	[RequireComponent(typeof(PlayerPoints))]
 	public class DataCollector : MonoBehaviour{
 

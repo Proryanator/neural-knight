@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
 
-namespace DataCollection{
+namespace DataCollection{ 
 	/**
- * Holds information about this data point.
- *
- * Will hold things like how many points this is worth, what type of data point it is, etc.
- */
+	* Holds information about this data point.
+	*
+	* Will hold things like how many points this is worth, what type of data point it is, etc.
+	*/
 	public class DataPoint : MonoBehaviour{
 		[Tooltip("The point value that is acquired/lost when this object is 'collected'.")] [SerializeField]
 		private int _collectionValue;
