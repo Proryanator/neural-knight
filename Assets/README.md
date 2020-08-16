@@ -3,6 +3,11 @@
 
 Here's information on mechanics and game design that you may need to reference and update from time to time.
 
+Prefab Structure:
+
+You'll have your main prefab, which will be the one that you drag into your scenes. Those will be at the highest level in the prefab folder.
+
+If there are sub-prefabs you'll have a folder called 'Parts' that will have the nested prefabs, or parts, of that prefab.
 
 ## Game Mechanics ##
 Put information in here on how CURRENT game mechanics work. As new mechanics are added, do update this.

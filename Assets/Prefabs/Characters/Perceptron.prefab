@@ -1,5 +1,77 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1678115296
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1678115297}
+  - component: {fileID: 1678115298}
+  m_Layer: 8
+  m_Name: Point Light 2D
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1678115297
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678115296}
+  m_LocalRotation: {x: -0, y: -0, z: -0.006455298, w: 0.9999792}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1526640807747819261}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1678115298
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678115296}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.643
+  m_Color: {r: 0.6792453, g: 0.6792453, b: 0.6792453, a: 1}
+  m_Intensity: 1.5
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000cb068d39256b849ecbe7d995df8b8c6e
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 1
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 1
+  m_PointLightOuterRadius: 1.5
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
 --- !u!1 &1526640807747819263
 GameObject:
   m_ObjectHideFlags: 0
@@ -19,7 +91,7 @@ GameObject:
   - component: {fileID: 1526640807747819260}
   - component: {fileID: 115118555}
   m_Layer: 8
-  m_Name: PlayerWithAnimation
+  m_Name: Perceptron
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -39,6 +111,7 @@ Transform:
   - {fileID: 8077619731766110964}
   - {fileID: 7467871314515637696}
   - {fileID: 7467871314026679091}
+  - {fileID: 1678115297}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25.386002}
@@ -103,7 +176,8 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 0d6d5fab-c864-40e8-ac2f-9906405b584c
-    m_ActionName: Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionName: "Player/Move[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow,/\x18USB
+      GamePad USB GamePad/stick,/\x18USB GamePad USB GamePad/stick]"
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1526640807747819260}
@@ -118,7 +192,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 224615eb-97c5-47d5-8201-bfd5c5186c75
-    m_ActionName: Player/Look[/Mouse/delta]
+    m_ActionName: Player/Look[/Mouse/delta,/Pen/delta]
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1526640808184733633}
@@ -133,11 +207,16 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 4c9bfcc3-118b-47e6-8289-6859482df719
-    m_ActionName: Player/Fire[/Mouse/leftButton]
+    m_ActionName: "Player/Fire[/Mouse/leftButton,/\x18USB GamePad USB GamePad/trigger,/\x18USB
+      GamePad USB GamePad/trigger]"
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: cfbbf4e0-16a1-4377-a60a-62e07a84a804
-    m_ActionName: UI/Navigate[/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]
+    m_ActionName: "UI/Navigate[/\x18USB GamePad USB GamePad/stick/up,/\x18USB GamePad
+      USB GamePad/stick/up,/\x18USB GamePad USB GamePad/stick/down,/\x18USB GamePad
+      USB GamePad/stick/down,/\x18USB GamePad USB GamePad/stick/left,/\x18USB GamePad
+      USB GamePad/stick/left,/\x18USB GamePad USB GamePad/stick/right,/\x18USB GamePad
+      USB GamePad/stick/right,/Keyboard/w,/Keyboard/upArrow,/Keyboard/s,/Keyboard/downArrow,/Keyboard/a,/Keyboard/leftArrow,/Keyboard/d,/Keyboard/rightArrow]"
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: bc23012a-b151-4e80-a023-e3dc54262f53
@@ -149,11 +228,11 @@ MonoBehaviour:
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 2ac40363-d891-4c74-acf4-6614d83d212f
-    m_ActionName: UI/Point[/Mouse/position]
+    m_ActionName: UI/Point[/Mouse/position,/Pen/position]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: c1bb694c-d728-452c-bc08-61ee46cbab26
-    m_ActionName: UI/Click[/Mouse/leftButton]
+    m_ActionName: UI/Click[/Mouse/leftButton,/Pen/tip]
   - m_PersistentCalls:
       m_Calls: []
     m_ActionId: 7fdaa0a5-c0df-48eb-92d4-6025df06d73f
@@ -178,8 +257,8 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: e84b7656-5a34-4301-99b3-40793b4f3d34
     m_ActionName: UI/TrackedDeviceSelect
-  m_NeverAutoSwitchControlSchemes: 0
-  m_DefaultControlScheme: 
+  m_NeverAutoSwitchControlSchemes: 1
+  m_DefaultControlScheme: Keyboard&Mouse
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
@@ -428,7 +507,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _legRotationSpeed: 5
-  _drawDebugLines: 1
+  _drawDebugLines: 0
   _turnAngleThreshold: 30
 --- !u!1 &7467871314515637699
 GameObject:
