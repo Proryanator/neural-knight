@@ -1,7 +1,7 @@
 ﻿using Player;
 using UnityEngine;
 
-namespace DataCollection{ 
+namespace DataPoints{ 
 	/**
 	* Holds information about this data point.
 	*

@@ -1,5 +1,5 @@
 ﻿using System;
-using DataCollection;
+using DataPoints;
 using UnityEngine;
 
 /// <summary>

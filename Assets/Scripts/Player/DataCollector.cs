@@ -1,4 +1,4 @@
-﻿using DataCollection;
+﻿using DataPoints;
 using UnityEngine;
 
 namespace Player{
