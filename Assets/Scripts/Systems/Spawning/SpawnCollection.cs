@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
@@ -12,12 +10,7 @@ public class SpawnCollection : MonoBehaviour{
 	private Transform[] _spawnPointObjects;
 
 	private void Awake(){
-		List<Transform> _children = new List<Transform>();
-		foreach (Transform child in transform){
-			_children.Add(child);
-		}
-
-		_spawnPointObjects = _children.ToArray();
+		_spawnPointObjects = Utilities.GetAllChildren(transform);
 	}
 
 	/// <summary>

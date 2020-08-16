@@ -90,6 +90,14 @@ public class AIMovementController : MonoBehaviour{
 			rigidbody2D.velocity = Vector2.zero;
 		}
 	}
+
+	/// <summary>
+	/// Used to get the stun time set here; allows for synchronizing other parts of the enemy when stunned.
+	/// </summary>
+	/// <returns></returns>
+	public float GetStunTime(){
+		return _stunTime;
+	}
 	
 	/// <summary>
 	/// Temporarily uses the no movement controller, until the time is up.

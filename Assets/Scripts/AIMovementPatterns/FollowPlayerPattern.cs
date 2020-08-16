@@ -13,6 +13,9 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 
 	[Tooltip("The speed at which to update the path. A higher value will be more realistic but more costly.")]
 	[SerializeField] private float _repeatRate = .5f;
+
+	[Tooltip("The starting facing direction of the sprite")] 
+	[SerializeField] private FacingDirection _startingDirection = FacingDirection.UP;
 	
 	private Seeker _seeker;
 
@@ -63,11 +66,11 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 		
 		// you haven't reached the end of your way-point yet!
 		_reachedEndOfPath = false;
-
+		
 		// let's calculate the direction we'll want to travel
 		Vector2 directionToMove =
 			((Vector2) _path.vectorPath[_currentWayPoint] - (Vector2) transform.position).normalized;
-		
+
 		// now we simply translate in that direction based on the speed!
 		// transform.Translate(Time.deltaTime * );
 		_rigidbody2D.velocity = (_speed * directionToMove);
@@ -78,6 +81,24 @@ public class FollowPlayerPattern : AbstractAIMovementPattern{
 		if (distance < _nextWayPointDistance){
 			_currentWayPoint++;
 		}
+		
+		// as part of moving, let's also face the movement direction, only if there's a movement direction
+		if (directionToMove != Vector2.zero){
+			RotateToFaceDirection(directionToMove);
+		}
+	}
+	
+	// TODO: need to move up into 2D utils
+	private void RotateToFaceDirection(Vector2 direction) {
+		float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+		// taking initial direction into account, now rotate towards the mouse!
+		transform.rotation = GetRotationForStartingDirection(angle, _startingDirection);
+	}
+	
+	// TODO: need to move up into 2D utils
+	protected Quaternion GetRotationForStartingDirection(float angle, FacingDirection direction) {
+		return Quaternion.AngleAxis((angle + (float)direction) % 360, Vector3.forward);
 	}
 	
 	private void UpdatePath(){
