@@ -1,7 +1,7 @@
-﻿using System;
-using Proryanator.Controllers2D;
+﻿using Proryanator.Controllers2D;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Weapons;
 
 namespace Player{
 	/// <summary>
