@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using Utils;
 
 /// <summary>
 /// All children under this object are spawn points, and all have the same kind of
@@ -10,7 +11,7 @@ public class SpawnCollection : MonoBehaviour{
 	private Transform[] _spawnPointObjects;
 
 	private void Awake(){
-		_spawnPointObjects = Utilities.GetAllChildren(transform);
+		_spawnPointObjects = UnityUtilities.GetAllChildren(transform);
 	}
 
 	/// <summary>

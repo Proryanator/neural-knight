@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using Utils;
 
 /// <summary>
 /// Moves this game object a distance defined here, until a point when the object dies.

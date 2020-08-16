@@ -1,5 +1,6 @@
 ﻿using Pathfinding;
 using UnityEngine;
+using Utils;
 
 /// <summary>
 /// Forces this data object to follow the player using A* path-finding.

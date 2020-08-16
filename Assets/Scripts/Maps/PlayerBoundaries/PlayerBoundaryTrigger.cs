@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using Utils;
 
 /// <summary>
 /// Trigger for whether the player enters in the space to wall off the entrance for players.

@@ -1,5 +1,5 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using Utils;
 
 /// <summary>
 /// The movement pattern that all entities will default to should they spawn outside of the play area.
