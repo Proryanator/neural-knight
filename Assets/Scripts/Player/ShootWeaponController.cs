@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 /// Controls when the player takes input, and performs an attack action.
 /// </summary>
 [RequireComponent(typeof(WeaponManager))]
-public class AlgorithmAttackController : MonoBehaviour{
+public class ShootWeaponController : MonoBehaviour{
 
 	private WeaponManager _weaponManager;
 	private TDC_FaceMouse _faceMouseController;
@@ -15,13 +15,6 @@ public class AlgorithmAttackController : MonoBehaviour{
 	private void Start(){
 		_weaponManager = GetComponent<WeaponManager>();
 		_faceMouseController = GetComponent<TDC_FaceMouse>();
-	}
-
-	/// <summary>
-	/// Placeholder for a melee attack, should there be one.
-	/// </summary>
-	public void MeleeAttack(InputAction.CallbackContext context){
-		// TODO: implement me to do something if we need to?
 	}
 
 	/// <summary>
