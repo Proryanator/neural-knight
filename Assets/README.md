@@ -16,6 +16,8 @@ You will find nested prefabs all throughout this project.
 You'll have your main prefab, which will be the one that you drag into your scenes. Those will be at the highest level in the prefab folder.
 If there are sub-prefabs you'll also have a folder called 'Parts' that will have the nested prefabs, or parts, of that prefab.
 
+Do take care to open the prefab using the 'Open prefab' menu when editing it, this way you ensure that you're actually updating the prefab itself.
+ 
 ## Game Mechanics ##
 Put information in here on how CURRENT game mechanics work. As new mechanics are added, do update this.
 
