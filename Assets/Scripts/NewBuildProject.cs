@@ -9,7 +9,7 @@ using UnityEditor.Build.Reporting;
 // ------------------------------------------------------------------------
 // https://docs.unity3d.com/Manual/CommandLineArguments.html
 // ------------------------------------------------------------------------
-public class JenkinsBuild {
+public class NewBuildProject {
   
     static string[] EnabledScenes = FindEnabledEditorScenes();
   
