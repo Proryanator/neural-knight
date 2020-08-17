@@ -8,7 +8,9 @@ public class BuildProject{
 	private const string SCENE_PREFIX = "Assets/Scenes/";
 	private static string[] sceneNames = { "first-map" };
 
-	private const string TARGET_DIR = "~/Desktop";
+	private const string TARGET_DIR =
+		"C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins.jenkins\\workspace\\Neural Defender\\artifacts\\";
+	
 	private const string APP_NAME = "NeuralDefender";
 	
 	static void PerformBuild (){
@@ -16,8 +18,9 @@ public class BuildProject{
 		BuildPlayerOptions options = new BuildPlayerOptions();
 		options.scenes = GetScenePaths(SCENE_PREFIX, sceneNames);
 		
-		string fullPathAndName = TARGET_DIR + Path.DirectorySeparatorChar + APP_NAME + ".exe";
+		string fullPathAndName = TARGET_DIR + APP_NAME;
 		
+		System.Console.WriteLine("Output directory will be: [" + fullPathAndName + "]");
 		// note: can we make this dynamic or build it to multiple platforms?
 		options.target = BuildTarget.StandaloneWindows64;
 		options.targetGroup = BuildTargetGroup.Standalone;
