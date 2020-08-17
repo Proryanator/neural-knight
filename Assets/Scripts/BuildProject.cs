@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
+using UnityEngine;
 
 public class BuildProject{
 
@@ -19,8 +20,8 @@ public class BuildProject{
 		options.scenes = GetScenePaths(SCENE_PREFIX, sceneNames);
 		
 		string fullPathAndName = TARGET_DIR + APP_NAME;
-		
-		System.Console.WriteLine("Output directory will be: [" + fullPathAndName + "]");
+
+		Debug.Log("Output directory will be: [" + fullPathAndName + "]");
 		// note: can we make this dynamic or build it to multiple platforms?
 		options.target = BuildTarget.StandaloneWindows64;
 		options.targetGroup = BuildTargetGroup.Standalone;
