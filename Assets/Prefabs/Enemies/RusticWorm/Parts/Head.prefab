@@ -193,6 +193,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 3
+  _faceTargetSpeed: 300
   _repeatRate: 0.1
   _startingDirection: 270
   _nextWayPointDistance: 0.5

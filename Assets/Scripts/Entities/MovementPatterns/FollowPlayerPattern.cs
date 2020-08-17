@@ -10,9 +10,12 @@ namespace Entities.MovementPatterns{
 	[RequireComponent(typeof(Rigidbody2D))]
 	public class FollowPlayerPattern : AbstractMovementPattern{
 
-		[Tooltip("Speed at which to walk towards the player.")] [SerializeField]
-		private float _speed = 5f;
+		[Tooltip("Speed at which to walk towards the player.")]
+		[SerializeField] private float _speed = 5f;
 
+		[Tooltip("The speed at which the enemy will face the player.")]
+		[SerializeField] private float _faceTargetSpeed = 5f;
+		
 		[Tooltip("The speed at which to update the path. A higher value will be more realistic but more costly.")]
 		[SerializeField]
 		private float _repeatRate = .5f;
@@ -96,8 +99,8 @@ namespace Entities.MovementPatterns{
 		private void RotateToFaceDirection(Vector2 direction){
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
-			// taking initial direction into account, now rotate towards the mouse!
-			transform.rotation = GetRotationForStartingDirection(angle, _startingDirection);
+			transform.rotation = Quaternion.RotateTowards(transform.rotation, GetRotationForStartingDirection(angle, _startingDirection),
+				Time.deltaTime * _faceTargetSpeed);
 		}
 
 		// TODO: need to move up into 2D utils

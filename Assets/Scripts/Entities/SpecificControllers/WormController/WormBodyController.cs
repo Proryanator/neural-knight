@@ -29,32 +29,36 @@ namespace Entities.SpecificControllers.WormController{
 		// the head will start this, always sending it's current rotation down to the top-most body part.
 		// that body part will rotate, then do a wait, then pass that down to the next body part, and repeat
 		// the head should call this method every rotationDelay, which will start the chain
-		public void RotateTowardsLeader(Quaternion leaderRotation, float rotationDelay){
+		public void FollowHeadRotation(Transform head, float rotationDelay){
+			Quaternion.Lerp(transform.rotation, head.rotation, 1f);
+			
 			// first, apply that rotation
-			transform.rotation = leaderRotation;
+			transform.rotation = head.rotation;
 		
 			// then, delay before sending this down to the next one
-			StartCoroutine(WaitDelayAmount(leaderRotation, rotationDelay));
-
+			StartCoroutine(WaitDelayAmount(head, rotationDelay));
 		}
 
 
 		/// <summary>
 		/// Waits the amount of time, of which no more rotations can be taken for this object.
 		/// </summary>
-		private IEnumerator WaitDelayAmount(Quaternion leaderRotation, float delay){
+		private IEnumerator WaitDelayAmount(Transform leaderRotation, float delay){
 			yield return new WaitForSeconds(delay);
 		
 			// only if your next body controller is defined, pass it along
 			if (_nextBodyController != null){
-				_nextBodyController.RotateTowardsLeader(leaderRotation, delay);
+				_nextBodyController.FollowHeadRotation(leaderRotation, delay);
 			}
 		}
-	
+
 		private void Update(){
 			MoveWithHead();
 		}
 
+		/// <summary>
+		/// Moves the current body to the heads location, with a lerp + keeping initial distance from the head.
+		/// </summary>
 		private void MoveWithHead(){
 			transform.position = (transform.position - _head.position).normalized * _distanceFromHead + _head.position;
 		}

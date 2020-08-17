@@ -14,6 +14,8 @@ namespace Entities.SpecificControllers.WormController{
 
 		// holds the actual body parts, initialized at wake
 		private WormBodyController[] _bodyControllers;
+		
+		// all movement information will be passed here first, then passed along by each body controller
 		private WormBodyController _firstBodyPart;
 	
 		[Tooltip("Seconds to delay rotation of body.")]
@@ -48,7 +50,7 @@ namespace Entities.SpecificControllers.WormController{
 		private IEnumerator WaitAndTellBody(float delay){
 			while (true){
 				// pass this information to the first body part
-				_firstBodyPart.RotateTowardsLeader(_head.rotation, delay);
+				_firstBodyPart.FollowHeadRotation(_head, delay);
 				yield return new WaitForSeconds(delay);
 			}
 		}
