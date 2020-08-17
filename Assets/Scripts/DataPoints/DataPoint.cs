@@ -10,10 +10,12 @@ namespace DataPoints{
 		[SerializeField] private int _collectionValue;
 
 		/// <summary>
-		/// Called when this object is collected.
+		/// Adds the data point's points to the player points,
+		/// and destroys the object.
 		/// </summary>
 		public void Collect(PlayerPoints playerPoints){
 			playerPoints.AddPoints(_collectionValue);
+			Destroy(gameObject);
 		}
 	}
 }

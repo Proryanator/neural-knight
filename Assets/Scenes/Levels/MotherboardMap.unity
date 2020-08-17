@@ -275,6 +275,11 @@ PrefabInstance:
       propertyPath: _spawnCollection
       value: 
       objectReference: {fileID: 558446947}
+    - target: {fileID: 1462546619725017881, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1462546619725017883, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
         type: 3}
       propertyPath: _spawnCollection

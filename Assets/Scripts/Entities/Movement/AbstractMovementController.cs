@@ -20,6 +20,11 @@ namespace Entities.Movement{
 			}
 		}
 
+		private void Update(){
+			// simply move this object based on it's defined pattern
+			movementPattern.Move();
+		}
+		
 		/// <summary>
 		/// Call this to attach the move to central pattern, and start using that.
 		/// </summary>

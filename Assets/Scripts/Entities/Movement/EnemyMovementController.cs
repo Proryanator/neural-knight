@@ -47,11 +47,6 @@ namespace Entities.Movement{
 			_originalLayer = gameObject.layer;
 		}
 
-		private void Update(){
-			// simply move this object based on it's defined pattern
-			movementPattern.Move();
-		}
-
 		/// <summary>
 		/// Temporarily uses the no movement controller, until the time is up.
 		///
