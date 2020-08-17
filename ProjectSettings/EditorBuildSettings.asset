@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/Scenes/Levels/MotherboardMap.unity
+    guid: b3c386f6dabbf1e48a696bd97b1fa9d8
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: f938a4622800d004ba513afc26979e3a,
       type: 2}
