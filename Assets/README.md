@@ -22,13 +22,20 @@ Do take care to open the prefab using the 'Open prefab' menu when editing it, th
 Put information in here on how CURRENT game mechanics work. As new mechanics are added, do update this.
 
 ### Player ###
-<b>Movement:</b>
+Movement:
     You always face the direction of the mouse, and you fire in that direction too.
     Your legs face either your facing direction, or make you 'walk backwards' based on your current movement.
 
+Death:
+    When the player dies, we still want enemies and AI to track it's last spot.
+    
+    There's an object in the scene with the tag of AllTags.AI_TRACKER, which is a child of the player. It will
+    be detached and left in the scene to be a tracking point for enemy movement.
+    
 Shooting:
     Player shots will damage enemies, and will disappear on good data contact + hitting walls. Shots also
-    have a set lifetime that will fade at some point and die off.
+    have a set lifetime that will fade at some point and die off. How enemies are damaged is handled in their
+    own script, however how much damage to apply is determined by the weapon type, and passed through the projectile.
     
 
 ### Enemies ###
@@ -46,6 +53,7 @@ Enemies apply damage to the player by colliding with them.
 When enemies are attacked/hit, they will swap out their current movement pattern for that of the NoMovementPattern.
 A force will also be applied to the enemy to cause them to fly back, as well as their layer will be adjusted to a custom layer,
 'Damaged Enemy', which makes enemies not collide with other enemies (so they can fly back when attacked).
+
 ### Maps ###
 Maps will be a big part of this game. Let's add how maps will work, and how new ones will be made.
 
@@ -109,8 +117,6 @@ These have information defined about them in a SpawnProperties object, things li
 This is read by the SpawnManager, and is used to determine if spawning is still happening.
 
 <b>Level Manager</b>
-
-
 ## Art Source (If Any) ##
 I may borrow art during the development process for the sake of playing with mechanics, let's keep track of those here.
 Basic Ground texture: https://www.artstation.com/artwork/OywBxv
