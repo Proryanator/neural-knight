@@ -9,7 +9,7 @@ public class BuildProject{
 	private static string[] sceneNames = { "first-map" };
 
 	private const string TARGET_DIR =
-		"C:\\Windows\\System32\\config\\systemprofile\\AppData\\Local\\Jenkins.jenkins\\workspace\\Neural Defender\\artifacts\\";
+		"C:/Windows/System32/config/systemprofile/AppData/Local/Jenkins.jenkins/workspace/Neural Defender/artifacts/";
 	
 	private const string APP_NAME = "NeuralDefender";
 	
@@ -18,7 +18,7 @@ public class BuildProject{
 		BuildPlayerOptions options = new BuildPlayerOptions();
 		options.scenes = GetScenePaths(SCENE_PREFIX, sceneNames);
 		
-		string fullPathAndName = TARGET_DIR + APP_NAME;
+		string fullPathAndName = AdjustToSystemPath(TARGET_DIR + APP_NAME);
 
 		System.Console.WriteLine("Output directory will be: [" + fullPathAndName + "]");
 		
