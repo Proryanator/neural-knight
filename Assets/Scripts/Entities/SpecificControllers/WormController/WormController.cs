@@ -21,7 +21,7 @@ namespace Entities.SpecificControllers.WormController{
 
 		private void Awake(){
 			// collect the head and body parts
-			_head = GetComponentInChildren<AbstractAIMovementPattern>().gameObject.transform;
+			_head = GetComponentInChildren<AbstractMovementPattern>().gameObject.transform;
 			_bodyControllers = GetComponentsInChildren<WormBodyController>();
 			_firstBodyPart = _bodyControllers[0];
 		

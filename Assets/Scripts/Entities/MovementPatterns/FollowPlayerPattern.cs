@@ -8,7 +8,7 @@ namespace Entities.MovementPatterns{
 	/// </summary>
 	[RequireComponent(typeof(Seeker))]
 	[RequireComponent(typeof(Rigidbody2D))]
-	public class FollowPlayerPattern : AbstractAIMovementPattern{
+	public class FollowPlayerPattern : AbstractMovementPattern{
 
 		[Tooltip("Speed at which to walk towards the player.")] [SerializeField]
 		private float _speed = 5f;

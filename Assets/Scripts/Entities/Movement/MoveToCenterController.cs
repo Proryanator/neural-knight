@@ -9,10 +9,10 @@ namespace Entities.Movement{
 	/// </summary>
 	public class MoveToCenterController : MonoBehaviour{
 
-		private AIMovementController _aiMovementController;
+		private AbstractMovementController _abstractMovementController;
 
 		private void Awake(){
-			_aiMovementController = GetComponent<AIMovementController>();
+			_abstractMovementController = GetComponent<AbstractMovementController>();
 		}
 
 		public void Start(){
@@ -20,7 +20,7 @@ namespace Entities.Movement{
 			// on trigger enter of the play area, this will be turned off
 			if (!PlayAreaMovementStarter.Instance().IsInsidePlayArea(transform)){
 				Debug.Log("I'm outside the play area, gonna move to the center.");
-				_aiMovementController.EnableCenterPattern();
+				_abstractMovementController.EnableCenterPattern();
 			}
 		}
 	}

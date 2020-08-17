@@ -5,7 +5,7 @@ namespace Entities.MovementPatterns{
 	/// <summary>
 	/// The movement pattern that all entities will default to should they spawn outside of the play area.
 	/// </summary>
-	public class MoveToCenterMovementPattern : AbstractAIMovementPattern{
+	public class MoveToCenterMovementPattern : AbstractMovementPattern{
 
 		// holds the transform of the central location of the map
 		private GameObject _mapCentralPoint;

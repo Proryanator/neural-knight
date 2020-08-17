@@ -10,7 +10,7 @@ namespace Entities.MovementPatterns{
 	///
 	/// TODO: Might want to pass in speed values from the using class, but this works for now. 
 	/// </summary>
-	public class MindlessWanderPattern : AbstractAIMovementPattern{
+	public class MindlessWanderPattern : AbstractMovementPattern{
 
 		[Tooltip("True; moves the object freely in any random direction, not constricted to up/down/left/right.")]
 		[SerializeField]

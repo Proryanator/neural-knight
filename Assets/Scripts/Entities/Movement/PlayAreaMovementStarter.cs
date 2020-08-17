@@ -37,10 +37,10 @@ namespace Entities.Movement{
 
 		private void StartAIMovementIfViable(Collider2D other){
 			// call a start call on objects that have movement patterns
-			AIMovementController aiMovementController = other.GetComponent<AIMovementController>();
-			if (aiMovementController != null){
+			EnemyMovementController enemyMovementController = other.GetComponent<EnemyMovementController>();
+			if (enemyMovementController != null){
 				Debug.Log("Found AI! Starting their normal movement.");
-				aiMovementController.DisableCenterPattern();
+				enemyMovementController.DisableCenterPattern();
 
 				// also sets the layer of 'Entity' to this object, keeping it inside the playable area
 				other.gameObject.layer = LayerMask.NameToLayer(AllLayers.ENTITY);

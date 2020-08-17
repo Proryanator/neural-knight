@@ -5,7 +5,7 @@ namespace Entities.MovementPatterns{
 	/// A class that holds information that you'd need about how an object
 	/// moves around in 2D space.
 	/// </summary>
-	public abstract class AbstractAIMovementPattern : MonoBehaviour{
+	public abstract class AbstractMovementPattern : MonoBehaviour{
 
 		/// <summary>
 		/// Defines the movement pattern for this object.
