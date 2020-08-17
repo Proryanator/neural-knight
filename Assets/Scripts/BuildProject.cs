@@ -18,7 +18,7 @@ public class BuildProject{
 		BuildPlayerOptions options = new BuildPlayerOptions();
 		options.scenes = GetScenePaths(SCENE_PREFIX, sceneNames);
 		
-		string fullPathAndName = AdjustToSystemPath(TARGET_DIR + APP_NAME);
+		string fullPathAndName = AdjustToSystemPath(TARGET_DIR + APP_NAME);	
 
 		System.Console.WriteLine("Output directory will be: [" + fullPathAndName + "]");
 		
