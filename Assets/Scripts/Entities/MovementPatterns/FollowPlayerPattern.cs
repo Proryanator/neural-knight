@@ -95,6 +95,10 @@ namespace Entities.MovementPatterns{
 			}
 		}
 
+		public float GetFaceTargetSpeed(){
+			return _faceTargetSpeed;
+		}
+
 		// TODO: need to move up into 2D utils
 		private void RotateToFaceDirection(Vector2 direction){
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;

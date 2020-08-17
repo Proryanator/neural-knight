@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d9a31859c90efa54b864ebdc65cc2bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rotationDelay: 0.1
+  _bodyTellTime: 1
 --- !u!1001 &933141391081357973
 PrefabInstance:
   m_ObjectHideFlags: 0

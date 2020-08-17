@@ -18,15 +18,16 @@ namespace Entities.SpecificControllers.WormController{
 		// all movement information will be passed here first, then passed along by each body controller
 		private WormBodyController _firstBodyPart;
 	
-		[Tooltip("Seconds to delay rotation of body.")]
-		[SerializeField] private float _rotationDelay = 1f;
+		[Tooltip("The amount of time between each body telling the next about the heads position.")]
+		[SerializeField] private float _bodyTellTime = 1f;
 
 		private void Awake(){
 			// collect the head and body parts
-			_head = GetComponentInChildren<AbstractMovementPattern>().gameObject.transform;
+			FollowPlayerPattern pattern = GetComponentInChildren<FollowPlayerPattern>();
+			_head = pattern.gameObject.transform;
 			_bodyControllers = GetComponentsInChildren<WormBodyController>();
 			_firstBodyPart = _bodyControllers[0];
-		
+
 			// tell all body parts where the head is, and which body part is next (if any)
 			for (int i = 0; i < _bodyControllers.Length; i++){
 				WormBodyController body = _bodyControllers[i];
@@ -34,24 +35,28 @@ namespace Entities.SpecificControllers.WormController{
 
 				// set the next body controller to the next one in the list, just not for the last one
 				if (i != _bodyControllers.Length - 1){
-					body.SetNextBodyController(_bodyControllers[i+1]);
+					body.Init(_bodyControllers[i+1], pattern.GetFaceTargetSpeed(), _bodyTellTime);
+				}
+				else{
+					body.Init(null, pattern.GetFaceTargetSpeed(), _bodyTellTime);
 				}
 			}
+
 		}
 
 		private void Start(){
 			// start a co-routine that will run ever so often to tell the body what to do
-			StartCoroutine(WaitAndTellBody(_rotationDelay));
+			StartCoroutine(WaitAndTellBody(_bodyTellTime));
 		}
 
 		/// <summary>
 		/// Waits the amount of time, of which no more rotations can be taken for this object.
 		/// </summary>
-		private IEnumerator WaitAndTellBody(float delay){
+		private IEnumerator WaitAndTellBody(float bodyTellTime){
 			while (true){
 				// pass this information to the first body part
-				_firstBodyPart.FollowHeadRotation(_head, delay);
-				yield return new WaitForSeconds(delay);
+				_firstBodyPart.SetCurrentHeadTransform(_head);
+				yield return new WaitForSeconds(bodyTellTime);
 			}
 		}
 	}
