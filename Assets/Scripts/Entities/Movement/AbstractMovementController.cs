@@ -36,9 +36,8 @@ namespace Entities.Movement{
 		/// Calls this to restore the original movement pattern, and remove the component of center pattern.
 		/// </summary>
 		public void DisableCenterPattern(){
+			// if your current movement pattern is anything other than the center movement pattern, just skip this
 			if (movementPattern.GetType() != typeof(MoveToCenterMovementPattern)){
-				Debug.LogWarning(
-					"You're not supposed to call this method unless you first called 'EnableCenterPattern!'");
 				return;
 			}
 
