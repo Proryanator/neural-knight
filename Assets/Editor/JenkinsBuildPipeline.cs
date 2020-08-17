@@ -13,7 +13,7 @@ public class JenkinsBuildPipeline{
 		var args = FindArgs();
 		
 		string fullPathAndName = args.targetDir + args.appName;
-		BuildProject(FindEnabledEditorScenes(), fullPathAndName, BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, BuildOptions.None);
+		BuildProject(GetScenePaths(SCENE_PREFIX, sceneNames), fullPathAndName, BuildTargetGroup.Standalone, BuildTarget.StandaloneWindows64, BuildOptions.None);
 	}
 	
 	// ------------------------------------------------------------------------
