@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Utils;
 
-namespace Enemies.ObjectMovement.AIMovementPatterns{
+namespace Entities.MovementPatterns{
 	/// <summary>
 	/// The movement pattern that all entities will default to should they spawn outside of the play area.
 	/// </summary>

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Enemies.ObjectMovement.AIMovementPatterns{
+namespace Entities.MovementPatterns{
 	/// <summary>
 	/// Movement pattern of moving in a random direction for an amount of time,
 	/// then switching your direction.

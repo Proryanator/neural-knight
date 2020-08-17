@@ -2,7 +2,7 @@
 using UnityEngine;
 using Utils;
 
-namespace Enemies.ObjectMovement.AIMovementPatterns{
+namespace Entities.MovementPatterns{
 	/// <summary>
 	/// Forces this data object to follow the player using A* path-finding.
 	/// </summary>

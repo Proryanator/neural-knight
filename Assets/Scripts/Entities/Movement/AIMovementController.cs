@@ -1,9 +1,10 @@
 ﻿using System.Collections;
-using Enemies.ObjectMovement.AIMovementPatterns;
+using Entities.MovementPatterns;
 using HealthAndDamage;
 using UnityEngine;
+using Utils;
 
-namespace Enemies.ObjectMovement.AIMovement{
+namespace Entities.Movement{
 	/// <summary>
 	/// Applies some pre-defined movement to the current object's movement.
 	///
@@ -12,42 +13,43 @@ namespace Enemies.ObjectMovement.AIMovement{
 	[RequireComponent(typeof(MoveToCenterController))]
 	public class AIMovementController : MonoBehaviour{
 
+		// the initially set movement pattern when this object loads
+		// this is saved so you can return this object back to it's original set movement pattern
 		private AbstractAIMovementPattern _initialAIMovementPattern;
+		
+		// the current movement pattern being used right now
 		private AbstractAIMovementPattern _aiMovementPattern;
 
-		[Tooltip("How much time an AI movement controller will be disabled if damaged.")] [SerializeField]
-		private float _stunTime = 1f;
+		private Rigidbody2D _rigidBody2D;
 
+		[Tooltip("Amount of seconds that movement is disabled when enemy is hit.")]
+		[SerializeField] private float _stunTime = 1f;
+		
+		// true means this enemy is stunned, false means it's not
 		private bool _isStunned = false;
-
-		private Rigidbody2D _rigidbody2D;
-
-		// cache the original layer of this object
+		
+		// cache the original layer of this object; used to restore it's layer after taking damage
 		private int _originalLayer;
-
-		// the layer to make the enemy when it's damaged, to make it fly back and not hit other enemies
-		private int _enemyDamageLayer = 11;
 
 		private void Awake(){
 			// remember the initial movement pattern
 			_initialAIMovementPattern = GetComponent<AbstractAIMovementPattern>();
-
-			// we'll start with the initial movement pattern to begin with
 			_aiMovementPattern = _initialAIMovementPattern;
 
 			if (_aiMovementPattern == null){
-				Debug.Log("You did not attack an AI Movement Pattern object to this game object, it won't move!");
+				Debug.Log("You did not attach an AI Movement Pattern object to this game object, it won't move!");
 			}
 
 			// register for the 'OnDamageTaken', to make movement temporarily stop when damaged
 			// only if you have a health script!
+			// NOTE: we may want to pull this down into an enemy Movement Controller variant
 			AbstractBaseHealth health = GetComponent<AbstractBaseHealth>();
 			if (health != null){
 				health.OnDamageTaken += StopMovement;
 			}
 
-			_rigidbody2D = GetComponent<Rigidbody2D>();
-			if (_rigidbody2D == null){
+			_rigidBody2D = GetComponent<Rigidbody2D>();
+			if (_rigidBody2D == null){
 				Debug.LogWarning("Not able to stop any forces applied to the object.");
 			}
 
@@ -95,14 +97,6 @@ namespace Enemies.ObjectMovement.AIMovement{
 		}
 
 		/// <summary>
-		/// Used to get the stun time set here; allows for synchronizing other parts of the enemy when stunned.
-		/// </summary>
-		/// <returns></returns>
-		public float GetStunTime(){
-			return _stunTime;
-		}
-
-		/// <summary>
 		/// Temporarily uses the no movement controller, until the time is up.
 		///
 		/// TODO: perhaps we can make the stun time a method based on how much damage was applied?
@@ -115,7 +109,7 @@ namespace Enemies.ObjectMovement.AIMovement{
 
 		private IEnumerator StopAndRestoreMovement(){
 			_isStunned = true;
-			gameObject.layer = _enemyDamageLayer;
+			gameObject.layer = LayerMask.NameToLayer(AllLayers.DAMAGED_ENEMY);
 
 			// set the movement pattern to the no movement pattern
 			_aiMovementPattern = gameObject.AddComponent<NoMovementPattern>();
@@ -128,7 +122,7 @@ namespace Enemies.ObjectMovement.AIMovement{
 			gameObject.layer = _originalLayer;
 
 			// remove any forces if any were applied
-			_rigidbody2D.velocity = Vector2.zero;
+			_rigidBody2D.velocity = Vector2.zero;
 		}
 	}
 }

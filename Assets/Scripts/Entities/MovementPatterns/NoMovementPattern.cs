@@ -1,4 +1,4 @@
-﻿namespace Enemies.ObjectMovement.AIMovementPatterns{
+﻿namespace Entities.MovementPatterns{
 	/// <summary>
 	/// Yes, a version that does not actually move the object.
 	/// </summary>

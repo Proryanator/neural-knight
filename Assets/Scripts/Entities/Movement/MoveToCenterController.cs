@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Enemies.ObjectMovement.AIMovement{
+namespace Entities.Movement{
 	/// <summary>
 	/// Determines if the entity is in the play area, if so then this does nothing.
 	///

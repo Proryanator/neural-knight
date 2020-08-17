@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Enemies.ObjectMovement.AIMovementPatterns{
+namespace Entities.MovementPatterns{
 	/// <summary>
 	/// A class that holds information that you'd need about how an object
 	/// moves around in 2D space.

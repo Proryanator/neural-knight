@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using Enemies.ObjectMovement.AIMovementPatterns;
+using Entities.MovementPatterns;
 using UnityEngine;
 
-namespace Enemies.SpecificControllers.WormController{
+namespace Entities.SpecificControllers.WormController{
 	/// <summary>
 	/// A controller that applies worm movement, where the 'head' moves and rotates on it's own, and the body follows,
 	/// after a set delay.

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Enemies.SpecificControllers.WormController{
+namespace Entities.SpecificControllers.WormController{
 	/// <summary>
 	/// Controls the movement of each body part of a worm.
 	/// </summary>

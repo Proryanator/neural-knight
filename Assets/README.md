@@ -31,7 +31,21 @@ Shooting:
     have a set lifetime that will fade at some point and die off.
     
 
+### Enemies ###
+Movement:
+Enemy movement is controlled via an AIMovementController, which takes an assigned AbstractAIMovementPattern.
 
+These patterns decide what the enemy does per-update call, either apply force, follow some pre-defined path, or nothing at all.
+
+To change the enemy's movement, simply change their pattern type and the controller will just run that defined movement.
+
+Taking Damage/Applying Damage:
+
+Enemies apply damage to the player by colliding with them.
+
+When enemies are attacked/hit, they will swap out their current movement pattern for that of the NoMovementPattern.
+A force will also be applied to the enemy to cause them to fly back, as well as their layer will be adjusted to a custom layer,
+'Damaged Enemy', which makes enemies not collide with other enemies (so they can fly back when attacked).
 ### Maps ###
 Maps will be a big part of this game. Let's add how maps will work, and how new ones will be made.
 

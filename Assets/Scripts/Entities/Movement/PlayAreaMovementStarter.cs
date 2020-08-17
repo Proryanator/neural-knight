@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Utils;
 
-namespace Enemies.ObjectMovement.AIMovement{
+namespace Entities.Movement{
 	/// <summary>
 	/// Any entity outside of the 'play area' will need to have their
 	/// movement pattern set to one that tracks to the center of the map.
