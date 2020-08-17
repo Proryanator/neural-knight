@@ -19,7 +19,7 @@ namespace Entities.Movement{
 				Debug.Log("You did not attach an AI Movement Pattern object to this game object, it won't move!");
 			}
 		}
-		
+
 		/// <summary>
 		/// Call this to attach the move to central pattern, and start using that.
 		/// </summary>

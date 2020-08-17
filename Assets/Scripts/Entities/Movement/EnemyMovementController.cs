@@ -33,6 +33,10 @@ namespace Entities.Movement{
 			if (health != null){
 				health.OnDamageTaken += StopMovement;
 			}
+			else{
+				Debug.LogWarning("This entity should have a health object for movement to be stopped properly.");
+			}
+			
 
 			_rigidBody2D = GetComponent<Rigidbody2D>();
 			if (_rigidBody2D == null){
@@ -54,11 +58,17 @@ namespace Entities.Movement{
 		/// TODO: perhaps we can make the stun time a method based on how much damage was applied?
 		/// </summary>
 		private void StopMovement(int damage){
+			// only call this if you're not already stunned, don't want to permanently stun an enemy
 			if (!_isStunned){
 				StartCoroutine(StopAndRestoreMovement());
 			}
 		}
 
+		/// <summary>
+		/// The enemy is considered 'stunned' at this point. Their movement is replaced with the NoMovementPattern,
+		/// they're put on a layer to prevent them from colliding with other enemies, and have a force
+		/// applied to them to send them flying back.
+		/// </summary>
 		private IEnumerator StopAndRestoreMovement(){
 			_isStunned = true;
 			gameObject.layer = LayerMask.NameToLayer(AllLayers.DAMAGED_ENEMY);
