@@ -7,10 +7,11 @@ namespace Entities.SpecificControllers.WormController{
 	/// </summary>
 	public class WormBodyController : MonoBehaviour{
 
-		private Transform _head;
+		// the transform of the body part in front, could be the head!
+		private Transform _frontTransform;
 
-		// stores the starting distance from the head, as to not move to the head fully
-		private float _distanceFromHead;
+		// stores the starting distance from the front body part, as to not move away from the head all the way
+		private float _distanceFromFrontTransform;
 
 		// stores a linked list of the next body part versus the previous
 		private WormBodyController _nextBodyController = null;
@@ -18,7 +19,7 @@ namespace Entities.SpecificControllers.WormController{
 		private bool _isWaiting = false;
 	
 		private void Start(){
-			_distanceFromHead = Vector2.Distance(_head.position, transform.position);
+			_distanceFromFrontTransform = Vector2.Distance(_frontTransform.position, transform.position);
 		}
 
 		public void SetNextBodyController(WormBodyController controller){
@@ -35,7 +36,6 @@ namespace Entities.SpecificControllers.WormController{
 		
 			// then, delay before sending this down to the next one
 			StartCoroutine(WaitDelayAmount(leaderRotation, rotationDelay));
-
 		}
 
 
@@ -52,20 +52,28 @@ namespace Entities.SpecificControllers.WormController{
 		}
 	
 		private void Update(){
-			MoveWithHead();
+			MoveCloserToFrontBody();
 		}
 
-		private void MoveWithHead(){
-			transform.position = (transform.position - _head.position).normalized * _distanceFromHead + _head.position;
+		/// <summary>
+		/// If the front body part gets farther away from your initial setting, move closer to it!
+		/// Otherwise, don't move at all.
+		/// </summary>
+		private void MoveCloserToFrontBody(){
+			// only move closer to the front body part if you're farther away than the initial distance!
+			float distance = Vector2.Distance(transform.position, _frontTransform.position);
+			if (distance > _distanceFromFrontTransform){
+				transform.position = (transform.position - _frontTransform.position).normalized * _distanceFromFrontTransform + _frontTransform.position;
+			}
 		}
 
 		// call this once when you're supposed to reflect the rotation of the head, or the object in front of you
 		private void RotateWithHead(){
-			transform.rotation = _head.rotation;
+			transform.rotation = _frontTransform.rotation;
 		}
 
 		public void InitBody(Transform head){
-			_head = head;
+			_frontTransform = head;
 		}
 	}
 }
