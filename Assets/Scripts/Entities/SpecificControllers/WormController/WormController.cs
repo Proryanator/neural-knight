@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using Entities.MovementPatterns;
+﻿using Entities.MovementPatterns;
 using UnityEngine;
 
 namespace Entities.SpecificControllers.WormController{
@@ -31,32 +30,16 @@ namespace Entities.SpecificControllers.WormController{
 				
 				// if this is the first body part, initialize with the head
 				if (i == 0){
-					body.SetForwardTransform(_head);
+					body.SetBodyPartInFront(_head);
 				}else{
 					// otherwise, you set this to the previous body controller
-					body.SetForwardTransform(_bodyControllers[i - 1].transform);
+					body.SetBodyPartInFront(_bodyControllers[i - 1].transform);
 				}
 
 				// set the next body controller to the next one in the list, just not for the last one
 				if (i != _bodyControllers.Length - 1){
 					body.SetNextBodyController(_bodyControllers[i+1]);
 				}
-			}
-		}
-
-		private void Start(){
-			// start a co-routine that will run ever so often to tell the body what to do
-			StartCoroutine(WaitAndTellBody(_rotationDelay));
-		}
-
-		/// <summary>
-		/// Waits the amount of time, of which no more rotations can be taken for this object.
-		/// </summary>
-		private IEnumerator WaitAndTellBody(float delay){
-			while (true){
-				// pass this information to the first body part
-				_firstBodyPart.RotateTowardsLeader(_head.rotation, delay);
-				yield return new WaitForSeconds(delay);
 			}
 		}
 	}
