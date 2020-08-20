@@ -28,7 +28,14 @@ namespace Entities.SpecificControllers.WormController{
 			// tell all body parts where the head is, and which body part is next (if any)
 			for (int i = 0; i < _bodyControllers.Length; i++){
 				WormBodyController body = _bodyControllers[i];
-				body.InitBody(_head);
+				
+				// if this is the first body part, initialize with the head
+				if (i == 0){
+					body.SetForwardTransform(_head);
+				}else{
+					// otherwise, you set this to the previous body controller
+					body.SetForwardTransform(_bodyControllers[i - 1].transform);
+				}
 
 				// set the next body controller to the next one in the list, just not for the last one
 				if (i != _bodyControllers.Length - 1){

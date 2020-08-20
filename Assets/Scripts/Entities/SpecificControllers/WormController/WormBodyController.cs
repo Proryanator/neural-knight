@@ -72,8 +72,8 @@ namespace Entities.SpecificControllers.WormController{
 			transform.rotation = _frontTransform.rotation;
 		}
 
-		public void InitBody(Transform head){
-			_frontTransform = head;
+		public void SetForwardTransform(Transform frontTransform){
+			_frontTransform = frontTransform;
 		}
 	}
 }
