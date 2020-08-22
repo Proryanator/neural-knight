@@ -14,23 +14,12 @@ namespace Entities.SpecificControllers.WormController{
 		// stores the starting distance from the front body part, as to not move away from the head all the way
 		private float _distanceFromBodyInFront;
 
-		// how long to wait to rotate this body part
-		private float _rotationDelay;
-		
-		// stores a linked list of the next body part versus the previous
-		// used to pass information down to the next body part
-		private WormBodyController _nextBodyController = null;
-
 		private void Start(){
 			_distanceFromBodyInFront = Vector2.Distance(_bodyInFront.position, transform.position);
 		}
 
 		private void Update(){
 			MaintainDistanceFromFrontBody();
-		}
-		
-		public void SetNextBodyController(WormBodyController controller){
-			_nextBodyController = controller;
 		}
 
 		/// <summary>

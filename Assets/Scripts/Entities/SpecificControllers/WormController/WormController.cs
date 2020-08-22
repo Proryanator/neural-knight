@@ -13,17 +13,12 @@ namespace Entities.SpecificControllers.WormController{
 
 		// holds the actual body parts, initialized at wake
 		private WormBodyController[] _bodyControllers;
-		private WormBodyController _firstBodyPart;
-	
-		[Tooltip("Seconds to delay rotation of body.")]
-		[SerializeField] private float _rotationDelay = 1f;
 
 		private void Awake(){
 			// collect the head and body parts
 			_head = GetComponentInChildren<AbstractMovementPattern>().gameObject.transform;
 			_bodyControllers = GetComponentsInChildren<WormBodyController>();
-			_firstBodyPart = _bodyControllers[0];
-		
+
 			// tell all body parts where the head is, and which body part is next (if any)
 			for (int i = 0; i < _bodyControllers.Length; i++){
 				WormBodyController body = _bodyControllers[i];
@@ -34,11 +29,6 @@ namespace Entities.SpecificControllers.WormController{
 				}else{
 					// otherwise, you set this to the previous body controller
 					body.SetBodyPartInFront(_bodyControllers[i - 1].transform);
-				}
-
-				// set the next body controller to the next one in the list, just not for the last one
-				if (i != _bodyControllers.Length - 1){
-					body.SetNextBodyController(_bodyControllers[i+1]);
 				}
 			}
 		}

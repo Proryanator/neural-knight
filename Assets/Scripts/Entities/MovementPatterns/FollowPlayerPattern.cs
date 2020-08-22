@@ -10,15 +10,14 @@ namespace Entities.MovementPatterns{
 	[RequireComponent(typeof(Rigidbody2D))]
 	public class FollowPlayerPattern : AbstractMovementPattern{
 
-		[Tooltip("Speed at which to walk towards the player.")] [SerializeField]
-		private float _speed = 5f;
+		[Tooltip("Speed at which to walk towards the player.")] 
+		[SerializeField] private float _speed = 5f;
 
 		[Tooltip("The speed at which to update the path. A higher value will be more realistic but more costly.")]
-		[SerializeField]
-		private float _repeatRate = .5f;
+		[SerializeField] private float _repeatRate = .5f;
 
-		[Tooltip("The starting facing direction of the sprite")] [SerializeField]
-		private FacingDirection _startingDirection = FacingDirection.UP;
+		[Tooltip("The starting facing direction of the sprite")] 
+		[SerializeField] private FacingDirection _startingDirection = FacingDirection.UP;
 
 		private Seeker _seeker;
 
@@ -30,8 +29,8 @@ namespace Entities.MovementPatterns{
 		private Transform _playerTarget;
 
 		// distance between way points for the AI system
-		[Tooltip("The distance between way-points for the AI system to generate")] [SerializeField]
-		private float _nextWayPointDistance = 3f;
+		[Tooltip("The distance between way-points for the AI system to generate")] 
+		[SerializeField] private float _nextWayPointDistance = 3f;
 
 		// the current path we're following from the path-finding system
 		private Path _path;
@@ -95,7 +94,7 @@ namespace Entities.MovementPatterns{
 		// TODO: need to move up into 2D utils
 		private void RotateToFaceDirection(Vector2 direction){
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-
+			
 			// taking initial direction into account, now rotate towards the mouse!
 			transform.rotation = GetRotationForStartingDirection(angle, _startingDirection);
 		}
