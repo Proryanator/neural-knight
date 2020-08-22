@@ -431,6 +431,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: WorldLight2D
       objectReference: {fileID: 0}
+    - target: {fileID: 259731880319581635, guid: 3db50160bffc33d47a18c4522784e149,
+        type: 3}
+      propertyPath: m_Intensity
+      value: 0.7
+      objectReference: {fileID: 0}
     - target: {fileID: 259731880319581636, guid: 3db50160bffc33d47a18c4522784e149,
         type: 3}
       propertyPath: m_LocalPosition.x
