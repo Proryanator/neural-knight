@@ -3,11 +3,13 @@
 namespace Entities.Movement{
 	/// <summary>
 	/// Determines if the entity is in the play area, if so then this does nothing.
+	/// If the entity is of a specific type, will make an additional call to see if
+	/// they should agro the player or not.
 	///
 	/// If not, sets the entity's movement pattern to the MoveToCenterMovementPattern,
 	/// to force the entity to begin walking towards the center.
 	/// </summary>
-	public class MoveToCenterController : MonoBehaviour{
+	public class PlayAreaEntryController : MonoBehaviour{
 
 		private AbstractMovementController _abstractMovementController;
 
@@ -23,5 +25,7 @@ namespace Entities.Movement{
 				_abstractMovementController.EnableCenterPattern();
 			}
 		}
+
+		
 	}
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Systems.PlayerAgro;
 using Entities.MovementPatterns;
 using HealthAndDamage;
 using UnityEngine;
@@ -16,6 +17,9 @@ namespace Entities.Movement{
 
 		[Tooltip("Amount of seconds that movement is disabled when enemy is hit.")]
 		[SerializeField] private float _stunTime = 1f;
+
+		[Tooltip("Toggling this on will make a check to see if agro'ing is possible, otherwise will use other movement pattern.")]
+		[SerializeField] private bool _doesAgro = true;
 		
 		// true means this enemy is stunned, false means it's not
 		private bool _isStunned = false;
@@ -23,6 +27,11 @@ namespace Entities.Movement{
 		// cache the original layer of this object; used to restore it's layer after taking damage
 		private int _originalLayer;
 
+		// the follow player pattern, if any is attached to this enemy
+		private FollowPlayerPattern _followPlayerPattern;
+
+		private PlayerAgroManager _playerAgroManager;
+		
 		private void Awake(){
 			base.Awake();
 			
@@ -36,7 +45,6 @@ namespace Entities.Movement{
 			else{
 				Debug.LogWarning("This entity should have a health object for movement to be stopped properly.");
 			}
-			
 
 			_rigidBody2D = GetComponent<Rigidbody2D>();
 			if (_rigidBody2D == null){
@@ -45,6 +53,76 @@ namespace Entities.Movement{
 
 			// save the original layer; will be modified when hit
 			_originalLayer = gameObject.layer;
+			
+			// get the follow player pattern if you intend to use it
+			if (_doesAgro){
+				_followPlayerPattern = GetComponent<FollowPlayerPattern>();
+
+				if (_followPlayerPattern == null){
+					Debug.LogWarning("You did not attach a FollowPlayerPattern to this enemy, which you marked as supposed to agro the player.");
+				}
+			}
+		}
+
+		private void Start(){
+			_playerAgroManager = PlayerAgroManager.GetInstance();
+		}
+
+		/// <summary>
+		/// A one method to call on enemy controller to start using the FollowPlayerPattern,
+		/// as well as register to the PlayerAgroManager.
+		/// </summary>
+		private void StartAgro(){
+			// register this enemy as following the player!
+			_playerAgroManager.RegisterForAgro(GetComponent<EnemyHealth>());
+			
+			// remove itself from listening if it was
+			_playerAgroManager.StopListeningForAgroSlot(this);
+			
+			// we'll attach the FollowPlayerPattern and remove the other one!
+			EnableFollowPlayerPattern();
+		}
+		
+		/// <summary>
+		/// Checks to see if we can agro the player, and if we can, will enable the agro.
+		/// Otherwise, will set this guy up for listening.
+		/// </summary>
+		public void TriggerAgroIfEnemyController(bool setInitialMovementIfNo){
+			// entities of this type, and that can agro, will agro
+			if (DoesAgro()){
+				// if we can agro, then let's agro!
+				if (_playerAgroManager.CanAgroPlayer()){
+					StartAgro();
+				}
+				else{
+					// set this enemy up to listen for when there is an available agro slot
+					_playerAgroManager.ListenForAgroSlot(this);
+				}
+
+				// we'll want to start the initial movement if this is true
+				if (setInitialMovementIfNo){
+					StartInitialPattern();
+				}
+			}
+		}
+
+		/// <summary>
+		/// Enables the set follow player pattern on the enemy controller
+		/// </summary>
+		public void EnableFollowPlayerPattern(){
+			// if you added a follow player pattern, then it'll grab this
+			_movementPattern = _followPlayerPattern;
+			
+			// also, overwrite the intial movement pattern, to be able to re-set this after damage
+			OverwriteInitialPattern(_followPlayerPattern);
+		}
+		
+		/// <summary>
+		/// True if this enemy is supposed to agro to the player, false if not
+		/// </summary>
+		/// <returns></returns>
+		public bool DoesAgro(){
+			return _doesAgro;
 		}
 
 		/// <summary>
@@ -69,11 +147,11 @@ namespace Entities.Movement{
 			gameObject.layer = LayerMask.NameToLayer(AllLayers.DAMAGED_ENEMY);
 
 			// set the movement pattern to the no movement pattern
-			movementPattern = gameObject.AddComponent<NoMovementPattern>();
+			_movementPattern = gameObject.AddComponent<NoMovementPattern>();
 			yield return new WaitForSeconds(_stunTime);
 
 			// now, remove this pattern, restore the original
-			Destroy(movementPattern);
+			Destroy(_movementPattern);
 			RestoreOriginalMovementPattern();
 			_isStunned = false;
 			gameObject.layer = _originalLayer;

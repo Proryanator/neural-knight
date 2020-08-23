@@ -16,9 +16,6 @@ namespace Entities.MovementPatterns{
 		[Tooltip("The speed at which to update the path. A higher value will be more realistic but more costly.")]
 		[SerializeField] private float _repeatRate = .5f;
 
-		[Tooltip("The starting facing direction of the sprite")] 
-		[SerializeField] private FacingDirection _startingDirection = FacingDirection.UP;
-
 		private Seeker _seeker;
 
 		private Rigidbody2D _rigidbody2D;
@@ -41,6 +38,8 @@ namespace Entities.MovementPatterns{
 		[SerializeField] private bool _reachedEndOfPath = false;
 
 		private void Start(){
+			// determine if we're allowed to agro the player or not right now
+			// called when this script is first added
 			_seeker = GetComponent<Seeker>();
 			_rigidbody2D = GetComponent<Rigidbody2D>();
 			_playerTarget = GetPlayerTarget();
@@ -87,22 +86,10 @@ namespace Entities.MovementPatterns{
 
 			// as part of moving, let's also face the movement direction, only if there's a movement direction
 			if (directionToMove != Vector2.zero){
-				RotateToFaceDirection(directionToMove);
+				Utils2D.RotateToFaceDirection(transform, directionToMove, startingDirection);
 			}
 		}
 
-		// TODO: need to move up into 2D utils
-		private void RotateToFaceDirection(Vector2 direction){
-			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-			
-			// taking initial direction into account, now rotate towards the mouse!
-			transform.rotation = GetRotationForStartingDirection(angle, _startingDirection);
-		}
-
-		// TODO: need to move up into 2D utils
-		protected Quaternion GetRotationForStartingDirection(float angle, FacingDirection direction){
-			return Quaternion.AngleAxis((angle + (float) direction) % 360, Vector3.forward);
-		}
 
 		private void UpdatePath(){
 			// only if you're done calculating your previous path, do this again!

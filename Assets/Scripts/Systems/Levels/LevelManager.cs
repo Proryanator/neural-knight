@@ -13,14 +13,8 @@ namespace Systems.Levels{
 	/// </summary>
 	public class LevelManager : MonoBehaviour{
 	
-		private static LevelManager _instance = null;
+		private static LevelManager _instance;
 
-		// the current spawn rate; changed when levels start
-		private float _currentSpawnRate = 0f;
-
-		// the current spawn count; changed when levels start
-		private int _currentSpawnCount = 0;
-	
 		[Tooltip("How many enemies to start spawning with. Will increase from here.")]
 		[SerializeField] private int _initialEnemySpawnCount = 10;
 	

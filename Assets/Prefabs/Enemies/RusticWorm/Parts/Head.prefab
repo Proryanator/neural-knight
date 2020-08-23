@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 4544364591336759107}
   - component: {fileID: 3860130341879805427}
   - component: {fileID: 97853904542293084}
+  - component: {fileID: -3257171913310972470}
   - component: {fileID: 7358912374886872814}
   - component: {fileID: 3981973705603629466}
   - component: {fileID: 5520615965276740983}
@@ -168,6 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _stunTime: 0.2
+  _doesAgro: 1
 --- !u!114 &97853904542293084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +182,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2d0ce2d2c154d46a77d06e36e962c52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3257171913310972470
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 789580090956864022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968dedb257954060a6d59cb32084994c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingDirection: 270
+  _radius: 10
+  _speed: 100
 --- !u!114 &7358912374886872814
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -192,9 +209,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b439e045496440d1aca74fddb37b1758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  startingDirection: 270
   _speed: 3
   _repeatRate: 0.1
-  _startingDirection: 270
   _nextWayPointDistance: 0.5
   _reachedEndOfPath: 0
 --- !u!114 &3981973705603629466

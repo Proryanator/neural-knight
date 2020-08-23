@@ -32,15 +32,23 @@ namespace Entities.Movement{
 		}
 
 		private void OnTriggerEnter2D(Collider2D other){
-			StartAIMovementIfViable(other);
+			StartInitialMovementIfViable(other);
 		}
 
-		private void StartAIMovementIfViable(Collider2D other){
+		private void StartInitialMovementIfViable(Collider2D other){
 			// call a start call on objects that have movement patterns
 			AbstractMovementController movementController = other.GetComponent<AbstractMovementController>();
+			
+			// special setup code required for enemy controllers here
+			if (movementController is EnemyMovementController){
+				EnemyMovementController enemyMovementController = (EnemyMovementController) movementController;
+				enemyMovementController.TriggerAgroIfEnemyController(true);
+				return;
+			}
+
 			if (movementController != null){
 				Debug.Log("Found AI! Starting their normal movement.");
-				movementController.DisableCenterPattern();
+				movementController.StartInitialPattern();
 
 				// also sets the layer of 'Entity' to this object, keeping it inside the playable area
 				other.gameObject.layer = LayerMask.NameToLayer(AllLayers.ENTITY);

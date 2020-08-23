@@ -7,6 +7,9 @@ namespace Entities.MovementPatterns{
 	/// </summary>
 	public abstract class AbstractMovementPattern : MonoBehaviour{
 
+		[Tooltip("The starting facing direction of the sprite")] 
+		[SerializeField] protected FacingDirection startingDirection = FacingDirection.UP;
+		
 		/// <summary>
 		/// Defines the movement pattern for this object.
 		/// </summary>
