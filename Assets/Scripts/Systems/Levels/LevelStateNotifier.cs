@@ -5,11 +5,11 @@ namespace Systems.Levels{
 	/// Attach me to any objects that may need to trigger a
 	/// 'is the level over' type check.
 	/// </summary>
-	public class LevelNotifier : MonoBehaviour{
+	public class LevelStateNotifier : MonoBehaviour{
 	
 		private void OnDestroy(){
 			// after destroying itself, lets the level manager know the level might be over
-			LevelManager.GetInstance().LevelEndCheck();
+			LevelManager.GetInstance().LevelStateChangeCheck();
 		}
 	}
 }

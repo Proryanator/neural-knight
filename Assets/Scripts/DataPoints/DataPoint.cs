@@ -9,15 +9,15 @@ namespace DataPoints{
 		[Tooltip("The value of this data point.")]
 		[SerializeField] private int _collectionValue;
 
-		private static int _dataPointsInScene = 0;
-		
-		public DataPoint(){
+		private static int _totalDataPointsInScene = 0;
+
+		private void Start(){
 			// when this data point is spawned, increment the counter
-			_dataPointsInScene++;
+			_totalDataPointsInScene++;
 		}
 
 		public static int GetDataPointCountInScene(){
-			return _dataPointsInScene;
+			return _totalDataPointsInScene;
 		}
 		
 		/// <summary>
@@ -25,6 +25,9 @@ namespace DataPoints{
 		/// and destroys the object.
 		/// </summary>
 		public void Collect(PlayerPoints playerPoints){
+			// decrement how many are in the scene
+			_totalDataPointsInScene--;
+			
 			playerPoints.AddPoints(_collectionValue);
 			Destroy(gameObject);
 		}

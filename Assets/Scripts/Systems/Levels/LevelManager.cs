@@ -74,29 +74,23 @@ namespace Systems.Levels{
 		}
 
 		/// <summary>
-		/// Performs a check to see if the level is considered 'ended' or not.
+		/// A method intended to be called from entities that affect how the levels' state changes.
 		///
-		/// Checks if all spawn managers are done spawning. If they are, checks to see
-		/// if any children are still left in the scene.
+		/// Will potentially end the level or change it's state if the rules are met.
 		/// </summary>
-		public void LevelEndCheck(){
-			// if any of the spawn managers is still spawning, we're not done
-			foreach (SpawnManager manager in _allSpawnManagers){
-				if (manager.CanSpawn()){
-					return;
-				}
+		public void LevelStateChangeCheck(){
+			// if there are data points left, the level is not over
+			if (AreThereDataPointsLeft()){
+				return;
 			}
 			
-			// if we've collected all data points in the scene, the level might be over
-			if (!AreThereDataPointsLeft()){
-				// if there are enemies left in the scene, this is a special level state
-				if (AreThereEnemiesLeft()){
-					SetLevelState(LevelState.EnemyCleanup);
-				}
-				else{
-					// TODO: one day, trigger the level state where the player can walk around/take action
-					EndLevel();	
-				}
+			// if there are enemies left in the scene, this is a special level state
+			if (AreThereEnemiesLeft()){
+				SetLevelState(LevelState.EnemyCleanup);
+			}
+			else{
+				// TODO: one day, trigger the level state where the player can walk around/take action
+				EndLevel();	
 			}
 		}
 

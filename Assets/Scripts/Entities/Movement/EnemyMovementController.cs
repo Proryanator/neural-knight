@@ -34,10 +34,6 @@ namespace Entities.Movement{
 
 		private static int _totalEnemiesInScene = 0;
 
-		public EnemyMovementController(){
-			_totalEnemiesInScene++;
-		}
-		
 		private void Awake(){
 			base.Awake();
 			
@@ -72,6 +68,8 @@ namespace Entities.Movement{
 
 		private void Start(){
 			_playerAgroManager = PlayerAgroManager.GetInstance();
+			
+			_totalEnemiesInScene++;
 		}
 
 		/// <summary>
@@ -115,7 +113,10 @@ namespace Entities.Movement{
 		public static int GetTotalEnemiesInScene(){
 			return _totalEnemiesInScene;
 		}
-		
+
+		private void OnDestroy(){
+			_totalEnemiesInScene--;
+		}
 
 		/// <summary>
 		/// Enables the set follow player pattern on the enemy controller
