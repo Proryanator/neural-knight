@@ -77,15 +77,23 @@ namespace Systems.PlayerAgro{
 		/// </summary>
 		public void DeRegisterAgro(){
 			_currentAgro--;
-			
-			// trigger the next in line
-			if (_listOfListeners.Count > 0){
-				_listOfListeners[0].TriggerAgroIfEnemyController(false);
-			}
+
+			TriggerAgroOnNextRandomEnemy();
 
 			Debug.Log("Freed up agro slot.");
 		}
 
+		/// <summary>
+		/// If there's an enemy that's listening to agro, activate them now!
+		/// </summary>
+		private void TriggerAgroOnNextRandomEnemy(){
+			// trigger the next in line
+			if (_listOfListeners.Count > 0){
+				int index = Random.Range(0, _listOfListeners.Count);
+				_listOfListeners[index].TriggerAgroIfEnemyController(false);
+			}
+		}
+		
 		/// <summary>
 		/// True if there is space left for enemies to agro the player, false if not.
 		/// </summary>
