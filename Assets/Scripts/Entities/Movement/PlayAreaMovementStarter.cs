@@ -35,6 +35,9 @@ namespace Entities.Movement{
 			StartInitialMovementIfViable(other);
 		}
 
+		// NOTE: projectile is colliding with the play area movement starter :/ why?
+		// also, the head is also re-colliding with this over and over, which causes it
+		// to re-register
 		private void StartInitialMovementIfViable(Collider2D other){
 			// call a start call on objects that have movement patterns
 			AbstractMovementController movementController = other.GetComponent<AbstractMovementController>();
@@ -42,7 +45,7 @@ namespace Entities.Movement{
 			// special setup code required for enemy controllers here
 			if (movementController is EnemyMovementController){
 				EnemyMovementController enemyMovementController = (EnemyMovementController) movementController;
-				enemyMovementController.TriggerAgroIfEnemyController(true);
+				enemyMovementController.TriggerAgroIfEnemyController();
 				return;
 			}
 

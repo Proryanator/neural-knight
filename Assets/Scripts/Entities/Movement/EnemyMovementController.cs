@@ -91,23 +91,20 @@ namespace Entities.Movement{
 		/// Checks to see if we can agro the player, and if we can, will enable the agro.
 		/// Otherwise, will set this guy up for listening.
 		/// </summary>
-		public void TriggerAgroIfEnemyController(bool setInitialMovementIfNo){
-			// entities of this type, and that can agro, will agro
-			if (DoesAgro()){
-				// if we can agro, then let's agro!
-				if (_playerAgroManager.CanAgroPlayer()){
-					StartAgro();
-				}
-				else{
-					// set this enemy up to listen for when there is an available agro slot
-					_playerAgroManager.ListenForAgroSlot(this);
-				}
-
-				// we'll want to start the initial movement if this is true
-				if (setInitialMovementIfNo){
-					StartInitialPattern();
-				}
+		public void TriggerAgroIfEnemyController(){
+			Debug.Log("Object w/ name [" + gameObject.name + "] is trying to agro.");
+			
+			// entities that can agro, and are allowed to, will do so
+			if (_doesAgro && _playerAgroManager.CanAgroPlayer()){
+				StartAgro();
+				return;
 			}
+
+			// otherwise this enemy will listen
+			_playerAgroManager.ListenForAgroSlot(this);
+
+			// we'll want to start the initial movement if this is true
+			StartInitialPattern();
 		}
 
 		public static int GetTotalEnemiesInScene(){

@@ -92,7 +92,7 @@ namespace Systems.PlayerAgro{
 			// trigger the next in line
 			if (_listOfListeners.Count > 0){
 				int index = Random.Range(0, _listOfListeners.Count);
-				_listOfListeners[index].TriggerAgroIfEnemyController(false);
+				_listOfListeners[index].TriggerAgroIfEnemyController();
 			}
 		}
 		
