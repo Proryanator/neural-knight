@@ -1,5 +1,4 @@
 ﻿using System;
-using Systems.Spawning;
 using DataPoints;
 using Entities.Movement;
 using UnityEngine;
@@ -16,15 +15,9 @@ namespace Systems.Levels{
 	
 		private static LevelManager _instance;
 
-		[Tooltip("How many enemies to start spawning with. Will increase from here.")]
-		[SerializeField] private int _initialEnemySpawnCount = 10;
-	
 		// the current game level, incremented through some game behavior 
 		private int _gameLevel = 1;
-	
-		// we need a cache of all spawn managers for checking if a level has ended
-		private SpawnManager[] _allSpawnManagers;
-	
+
 		// notifies when a level ends
 		public Action<int> OnLevelFinish;
 	
@@ -43,8 +36,6 @@ namespace Systems.Levels{
 			}else if (_instance != this){
 				Destroy(gameObject);
 			}
-
-			_allSpawnManagers = FindObjectsOfType<SpawnManager>();
 		}
 
 		private void Start(){

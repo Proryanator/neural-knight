@@ -44,7 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c30bd20da394b1092d7f287c4485770, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _spawnDelay: 0
+  _spawnDelay: 2
   _spawnSpeed: 0.5
   _minSpawnSpeed: 0.1
   _maxSpawnSpeed: 2
@@ -67,3 +67,4 @@ MonoBehaviour:
     type: 3}
   _spawnRuleEnum: 0
   _spawnAdjusterEnum: 0
+  _spawnCollection: {fileID: 0}
