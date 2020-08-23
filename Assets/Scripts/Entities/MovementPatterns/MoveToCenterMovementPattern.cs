@@ -8,13 +8,13 @@ namespace Entities.MovementPatterns{
 	public class MoveToCenterMovementPattern : AbstractMovementPattern{
 
 		// holds the transform of the central location of the map
-		private GameObject _mapCentralPoint;
+		private Transform _mapCentralPoint;
 
-		[Tooltip("The speed at which to move towards the center of the map.")] [SerializeField]
-		private float _moveSpeed = 5f;
+		[Tooltip("The speed at which to move towards the center of the map.")] 
+		[SerializeField] private float _moveSpeed = 5f;
 
 		private void Awake(){
-			_mapCentralPoint = GameObject.FindGameObjectWithTag(AllTags.MAP_CENTRAL_POINT);
+			_mapCentralPoint = GameObject.FindGameObjectWithTag(AllTags.MAP_CENTRAL_POINT).transform;
 
 			if (_mapCentralPoint == null){
 				Debug.LogWarning("There was no object set with the tag: " + AllTags.MAP_CENTRAL_POINT +
@@ -24,9 +24,16 @@ namespace Entities.MovementPatterns{
 
 		public override void Move(){
 			if (_mapCentralPoint != null){
-				transform.position = Vector2.MoveTowards(transform.position,
-					(Vector2) _mapCentralPoint.transform.position, _moveSpeed * Time.deltaTime);
+				MoveToCenterMovement(transform, _mapCentralPoint, _moveSpeed);
 			}
+		}
+
+		/// <summary>
+		/// Contains the logic to move towards the center!
+		/// </summary>
+		public static void MoveToCenterMovement(Transform transform, Transform centralPoint, float moveSpeed){
+			transform.position = Vector2.MoveTowards(transform.position,
+				centralPoint.transform.position, moveSpeed * Time.deltaTime);
 		}
 	}
 }
