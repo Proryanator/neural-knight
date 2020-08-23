@@ -1,5 +1,6 @@
 ﻿using Entities.MovementPatterns;
 using UnityEngine;
+using Utils;
 
 namespace Entities.Movement{
 	[RequireComponent(typeof(PlayAreaEntryController))]
@@ -11,7 +12,13 @@ namespace Entities.Movement{
 		// the current movement pattern being used right now
 		protected AbstractMovementPattern _movementPattern;
 
+		// cache the original layer of this object; used to restore it's layer after taking damage
+		protected int originalLayer;
+		
 		protected void Awake(){
+			// save the original layer; will be modified when hit
+			originalLayer = gameObject.layer;
+			
 			// remember the initial movement pattern
 			AbstractMovementPattern[] patterns = GetComponents<AbstractMovementPattern>();
 			// we do not want to store the follow player pattern, this one is special and only for enemies
@@ -48,12 +55,25 @@ namespace Entities.Movement{
 		protected AbstractMovementPattern GetInitialPattern(){
 			return _initialMovementPattern;
 		}
+
+		/// <summary>
+		/// Sets the object to the default layer. This layer is where collisions outside the play area are to occur.
+		/// </summary>
+		private void SetToDefaultLayer(){
+			gameObject.layer = LayerMask.NameToLayer(AllLayers.DEFAULT);
+		}
+
+		public void RestoreOriginalLayer(){
+			gameObject.layer = originalLayer;
+		}
 		
 		/// <summary>
 		/// Call this to attach the move to central pattern, and start using that.
 		/// </summary>
 		public void EnableCenterPattern(){
 			_movementPattern = gameObject.AddComponent<MoveToCenterMovementPattern>();
+
+			SetToDefaultLayer();
 		}
 
 		/// <summary>

@@ -23,9 +23,6 @@ namespace Entities.Movement{
 		
 		// true means this enemy is stunned, false means it's not
 		private bool _isStunned = false;
-		
-		// cache the original layer of this object; used to restore it's layer after taking damage
-		private int _originalLayer;
 
 		// the follow player pattern, if any is attached to this enemy
 		private FollowPlayerPattern _followPlayerPattern;
@@ -53,9 +50,6 @@ namespace Entities.Movement{
 				Debug.LogWarning("Not able to stop any forces applied to the object.");
 			}
 
-			// save the original layer; will be modified when hit
-			_originalLayer = gameObject.layer;
-			
 			// get the follow player pattern if you intend to use it
 			if (_doesAgro){
 				_followPlayerPattern = GetComponent<FollowPlayerPattern>();
@@ -163,7 +157,7 @@ namespace Entities.Movement{
 			Destroy(_movementPattern);
 			RestoreOriginalMovementPattern();
 			_isStunned = false;
-			gameObject.layer = _originalLayer;
+			gameObject.layer = originalLayer;
 
 			// remove any forces if any were applied
 			_rigidBody2D.velocity = Vector2.zero;

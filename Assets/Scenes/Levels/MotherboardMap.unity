@@ -264,6 +264,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxAgro: 1
+  _currentAgro: 0
 --- !u!4 &1455069892 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 259731880319581636, guid: 3db50160bffc33d47a18c4522784e149,

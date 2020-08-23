@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Utils;
 
 namespace Entities.Movement{
 	/// <summary>
@@ -54,8 +53,7 @@ namespace Entities.Movement{
 				movementController.StartInitialPattern();
 
 				// also sets the layer of 'Entity' to this object, keeping it inside the playable area
-				other.gameObject.layer = LayerMask.NameToLayer(AllLayers.ENTITY);
-			}
+				movementController.RestoreOriginalLayer();			}
 		}
 
 		/// <summary>
