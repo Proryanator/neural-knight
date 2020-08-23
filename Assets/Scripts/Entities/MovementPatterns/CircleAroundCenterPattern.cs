@@ -10,12 +10,9 @@ namespace Entities.MovementPatterns{
 		
 		[Tooltip("How far from the point to rotate outwards from. NOTE: this is used to create a slightly larger radius for movement purposes.")]
 		[SerializeField] private float _radius = 1f;
-		
-		[Tooltip("How fast to rotate around the center")]
-		[SerializeField] private float _rotationSpeed = 5f;
 
 		[Tooltip("Speed to move towards the center of the map")]
-		[SerializeField] private float _toCenterSpeed = 5f;
+		[SerializeField] private float _moveSpeed = 5f;
 		
 		// point to rotate around
 		private Transform _rotationOrigin;
@@ -43,14 +40,14 @@ namespace Entities.MovementPatterns{
 				// remember transform from before
 				Vector2 oldPosition = transform.position;
 			
-				transform.RotateAround(_rotationOrigin.position, Vector3.back, Time.deltaTime* _rotationSpeed);
+				transform.RotateAround(_rotationOrigin.position, Vector3.back, Time.deltaTime * (_moveSpeed * 20));
 			
 				// now, let's calculate the direction from one point to another
 				directionOfMovement = (Vector2) transform.position - oldPosition;
 			}
 			else{
 				// start moving towards the center, like you do with the MoveToCenterPattern
-				MoveToCenterMovementPattern.MoveToCenterMovement(transform, _rotationOrigin, _toCenterSpeed);
+				MoveToCenterMovementPattern.MoveToCenterMovement(transform, _rotationOrigin, _moveSpeed);
 				
 				// move towards the center until you're inside of the circle
 				directionOfMovement = (Vector2) _rotationOrigin.position - (Vector2) transform.position;
