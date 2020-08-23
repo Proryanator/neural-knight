@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Systems.Levels;
 using Entities.Movement;
 using HealthAndDamage;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace Systems.PlayerAgro{
 		// the current number of enemies that are agro'd to the player
 		[SerializeField] private int _currentAgro = 0;
 
+		[Tooltip("Trigger agro increase every X levels")]
+		[SerializeField] private int _agroLevelBoundary = 2;
+		
 		// holds list of unique ids of enemy listeners
 		private List<EnemyMovementController> _listOfListeners = new List<EnemyMovementController>();
 		
@@ -28,6 +32,11 @@ namespace Systems.PlayerAgro{
 			}else if (_instance != this){
 				Destroy(gameObject);
 			}
+		}
+
+		private void Start(){
+			// let's register this method to the 'OnLevelFinish' method, to increase/adjust agro level
+			LevelManager.GetInstance().OnLevelFinish += IncreaseAgroAmount;
 		}
 
 		public static PlayerAgroManager GetInstance(){
@@ -73,14 +82,36 @@ namespace Systems.PlayerAgro{
 		}
 		
 		/// <summary>
+		/// True if there is space left for enemies to agro the player, false if not.
+		/// </summary>
+		public bool CanAgroPlayer(){
+			return _currentAgro < _maxAgro;
+		}
+		
+		/// <summary>
 		/// Decrements the current agro, and notifies the next one listening that the slot is open!
 		/// </summary>
-		public void DeRegisterAgro(){
+		private void DeRegisterAgro(){
 			_currentAgro--;
 
 			TriggerAgroOnNextRandomEnemy();
 
 			Debug.Log("Freed up agro slot.");
+		}
+
+		/// <summary>
+		/// Logic to increase the amount of enemies that can agro to the player at once.
+		///
+		/// If increase would be smaller than original, just keeps that.
+		/// </summary>
+		private void IncreaseAgroAmount(int gameLevel){
+			if (gameLevel % _agroLevelBoundary == 0){
+				int newAgro = gameLevel / _agroLevelBoundary;
+
+				if (newAgro > _maxAgro){
+					_maxAgro = newAgro;
+				}
+			}
 		}
 
 		/// <summary>
@@ -94,13 +125,6 @@ namespace Systems.PlayerAgro{
 				int index = Random.Range(0, _listOfListeners.Count);
 				_listOfListeners[index].TriggerAgroIfEnemyController();
 			}
-		}
-		
-		/// <summary>
-		/// True if there is space left for enemies to agro the player, false if not.
-		/// </summary>
-		public bool CanAgroPlayer(){
-			return _currentAgro < _maxAgro;
 		}
 	}
 }
