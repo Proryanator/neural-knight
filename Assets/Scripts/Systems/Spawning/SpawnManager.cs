@@ -45,7 +45,9 @@ namespace Systems.Spawning{
 			if (_spawnCollection == null){
 				Debug.LogWarning("The SpawnCollector was not set for this spawn manager, did you forget?");
 			}
-		
+		}
+
+		private void Start(){
 			// subscribe to the level starting method; this is what initiates/restarts spawning!
 			LevelManager.GetInstance().OnLevelFinish += AdjustSpawnProperties;
 		

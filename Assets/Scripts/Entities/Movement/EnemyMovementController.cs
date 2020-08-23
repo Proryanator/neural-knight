@@ -31,6 +31,12 @@ namespace Entities.Movement{
 		private FollowPlayerPattern _followPlayerPattern;
 
 		private PlayerAgroManager _playerAgroManager;
+
+		private static int _totalEnemiesInScene = 0;
+
+		public EnemyMovementController(){
+			_totalEnemiesInScene++;
+		}
 		
 		private void Awake(){
 			base.Awake();
@@ -106,10 +112,15 @@ namespace Entities.Movement{
 			}
 		}
 
+		public static int GetTotalEnemiesInScene(){
+			return _totalEnemiesInScene;
+		}
+		
+
 		/// <summary>
 		/// Enables the set follow player pattern on the enemy controller
 		/// </summary>
-		public void EnableFollowPlayerPattern(){
+		private void EnableFollowPlayerPattern(){
 			// if you added a follow player pattern, then it'll grab this
 			_movementPattern = _followPlayerPattern;
 			
@@ -121,7 +132,7 @@ namespace Entities.Movement{
 		/// True if this enemy is supposed to agro to the player, false if not
 		/// </summary>
 		/// <returns></returns>
-		public bool DoesAgro(){
+		private bool DoesAgro(){
 			return _doesAgro;
 		}
 

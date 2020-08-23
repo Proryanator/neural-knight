@@ -1,6 +1,7 @@
 ﻿using System;
 using Systems.Spawning;
 using DataPoints;
+using Entities.Movement;
 using UnityEngine;
 
 namespace Systems.Levels{
@@ -30,6 +31,12 @@ namespace Systems.Levels{
 		// notifies when a level starts
 		public Action<int> OnLevelStart;
 
+		// tracks the current level state of the current level
+		private LevelState _levelState = LevelState.WaitingToStart;
+
+		// call this when the levels' state changes, to alert things that need to know this
+		public Action<LevelState> OnLevelStateChange;
+		
 		private void Awake(){
 			if (_instance == null){
 				_instance = this;
@@ -37,7 +44,7 @@ namespace Systems.Levels{
 				Destroy(gameObject);
 			}
 
-			_allSpawnManagers = GameObject.FindObjectsOfType<SpawnManager>();
+			_allSpawnManagers = FindObjectsOfType<SpawnManager>();
 		}
 
 		private void Start(){
@@ -57,6 +64,8 @@ namespace Systems.Levels{
 		/// Calls any other methods that need to happen here.
 		/// </summary>
 		public void StartLevel(){
+			SetLevelState(LevelState.Started);
+			
 			Debug.Log("Starting Level [" + _gameLevel + "]!");
 
 			if (OnLevelStart != null){
@@ -77,12 +86,32 @@ namespace Systems.Levels{
 					return;
 				}
 			}
-		
-			// if all the spawned objects are missing, then the level is over!
-			// TODO: this is an expensive call, refactor to do it a better way
-			if (GameObject.FindObjectsOfType<DataPoint>().Length == 0){
-				EndLevel();
+			
+			// if we've collected all data points in the scene, the level might be over
+			if (!AreThereDataPointsLeft()){
+				// if there are enemies left in the scene, this is a special level state
+				if (AreThereEnemiesLeft()){
+					SetLevelState(LevelState.EnemyCleanup);
+				}
+				else{
+					// TODO: one day, trigger the level state where the player can walk around/take action
+					EndLevel();	
+				}
 			}
+		}
+
+		/// <summary>
+		/// True if there are data points left in the scene, false if not.
+		/// </summary>
+		private bool AreThereDataPointsLeft(){
+			return DataPoint.GetDataPointCountInScene() > 0;
+		}
+
+		/// <summary>
+		/// True if there are enemies still left in the scene, false if not.
+		/// </summary>
+		private bool AreThereEnemiesLeft(){
+			return EnemyMovementController.GetTotalEnemiesInScene() > 0;
 		}
 	
 		/// <summary>
@@ -90,19 +119,31 @@ namespace Systems.Levels{
 		/// including preparing for the next level.
 		/// </summary>
 		private void EndLevel(){
+			SetLevelState(LevelState.Ended);
+			
 			// first, let's increment the level counter to the next level
-			IncrementLevel();
+			_gameLevel++;
+			
+			// if there are any listeners, notify them that the level has changed!
+			if (OnLevelFinish != null){
+				OnLevelFinish(_gameLevel);
+			}
 		
+			// TODO: instead of stopping the level altogether, let the player do something here instead
 			// and for now, just starts the next level!
 			StartLevel();
 		}
 
-		private void IncrementLevel(){
-			_gameLevel++;
-		
-			// if there are any listeners, notify them that the level has changed!
-			if (OnLevelFinish != null){
-				OnLevelFinish(_gameLevel);
+		/// <summary>
+		/// Wrapper to change level state. Use this to see nice logging if you'd like.
+		/// </summary>
+		private void SetLevelState(LevelState state){
+			Debug.Log("Changed Level State from [" + _levelState + "] to: [" + state + "]");
+			_levelState = state;
+
+			// call any listeners that need to know when the current state has changed
+			if (OnLevelStateChange != null){
+				OnLevelStateChange(_levelState);
 			}
 		}
 	}
