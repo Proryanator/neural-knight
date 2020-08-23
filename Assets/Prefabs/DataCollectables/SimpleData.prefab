@@ -14,11 +14,11 @@ GameObject:
   - component: {fileID: 492845937}
   - component: {fileID: 6198352761472684216}
   - component: {fileID: 5814638398202421002}
-  - component: {fileID: 3287703740583024353}
+  - component: {fileID: -1362552592381193057}
   - component: {fileID: 7295590159926269586}
   - component: {fileID: -7157169241515413422}
   - component: {fileID: -8106663143072523599}
-  m_Layer: 14
+  m_Layer: 17
   m_Name: SimpleData
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -150,7 +150,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fd3f0726bfe489cae9ae7f73c75f9a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3287703740583024353
+--- !u!114 &-1362552592381193057
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -159,14 +159,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 5279645652737427393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac12429af39d4d9faca85f64806646c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 968dedb257954060a6d59cb32084994c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   startingDirection: 270
-  _moveFreeForm: 1
-  _wanderSpeed: 5
-  _wanderMaxInterval: 10
-  _wanderMinInterval: 5
+  _radius: 2
+  _moveSpeed: 5
+  _useCenterOfMap: 0
 --- !u!114 &7295590159926269586
 MonoBehaviour:
   m_ObjectHideFlags: 0

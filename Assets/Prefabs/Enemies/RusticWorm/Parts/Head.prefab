@@ -196,8 +196,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingDirection: 270
   _radius: 3.5
-  _rotationSpeed: 100
-  _toCenterSpeed: 5
+  _moveSpeed: 5
+  _useCenterOfMap: 1
 --- !u!114 &7358912374886872814
 MonoBehaviour:
   m_ObjectHideFlags: 0

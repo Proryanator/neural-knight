@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - AITracker
   - MapCentralPoint
+  - DataFocusPoint
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Entity
   - Play Area
   - Map Central Point
-  - 
+  - DataEntity
   - 
   - 
   - 

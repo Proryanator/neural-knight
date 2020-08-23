@@ -1,5 +1,4 @@
-﻿using System.Runtime.ConstrainedExecution;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Utils{
 	public class AllTags : ScriptableObject{
@@ -7,5 +6,6 @@ namespace Utils{
 		public const string PLAYER = "Player";
 		public const string AI_TRACKER = "AITracker";
 		public const string MAP_CENTRAL_POINT = "MapCentralPoint";
+		public const string DATA_FOCUS_POINT = "DataFocusPoint";
 	}
 }
