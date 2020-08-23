@@ -85,6 +85,8 @@ namespace Systems.PlayerAgro{
 
 		/// <summary>
 		/// If there's an enemy that's listening to agro, activate them now!
+		///
+		/// TODO: Might consider making this distance based instead.
 		/// </summary>
 		private void TriggerAgroOnNextRandomEnemy(){
 			// trigger the next in line
