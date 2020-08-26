@@ -92,6 +92,11 @@ namespace Systems.Spawning{
 		/// </summary>
 		public void DecrementSceneCount(){
 			_inSceneCount--;
+
+			// this might happen cause we're using co-routines
+			if (_inSceneCount < 0){
+				_inSceneCount = 0;
+			}
 		}
 		
 		/// <summary>
