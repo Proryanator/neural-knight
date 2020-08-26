@@ -79,7 +79,7 @@ namespace Entities.MovementPatterns{
 			}
 
 			// no matter what, you'll want to face your movement direction
-			Utils2D.RotateToFaceDirection(transform, directionOfMovement, startingDirection);
+			transform.rotation = Utils2D.GetRotationTowardsDirection(directionOfMovement, startingDirection);
 		}
 
 		/// <summary>

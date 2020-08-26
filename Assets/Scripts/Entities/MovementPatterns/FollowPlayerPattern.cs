@@ -16,6 +16,10 @@ namespace Entities.MovementPatterns{
 		[Tooltip("The speed at which to update the path. A higher value will be more realistic but more costly.")]
 		[SerializeField] private float _repeatRate = .5f;
 
+		// distance between way points for the AI system
+		[Tooltip("The distance between way-points for the AI system to generate")] 
+		[SerializeField] private float _nextWayPointDistance = 3f;
+		
 		private Seeker _seeker;
 
 		private Rigidbody2D _rigidbody2D;
@@ -25,17 +29,19 @@ namespace Entities.MovementPatterns{
 		// when working with multiple players
 		private Transform _playerTarget;
 
-		// distance between way points for the AI system
-		[Tooltip("The distance between way-points for the AI system to generate")] 
-		[SerializeField] private float _nextWayPointDistance = 3f;
-
 		// the current path we're following from the path-finding system
 		private Path _path;
 
 		// this is the current way point we're travelling to?
 		private int _currentWayPoint = 0;
+		
+		// if your rotation is inverted or larger than a threshold for more than this amount of frames,
+		// then apply the rotation. Otherwise, skip it
+		private int _frameSkipForInvertedRotation = 2;
 
-		[SerializeField] private bool _reachedEndOfPath = false;
+		private int _frameSkipCount = 0;
+
+		[SerializeField] private bool _reachedEndOfPath;
 
 		private void Start(){
 			// determine if we're allowed to agro the player or not right now
@@ -83,14 +89,10 @@ namespace Entities.MovementPatterns{
 			if (distance < _nextWayPointDistance){
 				_currentWayPoint++;
 			}
-
-			// as part of moving, let's also face the movement direction, only if there's a movement direction
-			if (directionToMove != Vector2.zero){
-				Utils2D.RotateToFaceDirection(transform, directionToMove, startingDirection);
-			}
+			
+			RotateTowardsDirectionIfNotInvertedBug(directionToMove);
 		}
-
-
+		
 		private void UpdatePath(){
 			// only if you're done calculating your previous path, do this again!
 			if (_seeker.IsDone()){
@@ -98,6 +100,39 @@ namespace Entities.MovementPatterns{
 			}
 		}
 
+		/// <summary>
+		/// Rotates the sprite towards the direction of movement.
+		///
+		/// However, if a complete inverse rotation is detected, will skip this for a few frames.
+		/// This fixes a problem where every X number of frames, a sprite just completely flips around
+		/// and faces the wrong direction.
+		///
+		/// This logic might need to be repeated for other controllers but, for now this will do.
+		/// </summary>
+		/// <param name="directionToMove"></param>
+		private void RotateTowardsDirectionIfNotInvertedBug(Vector2 directionToMove){
+			// the rotation to apply
+			Quaternion rotationToApply = Utils2D.GetRotationTowardsDirection(directionToMove, startingDirection);
+			
+			// is this rotation a complete flip of the previous one? If so, skip it if we can
+			// seems like 170 is the correct amount to fix this!
+			if (Utils2D.AreRotationsLargerThanAngle(transform.rotation, rotationToApply, 170)){
+				// if this counter is less than the maximum, skip the frame
+				if (_frameSkipCount < _frameSkipForInvertedRotation){
+					Debug.Log("Angles are too large, skipping the frame.");
+					// count this frame as 'skipped'
+					_frameSkipCount++;
+					return;
+				}
+			}
+			
+			// if the rotation was not a complete flip, or we already skipped enough frames, then apply the rotation
+			transform.rotation = rotationToApply;
+			_frameSkipCount = 0;
+		}
+
+		
+		
 		/// <summary>
 		/// Will return a player that you want to track.
 		///

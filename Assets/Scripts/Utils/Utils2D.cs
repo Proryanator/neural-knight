@@ -4,16 +4,25 @@ namespace Utils{
 	public class Utils2D : ScriptableObject{
 		
 		/// <summary>
-		/// Rotates the transform in the direction of the direction, based off of your starting direction.
+		/// Returns you a rotation in the direction you're requesting!
 		/// </summary>
 		/// <param name="transform">The transform of the object to rotate</param>
 		/// <param name="direction">The direction to face towards</param>
-		/// <param name="_startingDirection">The starting direction of the sprite</param>
-		public static void RotateToFaceDirection(Transform transform, Vector2 direction, FacingDirection _startingDirection){
+		/// <param name="startingDirection">The starting direction of the sprite</param>
+		public static Quaternion GetRotationTowardsDirection(Vector2 direction, FacingDirection startingDirection){
 			float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-			
-			// taking initial direction into account, now rotate towards the mouse!
-			transform.rotation = GetRotationForStartingDirection(angle, _startingDirection);
+			return GetRotationForStartingDirection(angle, startingDirection);
+		}
+
+		/// <summary>
+		/// Given an angle threshold, tells you if the second rotation is higher than the threshold rotation
+		/// from the first.
+		/// </summary>
+		/// <param name="first">The first rotation</param>
+		/// <param name="second">The second rotation (often the rotation to go to)</param>
+		/// <param name="angleThreshold">A minimum difference of rotation allowed between 2 rotations</param>
+		public static bool AreRotationsLargerThanAngle(Quaternion first, Quaternion second, int angleThreshold){
+			return Quaternion.Angle(first, second) >= angleThreshold;
 		}
 		
 		public static Quaternion GetRotationForStartingDirection(float angle, FacingDirection direction){
