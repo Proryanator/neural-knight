@@ -13,15 +13,14 @@ namespace Entities.MovementPatterns{
 		[Tooltip("Speed at which to walk towards the player.")] 
 		[SerializeField] private float _speed = 5f;
 
-		[Tooltip("The speed at which to update the path. A higher value will be more realistic but more costly.")]
+		[Tooltip("The interval at which to update the path. A higher value will be more realistic but more costly.")]
 		[SerializeField] private float _repeatRate = .5f;
-
-		// distance between way points for the AI system
+		
 		[Tooltip("The distance between way-points for the AI system to generate")] 
 		[SerializeField] private float _nextWayPointDistance = 3f;
 		
+		// references to other scripts
 		private Seeker _seeker;
-
 		private Rigidbody2D _rigidbody2D;
 
 		// the player object that we'll be following
@@ -35,13 +34,15 @@ namespace Entities.MovementPatterns{
 		// this is the current way point we're travelling to?
 		private int _currentWayPoint = 0;
 		
+		private bool _reachedEndOfPath;
+		
 		// if your rotation is inverted or larger than a threshold for more than this amount of frames,
 		// then apply the rotation. Otherwise, skip it
 		private int _frameSkipForInvertedRotation = 2;
-
 		private int _frameSkipCount = 0;
-
-		[SerializeField] private bool _reachedEndOfPath;
+		
+		// keeps track of the last waypoint, we may need to use it to get around an odd bug
+		private Vector2 _lastDirection;
 
 		private void Start(){
 			// determine if we're allowed to agro the player or not right now
@@ -55,7 +56,6 @@ namespace Entities.MovementPatterns{
 					"No player object was found, did you change the implementation of how a player is found?");
 			}
 			else{
-				// create a path
 				InvokeRepeating("UpdatePath", 0f, _repeatRate);
 			}
 		}
@@ -79,8 +79,17 @@ namespace Entities.MovementPatterns{
 			Vector2 directionToMove =
 				((Vector2) _path.vectorPath[_currentWayPoint] - (Vector2) transform.position).normalized;
 
+			// if this is the opposite direction, this is most likely a problem
+			// just use the last direction from before
+			if (Vector2.Dot(transform.position, directionToMove) == 0){
+				// just move in the direction you were last time and return
+				directionToMove = _lastDirection;
+			}else{
+				// store this as the last direction you moved
+				_lastDirection = directionToMove;
+			}
+			
 			// now we simply translate in that direction based on the speed!
-			// transform.Translate(Time.deltaTime * );
 			_rigidbody2D.velocity = (_speed * directionToMove);
 
 			// determine if we've reached the next way-point, track the next one
@@ -92,7 +101,7 @@ namespace Entities.MovementPatterns{
 			
 			RotateTowardsDirectionIfNotInvertedBug(directionToMove);
 		}
-		
+
 		private void UpdatePath(){
 			// only if you're done calculating your previous path, do this again!
 			if (_seeker.IsDone()){
