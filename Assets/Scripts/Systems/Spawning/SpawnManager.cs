@@ -18,12 +18,6 @@ namespace Systems.Spawning{
 	
 		[Tooltip("The prefab to spawn.")]
 		[SerializeField] private Transform _spawnPrefab;
-	
-		// this is accessed upon awake! Gets initial values for the script
-		private SpawnProperties _initialProps;
-
-		// holds the current use-able spawn properties; initialized by initial ones
-		private SpawnProperties _props;
 
 		[Tooltip("Choose the spawn rule to use for this spawner.")]
 		[SerializeField] private SpawnRuleEnum _spawnRuleEnum = SpawnRuleEnum.Random;
@@ -36,6 +30,18 @@ namespace Systems.Spawning{
 		[Tooltip("The object that holds spawn points that all have the same kind of spawned object.")]
 		[SerializeField] private SpawnCollection _spawnCollection;
 
+		[Tooltip("If you want this spawner to prevent level progression until it's finished spawning ALL of it's objects, this is true.")]
+		[SerializeField] private bool _affectsLevelProgression;
+
+		// this is accessed upon awake! Gets initial values for the script
+		private SpawnProperties _initialProps;
+
+		// holds the current use-able spawn properties; initialized by initial ones
+		private SpawnProperties _props;
+
+		// tracks how many total have been spawned, even if they've been removed
+		private uint _totalSpawned;
+		
 		private void Awake(){
 			_initialProps = GetComponent<SpawnProperties>();
 
@@ -70,7 +76,7 @@ namespace Systems.Spawning{
 			SetSpawnAdjuster();
 		
 			// set max count, restart counter, and start co routine!
-			_props.spawnCount = 0;
+			_props.ResetCounters();
 			StartCoroutine(Spawn());
 		}
 
@@ -98,7 +104,7 @@ namespace Systems.Spawning{
 				ScriptableObject.Destroy(_spawnRule);
 			}
 
-			_spawnRule = AbstractSpawnRule.GetRule(_spawnRuleEnum, _spawnPrefab, _spawnCollection.GetActiveSpawnPoints(), _props.maxSpawnCount);
+			_spawnRule = AbstractSpawnRule.GetRule(_spawnRuleEnum, _spawnPrefab, _spawnCollection.GetActiveSpawnPoints(), _props.sceneLimit);
 		}
 
 		private void SetSpawnAdjuster(){
@@ -110,10 +116,27 @@ namespace Systems.Spawning{
 			_spawnAdjuster = AbstractSpawnAdjuster.GetSpawnAdjuster(_spawnAdjusterEnum);
 		}
 
-		public bool CanSpawn(){
-			return _props.spawnCount < _props.maxSpawnCount;
+		/// <summary>
+		/// True if this spawner controls level progression, false if not.
+		///
+		/// Useful to see which spawners still have left to spawn, versus which will keep spawning
+		/// no matter if the level is over or not.
+		/// </summary>
+		public bool AffectsLevelProgression(){
+			return _affectsLevelProgression;
 		}
-	
+
+		/// <summary>
+		/// True if you can spawn more entities right now in the scene, false if not
+		/// </summary>
+		private bool IsSpaceInScene => _props.inSceneCount < _props.sceneLimit;
+
+		/// <summary>
+		/// True if you still have entities left to spawn, regardless if you can't spawn any right now
+		/// due to a scene limit. False if you're done.
+		/// </summary>
+		public bool CanSpawn => _props.totalSpawnedThisLevel < _props.totalToSpawn;
+
 		/// <summary>
 		/// Will spawn prefabs at the given spawn speed.
 		///
@@ -123,9 +146,14 @@ namespace Systems.Spawning{
 			// one-time spawn delay, if any
 			yield return new WaitForSeconds(_props.spawnDelay);
 		
-			while (CanSpawn()){
-				_props.spawnCount +=_spawnRule.Spawn(_props.spawnCount);
-			
+			// while we can spawn (still have entities left), keep checking
+			while (CanSpawn){
+				// if we have space for more entities, then spawn them!
+				if (IsSpaceInScene){
+					// increment how many are in the scene based on how many were made
+					_props.IncrementSpawnCount(_spawnRule.Spawn(_props));
+				}
+				
 				yield return new WaitForSeconds(_props.spawnSpeed);
 			}
 		}

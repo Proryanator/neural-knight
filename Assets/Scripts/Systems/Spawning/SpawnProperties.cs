@@ -7,16 +7,30 @@ namespace Systems.Spawning{
 	/// </summary>
 	public class SpawnProperties : MonoBehaviour{
 
+		[Tooltip("How long to delay starting to spawn this type")]
 		[SerializeField] private float _spawnDelay = 0f;
 	
+		[Tooltip("How fast to currently spawn objects")]
 		[SerializeField] private float _spawnSpeed;
+		
+		[Tooltip("The slowest spawn speed allowed")]
 		[SerializeField] private float _minSpawnSpeed;
+		
+		[Tooltip("The farthest/largest")]
 		[SerializeField] private float _maxSpawnSpeed;
-	
-		[SerializeField] private uint _spawnCount;
-		[SerializeField] private uint _minSpawnCount = 0;
-		[SerializeField] private uint _maxSpawnCount = uint.MaxValue;
+		
+		// how many units of a certain type exist in the scene
+		private uint _inSceneCount = 0;
 
+		// how many entities have been spawned this level
+		private uint _totalSpawnedThisLevel = 0;
+		
+		[Tooltip("The maximum number of a unit allowed in the scene at once.")]
+		[SerializeField] private uint sceneLimitLimit = uint.MaxValue;
+
+		[Tooltip("Total number of this entity that will be spawned, even if it's greater than the max allowed in the scene")]
+		[SerializeField] private uint _totalToSpawn = uint.MaxValue;
+		
 		public float spawnDelay{
 			get => _spawnDelay;
 			set => _spawnDelay = value;
@@ -37,21 +51,49 @@ namespace Systems.Spawning{
 			set => _maxSpawnSpeed = value;
 		}
 
-		public uint spawnCount{
-			get => _spawnCount;
-			set => _spawnCount = value;
+		public uint inSceneCount{
+			get => _inSceneCount;
+			set => _inSceneCount = value;
 		}
 
-		public uint minSpawnCount{
-			get => _minSpawnCount;
-			set => _minSpawnCount = value;
+		public uint totalSpawnedThisLevel{
+			get => _totalSpawnedThisLevel;
+			set => _totalSpawnedThisLevel = value;
+		}
+		
+		public uint sceneLimit{
+			get => sceneLimitLimit;
+			set => sceneLimitLimit = value;
 		}
 
-		public uint maxSpawnCount{
-			get => _maxSpawnCount;
-			set => _maxSpawnCount = value;
+		public uint totalToSpawn{
+			get => _totalToSpawn;
+			set => _totalToSpawn = value;
 		}
 
+		/// <summary>
+		/// Zero out all counters for preparation of a new level.
+		/// </summary>
+		public void ResetCounters(){
+			_inSceneCount = 0;
+			_totalSpawnedThisLevel = 0;
+		}
+		
+		/// <summary>
+		/// Increment scene counter, as well as total counter.
+		/// </summary>
+		public void IncrementSpawnCount(uint amount){
+			_inSceneCount+=amount;
+			_totalSpawnedThisLevel+=amount;
+		}
+
+		/// <summary>
+		/// Call this when an entity is destroyed.
+		/// </summary>
+		public void DecrementSceneCount(){
+			_inSceneCount--;
+		}
+		
 		/// <summary>
 		/// Clamps the spawn speed to be between the set limits.
 		/// </summary>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using Systems.Spawning;
 using DataPoints;
 using Entities.Movement;
 using UnityEngine;
@@ -27,6 +29,9 @@ namespace Systems.Levels{
 		// tracks the current level state of the current level
 		private LevelState _levelState = LevelState.WaitingToStart;
 
+		// these are spawn managers that need to spawn all their objects before levels can proceed
+		private SpawnManager[] _spawnManagersThatAffectLevelProgression;
+		
 		// call this when the levels' state changes, to alert things that need to know this
 		public Action<LevelState> OnLevelStateChange;
 		
@@ -55,6 +60,9 @@ namespace Systems.Levels{
 		/// Calls any other methods that need to happen here.
 		/// </summary>
 		public void StartLevel(){
+			// this call is made here, so that you can load new scenes with different spawn managers if need be
+			_spawnManagersThatAffectLevelProgression = GetSpawnManagersForLevelProgression();
+			
 			SetLevelState(LevelState.Started);
 			
 			Debug.Log("Starting Level [" + _gameLevel + "]!");
@@ -70,6 +78,13 @@ namespace Systems.Levels{
 		/// Will potentially end the level or change it's state if the rules are met.
 		/// </summary>
 		public void LevelStateChangeCheck(){
+			// are the spawners that affect level progression still spawning? If so, we're not done
+			foreach (SpawnManager manager in _spawnManagersThatAffectLevelProgression){
+				if (manager.CanSpawn){
+					return;
+				}
+			}
+			
 			// if there are data points left, the level is not over
 			if (AreThereDataPointsLeft()){
 				return;
@@ -85,6 +100,22 @@ namespace Systems.Levels{
 			}
 		}
 
+		/// <summary>
+		/// Gets you an array of spawn managers that need to spawn completely before the level progresses.
+		/// </summary>
+		private SpawnManager[] GetSpawnManagersForLevelProgression(){
+			List<SpawnManager> levelSpawnManagers = new List<SpawnManager>();
+			SpawnManager[] allSpawnManagers = FindObjectsOfType<SpawnManager>();
+
+			foreach (SpawnManager manager in allSpawnManagers){
+				if (manager.AffectsLevelProgression()){
+					levelSpawnManagers.Add(manager);
+				}
+			}
+
+			return levelSpawnManagers.ToArray();
+		}
+		
 		/// <summary>
 		/// True if there are data points left in the scene, false if not.
 		/// </summary>

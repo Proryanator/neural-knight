@@ -48,9 +48,8 @@ MonoBehaviour:
   _spawnSpeed: 0.5
   _minSpawnSpeed: 0.1
   _maxSpawnSpeed: 2
-  _spawnCount: 0
-  _minSpawnCount: 0
-  _maxSpawnCount: 3
+  sceneLimitLimit: 3
+  _totalToSpawn: 3
 --- !u!114 &364227904266615768
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68,3 +67,4 @@ MonoBehaviour:
   _spawnRuleEnum: 0
   _spawnAdjusterEnum: 0
   _spawnCollection: {fileID: 0}
+  _affectsLevelProgression: 0

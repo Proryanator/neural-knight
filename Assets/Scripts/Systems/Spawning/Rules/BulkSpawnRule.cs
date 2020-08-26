@@ -8,13 +8,13 @@
 
 		private uint _spawnCount = 3;
 	
-		public override uint Spawn(uint currentSpawnCount){
+		public override uint Spawn(SpawnProperties props){
 			uint amountToSpawn = _spawnCount;
-			if (currentSpawnCount + _spawnCount >= maxSpawnCount){
-				amountToSpawn = maxSpawnCount - currentSpawnCount;
+			if (props.inSceneCount + _spawnCount >= maxSpawnCount){
+				amountToSpawn = maxSpawnCount - props.inSceneCount;
 			}
 		
-			return SpawnAt(GetRandomSpawnPoint(), amountToSpawn);
+			return SpawnAt(GetRandomSpawnPoint(), amountToSpawn, props);
 		}
 	}
 }

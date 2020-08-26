@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Entities.Abilities;
+using UnityEngine;
 using Random = System.Random;
 
 namespace Systems.Spawning.Rules{
@@ -12,8 +13,8 @@ namespace Systems.Spawning.Rules{
 	/// </summary>
 	public abstract class AbstractSpawnRule : ScriptableObject{
 
-		protected Transform prefab;
-		protected Transform[] spawnPoints;
+		private Transform prefab;
+		private Transform[] spawnPoints;
 		protected uint maxSpawnCount;
 
 		public void Init(Transform prefab, Transform[] spawnPoints, uint maxSpawnCount){
@@ -28,19 +29,27 @@ namespace Systems.Spawning.Rules{
 		///
 		/// Returns the number of prefabs spawned!
 		/// </summary>
-		public abstract uint Spawn(uint currentSpawnCount);
+		public abstract uint Spawn(SpawnProperties props);
 
 		/// <summary>
 		/// Simply spawns the prefab at the spawn point location. Handled once in 1 place for
 		/// all spawn rules.
 		///
 		/// Spawns how ever many you ask it to, and returns that number.
+		///
+		/// Also, attaches a decrement method to the 'OnDeSpawn' method for each of them.
 		/// </summary>
-		protected uint SpawnAt(Transform point, uint spawnCount){
+		protected uint SpawnAt(Transform point, uint spawnCount, SpawnProperties props){
 			for (uint i = 0; i < spawnCount; i++){
-				GameObject.Instantiate(prefab, point.position, Quaternion.identity);
+				Transform spawned = Instantiate(prefab, point.position, Quaternion.identity);
+				DeSpawnable deSpawnable = spawned.GetComponent<DeSpawnable>();
+				if (deSpawnable == null){
+					Debug.LogWarning("Not able to attach decrement call to this object, it's missing a 'DeSpawnable' script.");
+				}else{
+					deSpawnable.OnDeSpawn += props.DecrementSceneCount;
+				}
 			}
-		
+
 			return spawnCount;
 		}
 
