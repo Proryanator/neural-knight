@@ -15,9 +15,9 @@ namespace Systems.Spawning.Rules{
 
 		private Transform prefab;
 		private Transform[] spawnPoints;
-		protected uint maxSpawnCount;
+		protected int maxSpawnCount;
 
-		public void Init(Transform prefab, Transform[] spawnPoints, uint maxSpawnCount){
+		public void Init(Transform prefab, Transform[] spawnPoints, int maxSpawnCount){
 			this.prefab = prefab;
 			this.spawnPoints = spawnPoints;
 			this.maxSpawnCount = maxSpawnCount;
@@ -29,7 +29,7 @@ namespace Systems.Spawning.Rules{
 		///
 		/// Returns the number of prefabs spawned!
 		/// </summary>
-		public abstract uint Spawn(SpawnProperties props);
+		public abstract int Spawn(SpawnProperties props);
 
 		/// <summary>
 		/// Simply spawns the prefab at the spawn point location. Handled once in 1 place for
@@ -39,8 +39,8 @@ namespace Systems.Spawning.Rules{
 		///
 		/// Also, attaches a decrement method to the 'OnDeSpawn' method for each of them.
 		/// </summary>
-		protected uint SpawnAt(Transform point, uint spawnCount, SpawnProperties props){
-			for (uint i = 0; i < spawnCount; i++){
+		protected int SpawnAt(Transform point, int spawnCount, SpawnProperties props){
+			for (int i = 0; i < spawnCount; i++){
 				Transform spawned = Instantiate(prefab, point.position, Quaternion.identity);
 				DeSpawnable deSpawnable = spawned.GetComponent<DeSpawnable>();
 				if (deSpawnable == null){
@@ -63,7 +63,7 @@ namespace Systems.Spawning.Rules{
 		///
 		/// NOTE: it's up to the caller to cleanup their own objects before getting a new one.
 		/// </summary>
-		public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum, Transform prefab, Transform[] spawnPoints, uint maxSpawnCount){
+		public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum, Transform prefab, Transform[] spawnPoints, int maxSpawnCount){
 			AbstractSpawnRule rule = null;
 
 			if (spawnPoints == null || spawnPoints.Length == 0){

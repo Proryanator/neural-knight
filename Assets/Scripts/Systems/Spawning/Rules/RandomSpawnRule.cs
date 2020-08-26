@@ -4,7 +4,7 @@
 	/// </summary>
 	public class RandomSpawnRule : AbstractSpawnRule {
 
-		public override uint Spawn(SpawnProperties props){
+		public override int Spawn(SpawnProperties props){
 			return SpawnAt(GetRandomSpawnPoint(), 1, props);
 		}
 	}

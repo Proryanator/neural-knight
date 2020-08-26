@@ -1,7 +1,7 @@
 ﻿namespace Systems.Spawning.SpawnAdjusters{
 	public class EnemyCountAndRateAdjuster : AbstractSpawnAdjuster{
 		public override SpawnProperties AdjustSpawnProperties(SpawnProperties props, int gameLevel){
-			props.sceneLimit += (uint)(2 * gameLevel);
+			props.sceneLimit += 2 * gameLevel;
 
 			// let's also make spawning faster every 5 levels
 			// TODO: how could we configure this from the inspector?

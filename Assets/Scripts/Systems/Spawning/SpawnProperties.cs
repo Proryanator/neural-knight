@@ -20,16 +20,16 @@ namespace Systems.Spawning{
 		[SerializeField] private float _maxSpawnSpeed;
 		
 		// how many units of a certain type exist in the scene
-		private uint _inSceneCount = 0;
+		[SerializeField] private int _inSceneCount = 0;
 
 		// how many entities have been spawned this level
-		private uint _totalSpawnedThisLevel = 0;
+		[SerializeField] private int _totalSpawnedThisLevel = 0;
 		
 		[Tooltip("The maximum number of a unit allowed in the scene at once.")]
-		[SerializeField] private uint sceneLimitLimit = uint.MaxValue;
+		[SerializeField] private int sceneLimitLimit = 10;
 
 		[Tooltip("Total number of this entity that will be spawned, even if it's greater than the max allowed in the scene")]
-		[SerializeField] private uint _totalToSpawn = uint.MaxValue;
+		[SerializeField] private int _totalToSpawn = int.MaxValue;
 		
 		public float spawnDelay{
 			get => _spawnDelay;
@@ -51,22 +51,22 @@ namespace Systems.Spawning{
 			set => _maxSpawnSpeed = value;
 		}
 
-		public uint inSceneCount{
+		public int inSceneCount{
 			get => _inSceneCount;
 			set => _inSceneCount = value;
 		}
 
-		public uint totalSpawnedThisLevel{
+		public int totalSpawnedThisLevel{
 			get => _totalSpawnedThisLevel;
 			set => _totalSpawnedThisLevel = value;
 		}
 		
-		public uint sceneLimit{
+		public int sceneLimit{
 			get => sceneLimitLimit;
 			set => sceneLimitLimit = value;
 		}
 
-		public uint totalToSpawn{
+		public int totalToSpawn{
 			get => _totalToSpawn;
 			set => _totalToSpawn = value;
 		}
@@ -82,7 +82,7 @@ namespace Systems.Spawning{
 		/// <summary>
 		/// Increment scene counter, as well as total counter.
 		/// </summary>
-		public void IncrementSpawnCount(uint amount){
+		public void IncrementSpawnCount(int amount){
 			_inSceneCount+=amount;
 			_totalSpawnedThisLevel+=amount;
 		}

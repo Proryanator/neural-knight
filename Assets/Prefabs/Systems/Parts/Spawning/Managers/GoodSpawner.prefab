@@ -49,7 +49,7 @@ MonoBehaviour:
   _minSpawnSpeed: 0.1
   _maxSpawnSpeed: 2
   sceneLimitLimit: 3
-  _totalToSpawn: 3
+  _totalToSpawn: 6
 --- !u!114 &364227904266615768
 MonoBehaviour:
   m_ObjectHideFlags: 0

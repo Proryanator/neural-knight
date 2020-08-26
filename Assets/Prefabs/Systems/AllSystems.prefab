@@ -519,6 +519,11 @@ PrefabInstance:
       propertyPath: _spawnCollection
       value: 
       objectReference: {fileID: 345661784}
+    - target: {fileID: 364227904266615768, guid: 9d24d66e71936784a8a3da53538d4f8e,
+        type: 3}
+      propertyPath: _affectsLevelProgression
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 364227904266615769, guid: 9d24d66e71936784a8a3da53538d4f8e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -577,7 +582,7 @@ PrefabInstance:
     - target: {fileID: 364227904266615771, guid: 9d24d66e71936784a8a3da53538d4f8e,
         type: 3}
       propertyPath: _spawnDelay
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 364227904266615774, guid: 9d24d66e71936784a8a3da53538d4f8e,
         type: 3}
