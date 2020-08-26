@@ -86,8 +86,6 @@ namespace Entities.Movement{
 		/// Otherwise, will set this guy up for listening.
 		/// </summary>
 		public void TriggerAgroIfEnemyController(){
-			Debug.Log("Object w/ name [" + gameObject.name + "] is trying to agro.");
-			
 			// entities that can agro, and are allowed to, will do so
 			if (_doesAgro && _playerAgroManager.CanAgroPlayer()){
 				StartAgro();

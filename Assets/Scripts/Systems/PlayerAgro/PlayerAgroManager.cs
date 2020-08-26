@@ -122,8 +122,28 @@ namespace Systems.PlayerAgro{
 		private void TriggerAgroOnNextRandomEnemy(){
 			// trigger the next in line
 			if (_listOfListeners.Count > 0){
+				RemoveNullControllers();
+				
 				int index = Random.Range(0, _listOfListeners.Count);
 				_listOfListeners[index].TriggerAgroIfEnemyController();
+			}
+		}
+
+		/// <summary>
+		/// It is possible that these enemies may have already been destroyed before this point,
+		/// so let's make sure to remove any from the list that may be null.
+		/// </summary>
+		private void RemoveNullControllers(){
+			List<int> indicesToRemove = new List<int>();
+			// trim this list of empty components (they might have been destroyed already)
+			for (int i = 0; i < _listOfListeners.Count; i++){
+				if (_listOfListeners[i] == null){
+					indicesToRemove.Add(i);
+				}
+			}
+
+			foreach (int index in indicesToRemove){
+				_listOfListeners.RemoveAt(index);
 			}
 		}
 	}
