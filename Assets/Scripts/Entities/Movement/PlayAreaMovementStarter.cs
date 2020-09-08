@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Systems.PlayerAgro;
+using UnityEngine;
 
 namespace Entities.Movement{
 	/// <summary>
@@ -39,23 +40,29 @@ namespace Entities.Movement{
 		// to re-register
 		private void StartInitialMovementIfViable(Collider2D other){
 			// call a start call on objects that have movement patterns
-			AbstractMovementController movementController = other.GetComponent<AbstractMovementController>();
-			
-			// special setup code required for enemy controllers here
-			if (movementController is EnemyMovementController){
-				EnemyMovementController enemyMovementController = (EnemyMovementController) movementController;
-				enemyMovementController.TriggerAgroIfEnemyController();
+			EntityMovementController entityMovementController = other.GetComponent<EntityMovementController>();
+
+			if (entityMovementController == null){
 				return;
 			}
 
-			if (movementController != null){
-				Debug.Log("Found AI! Starting their normal movement.");
-				movementController.StartInitialPattern();
+			TriggerOrListenForAgroIfAvailable(other);
+			
+			Debug.Log("Found AI! Starting their normal movement.");
+			entityMovementController.StartInitialMovementPattern();
 
-				// also sets the layer of 'Entity' to this object, keeping it inside the playable area
-				movementController.RestoreOriginalLayer();			}
+			// also sets the layer of 'Entity' to this object, keeping it inside the playable area
+			// we change the layer of the entity already right?
+			other.GetComponent<EntityLayerChanger>().SetToInsidePlayAreaLayer();
 		}
 
+		private void TriggerOrListenForAgroIfAvailable(Collider2D other){
+			AgroAvailabilityListener agroAvailabilityListener = other.GetComponent<AgroAvailabilityListener>();
+			if (agroAvailabilityListener != null){
+				agroAvailabilityListener.TriggerAgroOrListen();
+			}
+		}
+		
 		/// <summary>
 		/// Determines if you're in the play area.
 		/// </summary>

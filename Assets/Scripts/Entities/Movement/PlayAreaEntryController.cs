@@ -25,7 +25,5 @@ namespace Entities.Movement{
 				_abstractMovementController.EnableCenterPattern();
 			}
 		}
-
-		
 	}
 }

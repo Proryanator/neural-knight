@@ -72,10 +72,10 @@ namespace Entities.Movement{
 		/// </summary>
 		private void StartAgro(){
 			// register this enemy as following the player!
-			_playerAgroManager.RegisterForAgro(GetComponent<EnemyHealth>());
+			// _playerAgroManager.RegisterForAgro(GetComponent<EnemyHealth>());
 			
 			// remove itself from listening if it was
-			_playerAgroManager.StopListeningForAgroSlot(this);
+			// playerAgroManager.StopListeningForAgroSlot(this);
 			
 			// we'll attach the FollowPlayerPattern and remove the other one!
 			EnableFollowPlayerPattern();
@@ -93,7 +93,7 @@ namespace Entities.Movement{
 			}
 
 			// otherwise this enemy will listen
-			_playerAgroManager.ListenForAgroSlot(this);
+			// _playerAgroManager.ListenForAgroSlot(this);
 
 			// we'll want to start the initial movement if this is true
 			StartInitialPattern();

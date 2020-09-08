@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Systems.Spawning;
 using DataPoints;
-using Entities.Movement;
 using UnityEngine;
 
 namespace Systems.Levels{
@@ -127,7 +126,7 @@ namespace Systems.Levels{
 		/// True if there are enemies still left in the scene, false if not.
 		/// </summary>
 		private bool AreThereEnemiesLeft(){
-			return EnemyMovementController.GetTotalEnemiesInScene() > 0;
+			return EnemiesInSceneCounter.GetTotalEnemiesInScene() > 0;
 		}
 	
 		/// <summary>

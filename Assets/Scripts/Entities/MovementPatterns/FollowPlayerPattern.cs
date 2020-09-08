@@ -18,11 +18,15 @@ namespace Entities.MovementPatterns{
 		
 		[Tooltip("The distance between way-points for the AI system to generate")] 
 		[SerializeField] private float _nextWayPointDistance = 3f;
+
+		[SerializeField] private float _radiusOfCirclePattern = 3f;
 		
 		// references to other scripts
 		private Seeker _seeker;
 		private Rigidbody2D _rigidbody2D;
 
+		private bool _isAgroingPlayer;
+		
 		// the player object that we'll be following
 		// NOTE: we might need to adjust this to find the 'nearest' player instead of the default player,
 		// when working with multiple players
@@ -44,6 +48,8 @@ namespace Entities.MovementPatterns{
 		// keeps track of the last waypoint, we may need to use it to get around an odd bug
 		private Vector2 _lastDirection;
 
+		private Transform _rotationPoint;
+		
 		private void Start(){
 			// determine if we're allowed to agro the player or not right now
 			// called when this script is first added
@@ -58,9 +64,29 @@ namespace Entities.MovementPatterns{
 			else{
 				InvokeRepeating("UpdatePath", 0f, _repeatRate);
 			}
+			
+			_rotationPoint = GameObject.FindGameObjectWithTag(AllTags.MAP_CENTRAL_POINT).transform;
 		}
 
 		public override void Move(){
+			if (_isAgroingPlayer){
+				MoveTowardsPlayer();
+			}
+			else{
+				// TODO: make this something you can define/adjust later on specifically for this pattern!
+				CircleAroundPointPattern.CircleAroundCenterPointPattern(transform, _rotationPoint, _radiusOfCirclePattern, _speed);
+			}
+		}
+
+		public void EnableAgro(){
+			_isAgroingPlayer = true;
+		}
+
+		public bool IsAgroing(){
+			return _isAgroingPlayer;
+		}
+		
+		private void MoveTowardsPlayer(){
 			// if there isn't a path, return
 			if (_path == null){
 				return;
@@ -101,7 +127,7 @@ namespace Entities.MovementPatterns{
 			
 			RotateTowardsDirectionIfNotInvertedBug(directionToMove);
 		}
-
+		
 		private void UpdatePath(){
 			// only if you're done calculating your previous path, do this again!
 			if (_seeker.IsDone()){

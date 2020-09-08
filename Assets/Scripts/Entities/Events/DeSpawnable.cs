@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Entities.Abilities{
+namespace Entities.Events{
 	
 	/// <summary>
 	/// Simply exposes a method to use that will be called when this object is 'despawned'.

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Entities.NewMovement{
+namespace Systems.Levels{
 	public class EnemiesInSceneCounter : MonoBehaviour{
 		private static int _totalEnemiesInScene = 0;
 
@@ -10,6 +10,10 @@ namespace Entities.NewMovement{
 		
 		private void OnDestroy(){
 			_totalEnemiesInScene--;
+		}
+
+		public static int GetTotalEnemiesInScene(){
+			return _totalEnemiesInScene;
 		}
 	}
 }

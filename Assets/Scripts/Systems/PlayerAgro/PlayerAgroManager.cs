@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using Systems.Levels;
-using Entities.Movement;
-using HealthAndDamage;
+using Entities.Events;
 using UnityEngine;
 
 namespace Systems.PlayerAgro{
@@ -24,7 +23,7 @@ namespace Systems.PlayerAgro{
 		[SerializeField] private int _agroLevelBoundary = 2;
 		
 		// holds list of unique ids of enemy listeners
-		private List<EnemyMovementController> _listOfListeners = new List<EnemyMovementController>();
+		private List<AgroAvailabilityListener> _listOfAgroListeners = new List<AgroAvailabilityListener>();
 		
 		private void Awake(){
 			if (_instance == null){
@@ -50,7 +49,7 @@ namespace Systems.PlayerAgro{
 		///
 		/// Should only be called after calling 'CanAgroPlayer'.
 		/// </summary>
-		public void RegisterForAgro(EnemyHealth enemyHealth){
+		public void RegisterForAgro(DeSpawnable deSpawnable){
 			if (!CanAgroPlayer()){
 				Debug.LogWarning("You called this method when there were no slots left to agro the player!");
 			}
@@ -58,7 +57,7 @@ namespace Systems.PlayerAgro{
 			// increment the agro counter
 			_currentAgro++;
 
-			enemyHealth.OnDeath += DeRegisterAgro;
+			deSpawnable.OnDeSpawn += DeRegisterAgro;
 
 			Debug.Log("Enemy registered to agro the player.");
 		}
@@ -66,18 +65,18 @@ namespace Systems.PlayerAgro{
 		/// <summary>
 		/// Add this object to the list of objects listening for open slots
 		/// </summary>
-		public void ListenForAgroSlot(EnemyMovementController enemyMovementController){
+		public void ListenForAgroSlot(AgroAvailabilityListener agroAvailabilityListener){
 			Debug.Log("Enemy is listening for agro slot to open");
-			_listOfListeners.Add(enemyMovementController);
+			_listOfAgroListeners.Add(agroAvailabilityListener);
 		}
 
 		/// <summary>
 		/// Remove this object from the list of listening objects.
 		/// </summary>
-		public void StopListeningForAgroSlot(EnemyMovementController enemyMovementController){
-			if (_listOfListeners.Contains(enemyMovementController)){
+		public void StopListeningForAgroSlot(AgroAvailabilityListener agroAvailabilityListener){
+			if (_listOfAgroListeners.Contains(agroAvailabilityListener)){
 				Debug.Log("Enemy stopped listening for agro slot to open");
-				_listOfListeners.Remove(enemyMovementController);
+				_listOfAgroListeners.Remove(agroAvailabilityListener);
 			}
 		}
 		
@@ -121,11 +120,11 @@ namespace Systems.PlayerAgro{
 		/// </summary>
 		private void TriggerAgroOnNextRandomEnemy(){
 			// trigger the next in line
-			if (_listOfListeners.Count > 0){
+			if (_listOfAgroListeners.Count > 0){
 				RemoveNullControllers();
 				
-				int index = Random.Range(0, _listOfListeners.Count);
-				_listOfListeners[index].TriggerAgroIfEnemyController();
+				int index = Random.Range(0, _listOfAgroListeners.Count);
+				_listOfAgroListeners[index].TriggerAgroOrListen();
 			}
 		}
 
@@ -136,14 +135,14 @@ namespace Systems.PlayerAgro{
 		private void RemoveNullControllers(){
 			List<int> indicesToRemove = new List<int>();
 			// trim this list of empty components (they might have been destroyed already)
-			for (int i = 0; i < _listOfListeners.Count; i++){
-				if (_listOfListeners[i] == null){
+			for (int i = 0; i < _listOfAgroListeners.Count; i++){
+				if (_listOfAgroListeners[i] == null){
 					indicesToRemove.Add(i);
 				}
 			}
 
 			foreach (int index in indicesToRemove){
-				_listOfListeners.RemoveAt(index);
+				_listOfAgroListeners.RemoveAt(index);
 			}
 		}
 	}

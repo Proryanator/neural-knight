@@ -1,11 +1,9 @@
 ﻿using System.Collections;
-using Entities.MovementPatterns;
 using HealthAndDamage;
 using UnityEngine;
 using Utils;
 
-namespace Entities.NewMovement{
-	[RequireComponent(typeof(NoMovementPattern))]
+namespace Entities.Movement{
 	[RequireComponent(typeof(EntityMovementController))]
 	public class StunWhenHit : MonoBehaviour{
 		[Tooltip("Seconds to stop movement of the current entity")]
@@ -15,14 +13,11 @@ namespace Entities.NewMovement{
 
 		private bool _isStunned;
 
-		private NoMovementPattern _noMovementPattern;
-
 		private EntityMovementController _entityMovementController;
 
 		private int _originalLayer;
 		
 		private void Awake(){
-			_noMovementPattern = GetComponent<NoMovementPattern>();
 			_entityMovementController = GetComponent<EntityMovementController>();
 			_originalLayer = gameObject.layer;
 			
@@ -55,12 +50,12 @@ namespace Entities.NewMovement{
 		private void SetStunnedState(){
 			_isStunned = true;
 			gameObject.layer = LayerMask.NameToLayer(AllLayers.DAMAGED_ENEMY);
-			_entityMovementController.SetMovementPattern(_noMovementPattern);
+			_entityMovementController.DisableMovementPattern();
 		}
 
 		private void UndoStunnedState(){
 			_isStunned = false;
-			_entityMovementController.RestoreInitialMovementPattern();
+			_entityMovementController.StartInitialMovementPattern();
 			gameObject.layer = _originalLayer;
 
 			// remove any forces if any were applied
