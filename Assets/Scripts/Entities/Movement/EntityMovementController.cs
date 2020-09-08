@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Entities.Movement{
 	[RequireComponent(typeof(MoveToCenterMovementPattern))]
-	[RequireComponent(typeof(EntityLayerChanger))]
+	[RequireComponent(typeof(EntityPlayAreaLayerChanger))]
 	public class EntityMovementController : MonoBehaviour{
 
 		private AbstractMovementPattern _initialMovementPattern;
@@ -20,7 +20,7 @@ namespace Entities.Movement{
 		}
 
 		private void Update(){
-			CallMoveOnPatternIfNotNull(_movementPatternInUse);
+			CallMovementPatternIfNotNull(_movementPatternInUse);
 		}
 
 		private AbstractMovementPattern GetNonMoveToCenterPattern(){
@@ -38,18 +38,12 @@ namespace Entities.Movement{
 			return nonMoveToCenterPattern;
 		}
 		
-		private void CallMoveOnPatternIfNotNull(AbstractMovementPattern pattern){
-			if (pattern != null){
-				pattern.Move();
-			}
+		private void CallMovementPatternIfNotNull(AbstractMovementPattern pattern){
+			pattern?.Move();
 		}
 
 		public void DisableMovementPattern(){
 			_movementPatternInUse = null;
-		}
-		
-		public void SetMovementPattern(AbstractMovementPattern pattern){
-			_movementPatternInUse = pattern;
 		}
 
 		public void StartInitialMovementPattern(){
