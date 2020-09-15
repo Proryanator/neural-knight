@@ -21,11 +21,10 @@ GameObject:
   - component: {fileID: 3450372240070498885}
   - component: {fileID: 3450372240070498884}
   - component: {fileID: 3450372240070498939}
-  - component: {fileID: 3450372240070498938}
   - component: {fileID: 3450372240070498936}
   - component: {fileID: 3450372240070498937}
   m_Layer: 0
-  m_Name: NewHead
+  m_Name: Head
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,7 +182,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b9c893b7c6b4b7dba5acb4c0968e468, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingDirection: 270
   _moveSpeed: 5
 --- !u!114 &3450372240070498887
 MonoBehaviour:
@@ -197,7 +195,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b439e045496440d1aca74fddb37b1758, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingDirection: 270
   _speed: 3
   _repeatRate: 0.1
   _nextWayPointDistance: 0.5
@@ -268,18 +265,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyDamage: 1
---- !u!114 &3450372240070498938
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3450372240070498942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 03954d60d36f43b6ab6e2619c85b4042, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3450372240070498936
 MonoBehaviour:
   m_ObjectHideFlags: 0

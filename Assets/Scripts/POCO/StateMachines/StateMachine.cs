@@ -21,7 +21,7 @@ namespace POCO.StateMachines{
 			_currentState?.Tick();
 		}
 
-		private void SetState(IState state){
+		public void SetState(IState state){
 			if (state == _currentState){
 				return;
 			}
