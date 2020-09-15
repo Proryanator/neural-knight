@@ -13,6 +13,8 @@ namespace Systems.Levels.LevelStates{
 		}
 
 		public void OnEnter(){
+			_levelManager.SetSpawnManagersForLevelProgression();
+			
 			// invoke any events that are attached to this event
 			_levelManager.InvokeStartLevelEvent();
 

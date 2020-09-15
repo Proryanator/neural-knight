@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using Systems.Levels.LevelStates;
+using Systems.Spawning;
 using DataPoints;
 using POCO.StateMachines;
 using UnityEngine;
@@ -25,8 +27,11 @@ namespace Systems.Levels{
 		// notifies when a level starts
 		public Action<int> OnLevelStart;
 
+		private SpawnManager[] _spawnManagers;
+		
 		private StateMachine _stateMachine;
-
+		private IState _startLevelState;
+		
 		private void Awake(){
 			if (_instance == null){
 				_instance = this;
@@ -37,6 +42,10 @@ namespace Systems.Levels{
 			}
 		}
 
+		private void Start(){
+			_stateMachine.SetState(_startLevelState);
+		}
+
 		private void Update(){
 			_stateMachine.Tick();
 		}
@@ -44,22 +53,21 @@ namespace Systems.Levels{
 		private void CreateAndSetupStates(){
 			_stateMachine = new StateMachine();
 			
-			IState startLevelState = new StartLevelState(this);
+			_startLevelState = new StartLevelState(this);
 			IState collectDataState = new CollectDataState();
 			IState enemyCleanupState = new EnemyCleanupState();
 			IState endOfLevelState = new EndOfLevelState(this);
 			
-			_stateMachine.AddTransition(startLevelState, collectDataState, HasGameStarted());
+			_stateMachine.AddTransition(_startLevelState, collectDataState, HasGameStarted());
 			_stateMachine.AddTransition(collectDataState, enemyCleanupState, IsDataCollectedButEnemiesLeft());
 			_stateMachine.AddTransition(collectDataState, endOfLevelState, AreAllEntitiesGone());
-			_stateMachine.AddTransition(endOfLevelState, startLevelState, HasGameStarted());
-			
-			_stateMachine.SetState(startLevelState);
+			_stateMachine.AddTransition(enemyCleanupState, endOfLevelState, AreAllEntitiesGone());
+			_stateMachine.AddTransition(endOfLevelState, _startLevelState, HasGameStarted());
 		}
 		
 		private Func<bool> HasGameStarted() => () => true;
-		private Func<bool> IsDataCollectedButEnemiesLeft() => () => IsAllDataCollected() && AreThereEnemiesLeft();
-		private Func<bool> AreAllEntitiesGone() => () => IsAllDataCollected() && !AreThereEnemiesLeft();
+		private Func<bool> IsDataCollectedButEnemiesLeft() => () => AreAllSpawnersDoneSpawning() && IsAllDataCollected() && AreThereEnemiesLeft();
+		private Func<bool> AreAllEntitiesGone() => () => AreAllSpawnersDoneSpawning() && IsAllDataCollected() && !AreThereEnemiesLeft();
 		
 		public static LevelManager GetInstance(){
 			return _instance;
@@ -77,12 +85,38 @@ namespace Systems.Levels{
 			_gameLevel++;
 		}
 		
+		/// <summary>
+		/// Gets you an array of spawn managers that need to spawn completely before the level progresses.
+		/// </summary>
+		public void SetSpawnManagersForLevelProgression(){
+			List<SpawnManager> levelSpawnManagers = new List<SpawnManager>();
+			SpawnManager[] allSpawnManagers = FindObjectsOfType<SpawnManager>();
+
+			foreach (SpawnManager manager in allSpawnManagers){
+				if (manager.AffectsLevelProgression()){
+					levelSpawnManagers.Add(manager);
+				}
+			}
+
+			_spawnManagers = levelSpawnManagers.ToArray();
+		}
+		
 		private bool IsAllDataCollected(){
 			return DataPoint.GetDataPointCountInScene() == 0;
 		}
 		
 		private bool AreThereEnemiesLeft(){
 			return EnemiesInSceneCounter.GetTotalEnemiesInScene() > 0;
+		}
+
+		private bool AreAllSpawnersDoneSpawning(){
+			foreach (SpawnManager manager in _spawnManagers){
+				if (manager.CanSpawn){
+					return false;
+				}
+			}
+
+			return true;
 		}
 	}
 }

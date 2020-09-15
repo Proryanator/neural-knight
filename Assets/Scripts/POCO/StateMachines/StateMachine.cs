@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace POCO.StateMachines{
 	public class StateMachine{
@@ -15,7 +16,7 @@ namespace POCO.StateMachines{
 		public void Tick(){
 			Transition transition = GetTransitionIfAvailable();
 			if (transition != null){
-				SetState(transition.To);	
+				SetState(transition.To);
 			}
 
 			_currentState?.Tick();
@@ -25,6 +26,8 @@ namespace POCO.StateMachines{
 			if (state == _currentState){
 				return;
 			}
+
+			Debug.Log("Setting state to: [" + state.GetType().Name + "]");
 
 			_currentState?.OnExit();
 			_currentState = state;
