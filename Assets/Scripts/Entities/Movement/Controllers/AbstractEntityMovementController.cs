@@ -31,7 +31,9 @@ namespace Entities.Movement.Controllers{
 			
 			// every entity will have this state, to move to the center!
 			moveToPlayAreaState = new MoveToPlayAreaState(_moveToCenterMovementPattern);
+		}
 
+		protected void Start(){
 			// all entities start in the same state!
 			stateMachine.SetState(moveToPlayAreaState);
 		}
