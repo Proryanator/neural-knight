@@ -10,11 +10,11 @@ namespace Entities.Movement.Controllers{
 	public abstract class AbstractEntityMovementController : MonoBehaviour{
 		
 		private MoveToCenterMovementPattern _moveToCenterMovementPattern;
-		protected NormalMovementState normalMovementState;
-		
+
 		protected StateMachine stateMachine;
 		protected MoveToPlayAreaState moveToPlayAreaState;
-		private PlayArea _playArea;
+
+		private bool _inPlayArea;
 		
 		protected void Awake(){
 			_moveToCenterMovementPattern = GetComponent<MoveToCenterMovementPattern>();
@@ -22,11 +22,7 @@ namespace Entities.Movement.Controllers{
 			CreateStateMachineAndInitialState();
 		}
 
-		private void Start(){
-			_playArea = PlayArea.Instance();
-		}
-
-		private void Update(){
+		protected void Update(){
 			// tick is called on the state machine, does it do anything?
 			stateMachine.Tick();
 		}
@@ -36,17 +32,14 @@ namespace Entities.Movement.Controllers{
 			
 			// every entity will have this state, to move to the center!
 			moveToPlayAreaState = new MoveToPlayAreaState(_moveToCenterMovementPattern);
-			normalMovementState = new NormalMovementState(GetNormalMovementPattern());
-			
-			stateMachine.AddTransition(moveToPlayAreaState, normalMovementState, IsInPlayArea());
-			
+
 			// all entities start in the same state!
 			stateMachine.SetState(moveToPlayAreaState);
 		}
 
-		private Func<bool> IsInPlayArea() => () => _playArea.IsInsidePlayArea(transform);
+		protected Func<bool> IsInPlayArea() => () => _inPlayArea;
 		
-		private AbstractMovementPattern GetNormalMovementPattern(){
+		protected AbstractMovementPattern GetNormalMovementPattern(){
 			AbstractMovementPattern nonMoveToCenterPattern = null;
 			
 			foreach (AbstractMovementPattern pattern in GetComponents<AbstractMovementPattern>()){
@@ -59,6 +52,10 @@ namespace Entities.Movement.Controllers{
 			}
 
 			return nonMoveToCenterPattern;
+		}
+
+		public void SetInsidePlayArea(){
+			_inPlayArea = true;
 		}
 	}
 }

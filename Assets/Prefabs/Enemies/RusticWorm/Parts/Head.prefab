@@ -16,9 +16,9 @@ GameObject:
   - component: {fileID: 3450372240070498882}
   - component: {fileID: 3450372240070498880}
   - component: {fileID: 3450372240070498887}
+  - component: {fileID: 8923194425965929328}
   - component: {fileID: 8796359513957643081}
   - component: {fileID: 3450372240070498886}
-  - component: {fileID: 3450372240070498885}
   - component: {fileID: 3450372240070498939}
   - component: {fileID: 3450372240070498936}
   - component: {fileID: 3450372240070498937}
@@ -185,7 +185,20 @@ MonoBehaviour:
   _speed: 3
   _repeatRate: 0.1
   _nextWayPointDistance: 0.5
-  _radiusOfCirclePattern: 3
+--- !u!114 &8923194425965929328
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3450372240070498942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968dedb257954060a6d59cb32084994c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _radius: 3
+  _moveSpeed: 5
 --- !u!114 &8796359513957643081
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -227,18 +240,6 @@ MonoBehaviour:
   tagPenalties: 0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000
   graphMask:
     value: -1
---- !u!114 &3450372240070498885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3450372240070498942}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3fa5ff9798314468bf6cc6cee5be256b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3450372240070498939
 MonoBehaviour:
   m_ObjectHideFlags: 0

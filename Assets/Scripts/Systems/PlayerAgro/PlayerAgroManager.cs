@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Systems.Levels;
 using Entities.Events;
+using Entities.Movement.Controllers;
 using UnityEngine;
 
 namespace Systems.PlayerAgro{
@@ -23,7 +24,7 @@ namespace Systems.PlayerAgro{
 		[SerializeField] private int _agroLevelBoundary = 2;
 		
 		// holds list of unique ids of enemy listeners
-		private List<AgroAvailabilityListener> _listOfAgroListeners = new List<AgroAvailabilityListener>();
+		private List<EnemyMovementController> _listOfAgroListeners = new List<EnemyMovementController>();
 		
 		private void Awake(){
 			if (_instance == null){
@@ -38,7 +39,7 @@ namespace Systems.PlayerAgro{
 			LevelManager.GetInstance().OnLevelFinish += IncreaseAgroAmount;
 		}
 
-		public static PlayerAgroManager GetInstance(){
+		public static PlayerAgroManager Instance(){
 			return _instance;
 		}
 		
@@ -65,18 +66,17 @@ namespace Systems.PlayerAgro{
 		/// <summary>
 		/// Add this object to the list of objects listening for open slots
 		/// </summary>
-		public void ListenForAgroSlot(AgroAvailabilityListener agroAvailabilityListener){
-			Debug.Log("Enemy is listening for agro slot to open");
-			_listOfAgroListeners.Add(agroAvailabilityListener);
+		public void ListenForAgroSlot(EnemyMovementController controller){
+			_listOfAgroListeners.Add(controller);
 		}
 
 		/// <summary>
 		/// Remove this object from the list of listening objects.
 		/// </summary>
-		public void StopListeningForAgroSlot(AgroAvailabilityListener agroAvailabilityListener){
-			if (_listOfAgroListeners.Contains(agroAvailabilityListener)){
+		public void StopListeningForAgroSlot(EnemyMovementController controller){
+			if (_listOfAgroListeners.Contains(controller)){
 				Debug.Log("Enemy stopped listening for agro slot to open");
-				_listOfAgroListeners.Remove(agroAvailabilityListener);
+				_listOfAgroListeners.Remove(controller);
 			}
 		}
 		
@@ -124,7 +124,7 @@ namespace Systems.PlayerAgro{
 				RemoveNullControllers();
 				
 				int index = Random.Range(0, _listOfAgroListeners.Count);
-				_listOfAgroListeners[index].TriggerAgroOrListen();
+				_listOfAgroListeners[index].SetAgroSlotOpen(true);
 			}
 		}
 
