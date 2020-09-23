@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace POCO.StateMachines{
 	public class StateMachine{
@@ -26,6 +27,7 @@ namespace POCO.StateMachines{
 				return;
 			}
 
+			Debug.Log("Setting current state: " + state.GetType().Name);
 			_currentState?.OnExit();
 			_currentState = state;
       

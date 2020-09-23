@@ -38,7 +38,7 @@ namespace Entities.Movement.Controllers{
 		}
 
 		private void CreateEnemyStatesAndTransitions(){
-			WaitingForAgroState waitingForAgroState = new WaitingForAgroState(this);
+			WaitingForAgroState waitingForAgroState = new WaitingForAgroState(GetNormalMovementPattern(), this);
 			AgroPlayerState agroPlayerState = new AgroPlayerState(this, _followPlayerPattern);
 			DamagedEntityState damagedEntityState = new DamagedEntityState(this);
 			
