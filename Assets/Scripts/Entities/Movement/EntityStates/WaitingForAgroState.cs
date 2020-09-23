@@ -19,6 +19,11 @@ namespace Entities.Movement.EntityStates{
 		}
 
 		public void OnEnter(){
+			// we might actually leave this right after we start
+			if (PlayerAgroManager.Instance().CanAgroPlayer()){
+				_enemyMovementController.EnableAgro();
+			}
+			
 			_enemyMovementController.ListenForAgroSlot();
 		}
 

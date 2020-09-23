@@ -124,7 +124,7 @@ namespace Systems.PlayerAgro{
 				RemoveNullControllers();
 				
 				int index = Random.Range(0, _listOfAgroListeners.Count);
-				_listOfAgroListeners[index].SetAgroSlotOpen(true);
+				_listOfAgroListeners[index].EnableAgro();
 			}
 		}
 

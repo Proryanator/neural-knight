@@ -22,6 +22,7 @@ namespace Entities.Movement.Controllers{
 		
 		private void Awake(){
 			base.Awake();
+			_playerAgroManager = PlayerAgroManager.Instance();
 			_followPlayerPattern = GetComponent<FollowPlayerPattern>();
 
 			CreateEnemyStatesAndTransitions();
@@ -29,8 +30,6 @@ namespace Entities.Movement.Controllers{
 			// call the stun method when the enemy takes damage
 			EnemyHealth enemyHealth = GetComponent<EnemyHealth>();
 			enemyHealth.OnDamageTaken += StunEnemy;
-			
-			_playerAgroManager = PlayerAgroManager.Instance();
 		}
 
 		private void Update(){
@@ -42,16 +41,26 @@ namespace Entities.Movement.Controllers{
 			AgroPlayerState agroPlayerState = new AgroPlayerState(this, _followPlayerPattern);
 			DamagedEntityState damagedEntityState = new DamagedEntityState(this);
 			
-			stateMachine.AddTransition(moveToPlayAreaState, waitingForAgroState, IsInPlayArea());
-			stateMachine.AddTransition(waitingForAgroState, agroPlayerState, IsAgroSpotAvailable());
-			
+			// if you can agro, just go ahead and agro
+			if (_playerAgroManager.CanAgroPlayer()){
+				EnableAgro();
+				_playerAgroManager.RegisterForAgro(GetComponent<DeSpawnable>());
+				
+				// move directly to agro the player when in play area
+				stateMachine.AddTransition(moveToPlayAreaState, agroPlayerState, IsInPlayArea());
+			}else{
+				stateMachine.AddTransition(moveToPlayAreaState, waitingForAgroState, IsInPlayArea());
+				stateMachine.AddTransition(waitingForAgroState, agroPlayerState, IsAgroSpotAvailable());
+				
+				// also add a way to get back to this transition if you're needing to wait
+				stateMachine.AddTransition(damagedEntityState, waitingForAgroState, IsWaitingForAgro());
+			}
+
+			// this stuff happens no matter if you started to agro or not
 			stateMachine.AddAnyTransition(damagedEntityState, IsStunned());
-			
-			// if you were agroing, go back to that, if you were just waiting, go back to that
-			stateMachine.AddTransition(damagedEntityState, waitingForAgroState, IsWaitingForAgro());
 			stateMachine.AddTransition(damagedEntityState, agroPlayerState, IsAgroingPlayer());
 		}
-
+		
 		private Func<bool> IsAgroSpotAvailable() => () => _agroSlotOpened;
 		private Func<bool> IsStunned() => () => _isStunned;
 		private Func<bool> IsAgroingPlayer() => () => !_isStunned && _isAgroingPlayer;
@@ -59,6 +68,10 @@ namespace Entities.Movement.Controllers{
 
 		public void SetPlayerAgro(bool isAgroing){
 			_isAgroingPlayer = isAgroing;
+		}
+
+		public bool IsAgroEnabledFromStart(){
+			return _isAgroingPlayer;
 		}
 		
 		public void StunEnemy(int damage){
@@ -71,8 +84,8 @@ namespace Entities.Movement.Controllers{
 			_isStunned = false;
 		}
 
-		public void SetAgroSlotOpen(bool isOpen){
-			_agroSlotOpened = isOpen;
+		public void EnableAgro(){
+			_agroSlotOpened = true;
 		}
 		
 		public void ListenForAgroSlot(){

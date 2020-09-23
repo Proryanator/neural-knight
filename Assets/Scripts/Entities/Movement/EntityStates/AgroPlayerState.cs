@@ -23,6 +23,11 @@ namespace Entities.Movement.EntityStates{
 		}
 
 		public void OnEnter(){
+			// if you're already agroing from the start, just skip this
+			if (_enemyMovementController.IsAgroEnabledFromStart()){
+				return;
+			}
+			
 			_enemyMovementController.SetPlayerAgro(true);
 			
 			// register with the agro manager
