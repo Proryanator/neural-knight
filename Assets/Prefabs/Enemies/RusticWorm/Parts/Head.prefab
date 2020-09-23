@@ -199,6 +199,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _radius: 3
   _moveSpeed: 5
+  _useCenterPoint: 1
 --- !u!114 &8796359513957643081
 MonoBehaviour:
   m_ObjectHideFlags: 0

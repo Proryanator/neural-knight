@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Entities.Movement;
+using UnityEngine;
 using Utils;
 
 namespace Entities.MovementPatterns{
@@ -11,11 +12,18 @@ namespace Entities.MovementPatterns{
 		[Tooltip("Speed to move towards the center of the map")]
 		[SerializeField] private float _moveSpeed = 5f;
 
+		[SerializeField] private bool _useCenterPoint;
+		
 		// point to rotate around
 		private Transform _rotationPoint;
 
 		private void Awake(){
-			_rotationPoint = GetRandomFocusPoint();
+			if (_useCenterPoint){
+				_rotationPoint = GetCenterOfMap();
+			}
+			else{
+				_rotationPoint = GetRandomFocusPoint();
+			}
 		}
 
 		private Transform GetRandomFocusPoint(){
@@ -26,6 +34,10 @@ namespace Entities.MovementPatterns{
 			return focusPoints[Random.Range(0, focusPoints.Length)].transform;
 		}
 
+		private Transform GetCenterOfMap(){
+			return FindObjectOfType<PlayArea>().transform;
+		}
+		
 		private void OnDrawGizmos(){
 			// draw this circle as a gizmo so we can see how large this circle is
 			Gizmos.DrawWireSphere(_rotationPoint.position, _rotationPoint.GetComponent<CircleCollider2D>().radius);
