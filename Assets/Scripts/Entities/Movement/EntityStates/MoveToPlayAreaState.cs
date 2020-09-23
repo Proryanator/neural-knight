@@ -18,7 +18,7 @@ namespace Entities.Movement.EntityStates{
 		}
 
 		public void OnExit(){
-		
+			_moveToCenterPattern.GetComponent<EntityPlayAreaLayerChanger>().SetToInsidePlayAreaLayer();
 		}
 	}
 }

@@ -228,6 +228,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1462546619389283462, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
+        type: 3}
+      propertyPath: _totalToSpawn
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1462546619389283462, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
+        type: 3}
+      propertyPath: sceneLimitLimit
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1462546619725017881, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
         type: 3}
       propertyPath: m_IsActive

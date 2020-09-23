@@ -14,8 +14,9 @@ namespace Entities.Movement{
 				Destroy(gameObject);
 			}
 		}
+		
 
-		private void OnCollisionEnter2D(Collision2D other){
+		private void OnTriggerEnter2D(Collider2D other){
 			AbstractEntityMovementController controller = other.gameObject.GetComponent<AbstractEntityMovementController>();
 
 			if (controller != null){

@@ -14,7 +14,6 @@ namespace Entities.Movement.EntityStates{
 		}
 
 		public void OnEnter(){
-			
 		}
 
 		public void OnExit(){
