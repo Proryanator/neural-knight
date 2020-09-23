@@ -23,7 +23,6 @@ namespace Entities.Movement.Controllers{
 		}
 
 		protected void Update(){
-			// tick is called on the state machine, does it do anything?
 			stateMachine.Tick();
 		}
 
