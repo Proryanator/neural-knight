@@ -79,9 +79,7 @@ namespace Entities.Movement.Controllers{
 				return;
 			}
 			
-			_isStunned = true;
 			StartCoroutine(StunEntityForSetTime(_stunTime));
-			_isStunned = false;
 		}
 
 		public void EnableAgro(){
@@ -100,7 +98,9 @@ namespace Entities.Movement.Controllers{
 		}
 
 		private IEnumerator StunEntityForSetTime(float stunTime){
+			_isStunned = true;
 			yield return new WaitForSeconds(stunTime);
+			_isStunned = false;
 		}
 	}
 }

@@ -90,9 +90,7 @@ namespace HealthAndDamage{
 			}
 
 			// if any events were subscribed to this event, call those now!
-			if (OnDamageTaken != null) {
-				OnDamageTaken(_currentHealth);
-			}
+			OnDamageTaken?.Invoke(_currentHealth);
 		}
 
 		/// <summary>
