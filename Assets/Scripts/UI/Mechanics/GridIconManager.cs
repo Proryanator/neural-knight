@@ -2,8 +2,8 @@
 using UnityEngine;
 
 namespace UI.Mechanics{
-	public class HealthIconManager : MonoBehaviour{
-		private HealthIconSwapper[] _healthIconSwappers;
+	public class GridIconManager : MonoBehaviour{
+		private GridIconSwapper[] _healthIconSwappers;
 
 		private PlayerHealth _playerHealth;
 
@@ -48,7 +48,7 @@ namespace UI.Mechanics{
 		}
 
 		private void GetAllHealthIconChildren(){
-			_healthIconSwappers = GetComponentsInChildren<HealthIconSwapper>();
+			_healthIconSwappers = GetComponentsInChildren<GridIconSwapper>();
 		}
 		
 		private void TurnOnOrOff(int currentHealth, int maxHealth){

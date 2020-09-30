@@ -152,6 +152,12 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -4423164085806164075, guid: 6b63b84153ec7a74686f17f49a30a0ee,
+        type: 3}
+      propertyPath: _healthIconPrefab
+      value: 
+      objectReference: {fileID: 1851531072705636714, guid: aba5b6f83d8ee44478ab1bb41f1dd418,
+        type: 3}
     - target: {fileID: 975760887516985923, guid: 6b63b84153ec7a74686f17f49a30a0ee,
         type: 3}
       propertyPath: m_Sprite

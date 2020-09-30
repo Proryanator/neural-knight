@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3812904516221642370}
   - component: {fileID: 3812904516221642371}
   - component: {fileID: 3812904516221642380}
-  - component: {fileID: 8689169358153247544}
+  - component: {fileID: -4423164085806164075}
   m_Layer: 0
   m_Name: GridPanel
   m_TagString: Untagged
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Spacing: {x: 17.7, y: 0}
   m_Constraint: 0
   m_ConstraintCount: 2
---- !u!114 &8689169358153247544
+--- !u!114 &-4423164085806164075
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -114,7 +114,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8605ff2ae8a34fad8914a158f9e71b42, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _healthIconPrefab: {fileID: 6929959669460699090, guid: 2e7d785705388404b90ddd59fa9c080b,
+  _healthIconPrefab: {fileID: 2884099155871749286, guid: b849bed11a85c9f4995a05e1fce13124,
     type: 3}
 --- !u!1001 &2705812069182484219
 PrefabInstance:

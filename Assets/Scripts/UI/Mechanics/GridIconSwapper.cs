@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 namespace UI.Mechanics{
-	public class HealthIconSwapper : MonoBehaviour{
+	public class GridIconSwapper : MonoBehaviour{
 		[SerializeField] private Sprite _onSprite;
 		[SerializeField] private Sprite _offSprite;
 
