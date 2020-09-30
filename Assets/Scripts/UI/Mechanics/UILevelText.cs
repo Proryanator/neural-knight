@@ -8,9 +8,6 @@ namespace UI.Mechanics{
 
 		private void Awake(){
 			_levelText = GetComponent<Text>();
-		}
-
-		private void Start(){
 			LevelManager.GetInstance().OnLevelStart += SetLevelText;
 		}
 
