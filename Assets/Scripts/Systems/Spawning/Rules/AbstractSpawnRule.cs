@@ -42,7 +42,7 @@ namespace Systems.Spawning.Rules{
 		protected int SpawnAt(Transform point, int spawnCount, SpawnProperties props){
 			for (int i = 0; i < spawnCount; i++){
 				Transform spawned = Instantiate(prefab, point.position, Quaternion.identity);
-				DeSpawnable deSpawnable = spawned.GetComponent<DeSpawnable>();
+				DeSpawnable deSpawnable = spawned.GetComponentInChildren<DeSpawnable>();
 				if (deSpawnable == null){
 					Debug.LogWarning("Not able to attach decrement call to this object, it's missing a 'DeSpawnable' script.");
 				}else{
