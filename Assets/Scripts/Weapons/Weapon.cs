@@ -17,6 +17,10 @@ namespace Weapons{
 		// whether we're waiting for the next chance to fire or not, prevents spamming of input
 		private bool _intervalBetweenShots = false;
 
+		private void Awake(){
+			_weaponProperties = GetComponent<WeaponProperties>();
+		}
+
 		private void Start(){
 			if (_projectile == null){
 				Debug.Log("No game object has been set as the projectile for this weapon.");
@@ -28,17 +32,19 @@ namespace Weapons{
 		/// <param
 		/// </summary>
 		public void Fire(Transform spawnTransform, Vector2 direction){
-			if (_intervalBetweenShots){
+			if (_intervalBetweenShots || !_weaponProperties.HasAmmo()){
 				return;
 			}
-
-			// TODO: we'll probably want to spawn these shots under something later on so it's not just all up in the scene :D
+			
 			Projectile projectile = Instantiate(_projectile, spawnTransform.position, Quaternion.identity)
 				.GetComponent<Projectile>();
 
 			// set the direction of with which to fire the projectile, from the player's facing direction
 			projectile.InitProjectile(direction, _weaponProperties);
 
+			// decrement ammo from the weapon!
+			_weaponProperties.DecrementAmmo();
+			
 			// start the wait time for the fire rate
 			StartCoroutine(WaitFireRateRoutine());
 		}

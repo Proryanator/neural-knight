@@ -8,15 +8,15 @@ namespace Weapons{
 	/// </summary>
 	public class WeaponManager : MonoBehaviour{
 
-		[Tooltip("Weapon to start the player with, if any.")] [SerializeField]
-		private Weapon[] _weaponPrefabs;
+		[Tooltip("Weapon to start the player with, if any.")]
+		[SerializeField] private Weapon[] _weaponPrefabs;
 
 		/// <summary>
 		/// The currently equipped weapon, null if nothing is equipped.
 		/// An in-scene reference, not a prefab.
 		/// </summary>
-		[Tooltip("The currently equipped weapon.")] [SerializeField]
-		private Weapon _equippedWeapon;
+		[Tooltip("The currently equipped weapon.")]
+		[SerializeField] private Weapon _equippedWeapon;
 
 		/// <summary>
 		/// Weapons that the player can equip.
