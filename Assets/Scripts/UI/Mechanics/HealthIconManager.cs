@@ -6,9 +6,11 @@ namespace UI.Mechanics{
 		private HealthIconSwapper[] _healthIconSwappers;
 
 		private PlayerHealth _playerHealth;
+
+		[SerializeField] private GameObject _healthIconPrefab;
 		
 		private void Awake(){
-			_healthIconSwappers = GetComponentsInChildren<HealthIconSwapper>();
+			GetAllHealthIconChildren();
 			
 			// TODO: coordinate getting this not this way
 			_playerHealth = FindObjectOfType<PlayerHealth>();
@@ -18,11 +20,35 @@ namespace UI.Mechanics{
 		}
 		
 		private void UpdateHealthIcons(int currentHealth, int maxHealth){
+			DestroyOrAddHealthIcons(maxHealth);
+			
 			DisableAllHealthSwappers();
 
 			EnableForMaxHealth(maxHealth);
 
 			TurnOnOrOff(currentHealth, maxHealth);
+		}
+
+		private void DestroyOrAddHealthIcons(int maxHealth){
+			bool hasChanged = maxHealth != _healthIconSwappers.Length;
+			
+			// destroy any excess objects
+			for (int i = maxHealth; i < _healthIconSwappers.Length; i++){
+				Destroy(_healthIconSwappers[i]);
+			}
+			
+			// or, spawn any objects that are needed in-scene
+			for (int i = 0; i < maxHealth - _healthIconSwappers.Length; i++){
+				Instantiate(_healthIconPrefab, transform.position, Quaternion.identity, transform);
+			}
+
+			if (hasChanged){
+				GetAllHealthIconChildren();
+			}
+		}
+
+		private void GetAllHealthIconChildren(){
+			_healthIconSwappers = GetComponentsInChildren<HealthIconSwapper>();
 		}
 		
 		private void TurnOnOrOff(int currentHealth, int maxHealth){
