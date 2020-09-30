@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Weapons;
 
-namespace UI.Mechanics{
+namespace UI.Player{
 	public class WeaponIconSwapper : MonoBehaviour{
 		
 		private Sprite _weaponSprite;

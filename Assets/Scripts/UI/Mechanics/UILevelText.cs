@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UI.Player{
+namespace UI.Mechanics{
 	public class UILevelText : MonoBehaviour{
 		private Text _levelText;
 
