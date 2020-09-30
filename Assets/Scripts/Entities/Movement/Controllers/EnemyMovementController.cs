@@ -74,7 +74,7 @@ namespace Entities.Movement.Controllers{
 			return _isAgroingPlayer;
 		}
 		
-		public void StunEnemy(int damage){
+		public void StunEnemy(){
 			if (_isStunned){
 				return;
 			}

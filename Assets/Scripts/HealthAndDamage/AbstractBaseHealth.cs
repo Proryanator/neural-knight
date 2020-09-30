@@ -10,9 +10,8 @@ namespace HealthAndDamage{
 	/// there are Events setup to do just that.
 	/// </summary>
 	public abstract class AbstractBaseHealth : MonoBehaviour {
-
-		[Tooltip("How many lives this entity will have.")]
-		[SerializeField] private int _startingHealth = 3;
+		
+		[SerializeField] private int _maxHealth = 3;
 
 		// we want to remember the original health of this object, should we need to re-initialize later
 		// intended to be kept within the range of 0-startingHealth
@@ -24,9 +23,10 @@ namespace HealthAndDamage{
 
 		// will be turned off/on depending on how long your invulnerability period is
 		private bool _canBeDamaged = true;
+		
+		public Action OnDamageTaken;
 
-		// this is an action that other scripts can 'subscribe' to get updates
-		public Action<int> OnDamageTaken;
+		public Action<int, int> OnHealthChanged;
 
 		// allows other classes to add their methods here, to prevent damaging the player
 		public delegate bool PreventDamageTaken();
@@ -39,7 +39,9 @@ namespace HealthAndDamage{
 		public Action OnDeath;
 
 		protected void Start() {
-			_currentHealth = _startingHealth;
+			// use this method to call any pre-setup methods that need to know the starting health
+			// assumption is that you hooked into the methods in your awake method
+			SetCurrentHealth(_maxHealth);
 		}
 
 		/// <summary>
@@ -82,17 +84,28 @@ namespace HealthAndDamage{
 		/// Makes sure health stays within a 0-X range.
 		/// </summary>
 		private void ApplyDamageAndNotify(int damageApplied) {
-			_currentHealth -= damageApplied;
-	    
+			SetCurrentHealth(_currentHealth-damageApplied);
+
+			// if any events were subscribed to this event, call those now!
+			OnDamageTaken?.Invoke();
+		}
+
+		private void SetCurrentHealth(int newCurrentHealth){
+			_currentHealth = newCurrentHealth;
+			
 			// catch if we went under 0
 			if (_currentHealth < 0){
 				_currentHealth = 0;
 			}
-
-			// if any events were subscribed to this event, call those now!
-			OnDamageTaken?.Invoke(_currentHealth);
+			
+			OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
 		}
 
+		private void SetMaxHealth(int newMaxHealth){
+			_maxHealth = newMaxHealth;
+			OnHealthChanged?.Invoke(_currentHealth, _maxHealth);
+		}
+		
 		/// <summary>
 		/// A routine to run and prevent spamming of the player when attacked.
 		/// </summary>
