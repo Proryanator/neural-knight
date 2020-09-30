@@ -11,11 +11,12 @@ namespace Weapons{
 		[SerializeField] private int _maxAmmo = 100;
 
 		private void Awake(){
-			// TODO: this would be initialized as part of some setup beforehand
-			_currentAmmo = _maxAmmo;
+			// this initialization can be done through some orchestrator system later on but, make sure this is called
+			// do not just explicitly set the ammo. UI elements rely on this call
+			AddAmmo(_maxAmmo);
 		}
 
-		private int _currentAmmo;
+		private int _currentAmmo = 0;
 
 		public Action<int> OnAmmoChange;
 		

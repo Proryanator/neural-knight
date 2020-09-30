@@ -27,6 +27,10 @@ namespace Weapons{
 			}
 		}
 
+		public WeaponProperties GetWeaponProps(){
+			return _weaponProperties;
+		}
+		
 		/// <summary>
 		/// Fires the equipped projectile. Projectile will handle all other aspects of it's existence.
 		/// <param

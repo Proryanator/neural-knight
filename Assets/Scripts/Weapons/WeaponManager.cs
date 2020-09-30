@@ -25,7 +25,7 @@ namespace Weapons{
 
 		public Action<Sprite> OnWeaponChange;
 		
-		private void Start(){
+		private void Awake(){
 			// if we set a prefab instance to start with, we'll instantiate that weapon
 			if (_weaponPrefabs != null){
 				_equippedWeapon = Instantiate(_weaponPrefabs[0], transform.position, Quaternion.identity, transform);
