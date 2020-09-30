@@ -12,24 +12,12 @@ namespace Weapons.Projectiles{
 	public class Projectile : MonoBehaviour{
 
 		private WeaponProperties _weaponProperties;
-		
-		// speed at which this projectile travels
-		private float _speed;
-
-		// The time at which this object will live in the scene, in seconds
-		private float _lifeOfProjectile;
 
 		// the direction this projectile will travel when born
 		private Vector2 _direction;
 
 		// tracks when this projectile was spawned
 		private float _startTime;
-
-		// how much damage this will cause to an enemy that it hits
-		private int _projectileDamage;
-
-		// how much force will be applied to enemies when the projectile lands
-		private float _shotForce;
 
 		/// <summary>
 		/// Called by the weapon after each projectile is spawned. Sets the facing direction, as well as other information
@@ -44,11 +32,11 @@ namespace Weapons.Projectiles{
 		}
 
 		private void Update(){
-			if (Time.time - _startTime >= _lifeOfProjectile){
+			if (Time.time - _startTime >= _weaponProperties.shotLife){
 				Destroy(gameObject);
 			}
 
-			gameObject.transform.Translate(Time.deltaTime * this._speed * _direction);
+			gameObject.transform.Translate(Time.deltaTime * _weaponProperties.shotSpeed * _direction);
 		}
 
 		private void OnCollisionEnter2D(Collision2D other){
@@ -64,10 +52,10 @@ namespace Weapons.Projectiles{
 
 			if (abstractBaseHealth != null
 			    && other.gameObject.CompareTag(AllTags.ENEMY)){
-				abstractBaseHealth.Damage(_projectileDamage);
+				abstractBaseHealth.Damage(_weaponProperties.shotDamage);
 
 				// apply force to the object in the direction of your fired projectile
-				other.gameObject.GetComponent<Rigidbody2D>().AddForce(_direction * _shotForce, ForceMode2D.Impulse);
+				other.gameObject.GetComponent<Rigidbody2D>().AddForce(_direction * _weaponProperties.shotForce, ForceMode2D.Impulse);
 			}
 
 			// always destroy yourself if you collide with something!
