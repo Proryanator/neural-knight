@@ -15,10 +15,10 @@ namespace Systems.Levels.LevelStates{
 		public void OnEnter(){
 			_levelManager.SetSpawnManagersForLevelProgression();
 			
+			_levelManager.IncrementLevel();
+			
 			// invoke any events that are attached to this event
 			_levelManager.InvokeStartLevelEvent();
-
-			_levelManager.IncrementLevel();
 		}
 
 		public void OnExit(){
