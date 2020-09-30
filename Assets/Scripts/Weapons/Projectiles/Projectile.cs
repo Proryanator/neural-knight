@@ -11,6 +11,8 @@ namespace Weapons.Projectiles{
 	/// </summary>
 	public class Projectile : MonoBehaviour{
 
+		private WeaponProperties _weaponProperties;
+		
 		// speed at which this projectile travels
 		private float _speed;
 
@@ -34,16 +36,9 @@ namespace Weapons.Projectiles{
 		/// about how this projectile will perform. This keeps the configuration information about a weapon's firing rate + lifetime
 		/// controlled from the weapon itself.
 		/// </summary>
-		/// <param name="direction">The direction this projectile will fire. Doesn't need to be normalized, we'll do that here.</param>
-		/// <param name="lifeOfProjectile">How long this projectile will travel in the scene until it despawns.</param>
-		/// <param name="speed">The speed at which this will translate through the world.</param>
-		/// <param name="damage">The amount of damage this projectile will cause
-		public void InitProjectile(Vector2 direction, float lifeOfProjectile, float speed, int damage, float shotForce){
+		public void InitProjectile(Vector2 direction, WeaponProperties weaponProperties){
+			_weaponProperties = weaponProperties;
 			_direction = direction.normalized;
-			_lifeOfProjectile = lifeOfProjectile;
-			_speed = speed;
-			_projectileDamage = damage;
-			_shotForce = shotForce;
 
 			_startTime = Time.time;
 		}
