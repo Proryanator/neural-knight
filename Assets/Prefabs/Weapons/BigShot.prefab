@@ -98,6 +98,12 @@ PrefabInstance:
       propertyPath: _shotDamage
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4497926614328223620, guid: 0ea91074ad1cc0e4e8159c86ed5f9639,
+        type: 3}
+      propertyPath: _weaponIcon
+      value: 
+      objectReference: {fileID: 21300000, guid: 6b913960c3b10854280f2eb3fa834a2b,
+        type: 3}
     - target: {fileID: 4497926614328223621, guid: 0ea91074ad1cc0e4e8159c86ed5f9639,
         type: 3}
       propertyPath: m_Name

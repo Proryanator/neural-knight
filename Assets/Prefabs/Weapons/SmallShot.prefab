@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weaponName: SingleShot
+  _weaponIcon: {fileID: 21300000, guid: 63c497e2ce810ee4d81be5b8c4bdd207, type: 3}
   _projectile: {fileID: 6407793947514954888, guid: 0cf5664c3823df14287547e8e3afff61,
     type: 3}
   _fireRate: 0.1

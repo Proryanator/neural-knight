@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Weapons{
@@ -22,6 +23,8 @@ namespace Weapons{
 		/// </summary>
 		private SortedSet<Weapon> _availableWeapons;
 
+		public Action<Sprite> OnWeaponChange;
+		
 		private void Start(){
 			// if we set a prefab instance to start with, we'll instantiate that weapon
 			if (_weaponPrefabs != null){
@@ -41,6 +44,18 @@ namespace Weapons{
 			_availableWeapons.Add(weapon);
 		}
 
+		/// <summary>
+		/// Intended to be called at some point, passing in a weapon object.
+		///
+		/// NOTE: might want to keep the ability to change weapons more inside.
+		/// </summary>
+		public void ChangeWeapon(Weapon weapon){
+			// TODO: make it so that there's no chance that you can try to equip a weapon that you do not have
+			_equippedWeapon = weapon;
+			
+			OnWeaponChange?.Invoke(_equippedWeapon.GetWeaponIcon());
+		}
+		
 		private void Equip(Weapon weapon){
 			_equippedWeapon = weapon;
 		}

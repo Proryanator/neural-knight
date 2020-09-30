@@ -8,6 +8,8 @@ namespace Weapons{
 		[Tooltip("The name of the weapon.")] [SerializeField]
 		private string _weaponName = "DEFAULT WEAPON NAME";
 
+		[SerializeField] private Sprite _weaponIcon;
+		
 		[Tooltip("The game object that represents the projectile for this weapon.")] [SerializeField]
 		private Transform _projectile;
 
@@ -55,6 +57,10 @@ namespace Weapons{
 			StartCoroutine(WaitFireRateRoutine());
 		}
 
+		public Sprite GetWeaponIcon(){
+			return _weaponIcon;
+		}
+		
 		private IEnumerator WaitFireRateRoutine(){
 			_intervalBetweenShots = true;
 			yield return new WaitForSeconds(_fireRate);
