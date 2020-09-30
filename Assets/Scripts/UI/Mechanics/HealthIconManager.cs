@@ -34,7 +34,7 @@ namespace UI.Mechanics{
 			
 			// destroy any excess objects
 			for (int i = maxHealth; i < _healthIconSwappers.Length; i++){
-				Destroy(_healthIconSwappers[i]);
+				Destroy(_healthIconSwappers[i].gameObject);
 			}
 			
 			// or, spawn any objects that are needed in-scene
