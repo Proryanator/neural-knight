@@ -3,7 +3,7 @@
 namespace UI.Player{
 	public class UIAmmoText : UISimpleTextListener{
 
-		private void Start(){
+		public override void AttachTextListener(){
 			// TODO: how to handle this for multiple on-screen players?
 			WeaponProperties props = FindObjectOfType<WeaponManager>().GetEquippedWeapon().GetWeaponProps();
 			

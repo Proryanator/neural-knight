@@ -2,8 +2,8 @@
 
 namespace UI.Mechanics{
 	public class UILevelText : UISimpleTextListener{
-		
-		private void Start(){
+
+		public override void AttachTextListener(){
 			LevelManager.GetInstance().OnLevelStart += UpdateText;
 		}
 	}

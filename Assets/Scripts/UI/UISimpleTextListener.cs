@@ -7,10 +7,14 @@ namespace UI {
 
 		protected void Awake(){
 			_text = GetComponent<Text>();
+			
+			AttachTextListener();
 		}
 		
 		protected void UpdateText(int value){
 			_text.text = value.ToString();
 		}
+
+		public abstract void AttachTextListener();
 	}
 }
