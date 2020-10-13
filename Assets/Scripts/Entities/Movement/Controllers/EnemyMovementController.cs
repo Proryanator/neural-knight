@@ -47,18 +47,18 @@ namespace Entities.Movement.Controllers{
 				_playerAgroManager.RegisterForAgro(GetComponent<DeSpawnable>());
 				
 				// move directly to agro the player when in play area
-				stateMachine.AddTransition(moveToPlayAreaState, agroPlayerState, IsInPlayArea());
+				moveToPlayAreaState.AddTransition(agroPlayerState, IsInPlayArea());
 			}else{
-				stateMachine.AddTransition(moveToPlayAreaState, waitingForAgroState, IsInPlayArea());
-				stateMachine.AddTransition(waitingForAgroState, agroPlayerState, IsAgroSpotAvailable());
+				moveToPlayAreaState.AddTransition(waitingForAgroState, IsInPlayArea());
+				waitingForAgroState.AddTransition(agroPlayerState, IsAgroSpotAvailable());
 				
 				// also add a way to get back to this transition if you're needing to wait
-				stateMachine.AddTransition(damagedEntityState, waitingForAgroState, IsWaitingForAgro());
+				damagedEntityState.AddTransition(waitingForAgroState, IsWaitingForAgro());
 			}
 
 			// this stuff happens no matter if you started to agro or not
 			stateMachine.AddAnyTransition(damagedEntityState, IsStunned());
-			stateMachine.AddTransition(damagedEntityState, agroPlayerState, IsAgroingPlayer());
+			damagedEntityState.AddTransition(agroPlayerState, IsAgroingPlayer());
 		}
 		
 		private Func<bool> IsAgroSpotAvailable() => () => _agroSlotOpened;

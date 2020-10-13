@@ -4,7 +4,7 @@ using Entities.MovementPatterns;
 using POCO.StateMachines;
 
 namespace Entities.Movement.EntityStates{
-	public class WaitingForAgroState : IState{
+	public class WaitingForAgroState : State{
 		
 		private EnemyMovementController _enemyMovementController;
 		private AbstractMovementPattern _abstractMovementPattern;
@@ -14,11 +14,11 @@ namespace Entities.Movement.EntityStates{
 			_enemyMovementController = controller;
 		}
 		
-		public void Tick(){
+		public override void Tick(){
 			_abstractMovementPattern.Move();
 		}
 
-		public void OnEnter(){
+		public override void OnEnter(){
 			// we might actually leave this right after we start
 			if (PlayerAgroManager.Instance().CanAgroPlayer()){
 				_enemyMovementController.EnableAgro();
@@ -27,7 +27,7 @@ namespace Entities.Movement.EntityStates{
 			_enemyMovementController.ListenForAgroSlot();
 		}
 
-		public void OnExit(){
+		public override void OnExit(){
 			PlayerAgroManager.Instance().StopListeningForAgroSlot(_enemyMovementController);
 		}
 	}

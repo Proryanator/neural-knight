@@ -2,21 +2,21 @@
 using POCO.StateMachines;
 
 namespace Entities.Movement.EntityStates{
-	public class NormalMovementState : IState{
+	public class NormalMovementState : State{
 		private AbstractMovementPattern _abstractMovementPattern;
 
 		public NormalMovementState(AbstractMovementPattern pattern){
 			_abstractMovementPattern = pattern;
 		}
 
-		public void Tick(){
+		public override void Tick(){
 			_abstractMovementPattern.Move();
 		}
 
-		public void OnEnter(){
+		public override void OnEnter(){
 		}
 
-		public void OnExit(){
+		public override void OnExit(){
 			
 		}
 	}

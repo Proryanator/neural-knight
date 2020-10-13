@@ -1,14 +1,14 @@
 ﻿using POCO.StateMachines;
 
 namespace Systems.Levels.LevelStates{
-	public class CollectDataState : IState{
-		public void Tick(){
+	public class CollectDataState : State{
+		public override void Tick(){
 		}
 
-		public void OnEnter(){
+		public override void OnEnter(){
 		}
 
-		public void OnExit(){
+		public override void OnExit(){
 		}
 	}
 }

@@ -9,7 +9,7 @@ namespace Entities.Movement.Controllers{
 			base.Awake();
 			
 			_normalMovementState = new NormalMovementState(GetNormalMovementPattern());
-			stateMachine.AddTransition(moveToPlayAreaState, _normalMovementState, IsInPlayArea());
+			moveToPlayAreaState.AddTransition(_normalMovementState, IsInPlayArea());
 		}
 		
 		private void Update(){

@@ -2,22 +2,22 @@
 using POCO.StateMachines;
 
 namespace Entities.Movement.EntityStates{
-	public class MoveToPlayAreaState : IState{
+	public class MoveToPlayAreaState : State{
 		private MoveToCenterMovementPattern _moveToCenterPattern;
 
 		public MoveToPlayAreaState(MoveToCenterMovementPattern pattern){
 			_moveToCenterPattern = pattern;
 		}
 		
-		public void Tick(){
+		public override void Tick(){
 			_moveToCenterPattern.Move();
 		}
 
-		public void OnEnter(){
+		public override void OnEnter(){
 			
 		}
 
-		public void OnExit(){
+		public override void OnExit(){
 			_moveToCenterPattern.GetComponent<EntityPlayAreaLayerChanger>().SetToInsidePlayAreaLayer();
 		}
 	}

@@ -1,7 +1,7 @@
 ﻿using POCO.StateMachines;
 
 namespace Systems.Levels.LevelStates{
-	public class StartLevelState : IState{
+	public class StartLevelState : State{
 
 		private LevelManager _levelManager;
 		
@@ -9,10 +9,10 @@ namespace Systems.Levels.LevelStates{
 			_levelManager = levelManager;
 		}
 		
-		public void Tick(){
+		public override void Tick(){
 		}
 
-		public void OnEnter(){
+		public override void OnEnter(){
 			_levelManager.SetSpawnManagersForLevelProgression();
 			
 			_levelManager.IncrementLevel();
@@ -21,7 +21,7 @@ namespace Systems.Levels.LevelStates{
 			_levelManager.InvokeStartLevelEvent();
 		}
 
-		public void OnExit(){
+		public override void OnExit(){
 		}
 	}
 }

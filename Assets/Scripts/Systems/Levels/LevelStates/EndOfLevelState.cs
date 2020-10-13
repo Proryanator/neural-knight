@@ -1,7 +1,7 @@
 ﻿using POCO.StateMachines;
 
 namespace Systems.Levels.LevelStates{
-	public class EndOfLevelState : IState{
+	public class EndOfLevelState : State{
 
 		private LevelManager _levelManager;
 		
@@ -9,14 +9,14 @@ namespace Systems.Levels.LevelStates{
 			_levelManager = levelManager;
 		}
 		
-		public void Tick(){
+		public override void Tick(){
 		}
 
-		public void OnEnter(){
+		public override void OnEnter(){
 			_levelManager.InvokeEndLevelEvent();
 		}
 
-		public void OnExit(){
+		public override void OnExit(){
 		}
 	}
 }

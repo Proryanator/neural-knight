@@ -5,7 +5,7 @@ using Entities.MovementPatterns;
 using POCO.StateMachines;
 
 namespace Entities.Movement.EntityStates{
-	public class AgroPlayerState : IState{
+	public class AgroPlayerState : State{
 
 		private EnemyMovementController _enemyMovementController;
 		private FollowPlayerPattern _followPlayerPattern;
@@ -18,11 +18,11 @@ namespace Entities.Movement.EntityStates{
 			_playerAgroManager = PlayerAgroManager.Instance();
 		}
 		
-		public void Tick(){
+		public override void Tick(){
 			_followPlayerPattern.Move();
 		}
 
-		public void OnEnter(){
+		public override void OnEnter(){
 			// if you're already agroing from the start, just skip this
 			if (_enemyMovementController.IsAgroEnabledFromStart()){
 				return;
@@ -37,7 +37,7 @@ namespace Entities.Movement.EntityStates{
 			_playerAgroManager.StopListeningForAgroSlot(_enemyMovementController);
 		}
 
-		public void OnExit(){
+		public override void OnExit(){
 			
 		}
 	}

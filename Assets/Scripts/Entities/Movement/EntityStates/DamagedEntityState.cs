@@ -4,7 +4,7 @@ using UnityEngine;
 using Utils;
 
 namespace Entities.Movement.EntityStates{
-	public class DamagedEntityState : IState{
+	public class DamagedEntityState : State{
 
 		private readonly EnemyMovementController _enemyMovementController;
 		private readonly int _originalLayer;
@@ -17,14 +17,14 @@ namespace Entities.Movement.EntityStates{
 			_rigidbody2D = _enemyMovementController.GetComponent<Rigidbody2D>();
 		}
 		
-		public void Tick(){
+		public override void Tick(){
 		}
 
-		public void OnEnter(){
+		public override void OnEnter(){
 			_enemyMovementController.gameObject.layer = LayerMask.NameToLayer(AllLayers.DAMAGED_ENEMY);
 		}
 
-		public void OnExit(){
+		public override void OnExit(){
 			_enemyMovementController.gameObject.layer = _originalLayer;
 			
 			// if this game object has any rigid bodies on it, let's zero out any forces

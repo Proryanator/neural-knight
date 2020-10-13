@@ -30,7 +30,7 @@ namespace Systems.Levels{
 		private SpawnManager[] _spawnManagers;
 		
 		private StateMachine _stateMachine;
-		private IState _startLevelState;
+		private State _startLevelState;
 		
 		private void Awake(){
 			if (_instance == null){
@@ -54,15 +54,15 @@ namespace Systems.Levels{
 			_stateMachine = new StateMachine();
 			
 			_startLevelState = new StartLevelState(this);
-			IState collectDataState = new CollectDataState();
-			IState enemyCleanupState = new EnemyCleanupState();
-			IState endOfLevelState = new EndOfLevelState(this);
+			State collectDataState = new CollectDataState();
+			State enemyCleanupState = new EnemyCleanupState();
+			State endOfLevelState = new EndOfLevelState(this);
 			
-			_stateMachine.AddTransition(_startLevelState, collectDataState, HasGameStarted());
-			_stateMachine.AddTransition(collectDataState, enemyCleanupState, IsDataCollectedButEnemiesLeft());
-			_stateMachine.AddTransition(collectDataState, endOfLevelState, AreAllEntitiesGone());
-			_stateMachine.AddTransition(enemyCleanupState, endOfLevelState, AreAllEntitiesGone());
-			_stateMachine.AddTransition(endOfLevelState, _startLevelState, HasGameStarted());
+			_startLevelState.AddTransition(collectDataState, HasGameStarted());
+			collectDataState.AddTransition(enemyCleanupState, IsDataCollectedButEnemiesLeft());
+			collectDataState.AddTransition(endOfLevelState, AreAllEntitiesGone());
+			enemyCleanupState.AddTransition(endOfLevelState, AreAllEntitiesGone());
+			endOfLevelState.AddTransition(_startLevelState, HasGameStarted());
 		}
 		
 		private Func<bool> HasGameStarted() => () => true;
