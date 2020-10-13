@@ -16,8 +16,10 @@ namespace Weapons.Ammo {
 			if (weaponManager == null){
 				return;
 			}
-			
-			weaponManager.AddAmmo(_ammoBox.Ammo);
+
+
+			weaponManager.SetAmmoBasedOnWeaponNeeds(_ammoBox);
+			weaponManager.AddAmmo(_ammoBox);
 
 			Destroy(gameObject);
 		}

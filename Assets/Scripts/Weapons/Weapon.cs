@@ -56,7 +56,12 @@ namespace Weapons{
 		public Sprite GetWeaponIcon(){
 			return _weaponIcon;
 		}
-		
+
+		public override bool Equals(object other){
+			Weapon otherWeapon = (Weapon) other;
+			return _weaponName.Equals(otherWeapon._weaponName);
+		}
+
 		private IEnumerator WaitFireRateRoutine(){
 			_intervalBetweenShots = true;
 			yield return new WaitForSeconds(_weaponProperties.fireRate);
