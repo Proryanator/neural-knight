@@ -36,6 +36,11 @@ namespace Weapons{
 			return _equippedWeapon;
 		}
 
+		public void AddAmmo(int ammo){
+			// TODO: make this handle different weapon types
+			_equippedWeapon.GetWeaponProps().AddAmmo(ammo);
+		}
+		
 		/// <summary>
 		/// Adds the following weapon to the list of available weapons to equip.
 		/// This would happen when the player unlocks new weapons or finds new ones.

@@ -132,7 +132,6 @@ namespace Entities.MovementPatterns{
 			if (Utils2D.AreRotationsLargerThanAngle(transform.rotation, rotationToApply, 170)){
 				// if this counter is less than the maximum, skip the frame
 				if (_frameSkipCount < _frameSkipForInvertedRotation){
-					Debug.Log("Angles are too large, skipping the frame.");
 					// count this frame as 'skipped'
 					_frameSkipCount++;
 					return;

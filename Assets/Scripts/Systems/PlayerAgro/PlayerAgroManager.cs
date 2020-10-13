@@ -59,8 +59,6 @@ namespace Systems.PlayerAgro{
 			_currentAgro++;
 
 			deSpawnable.OnDeSpawn += DeRegisterAgro;
-
-			Debug.Log("Enemy registered to agro the player.");
 		}
 
 		/// <summary>
@@ -75,7 +73,6 @@ namespace Systems.PlayerAgro{
 		/// </summary>
 		public void StopListeningForAgroSlot(EnemyMovementController controller){
 			if (_listOfAgroListeners.Contains(controller)){
-				Debug.Log("Enemy stopped listening for agro slot to open");
 				_listOfAgroListeners.Remove(controller);
 			}
 		}
@@ -94,8 +91,6 @@ namespace Systems.PlayerAgro{
 			_currentAgro--;
 
 			TriggerAgroOnNextRandomEnemy();
-
-			Debug.Log("Freed up agro slot.");
 		}
 
 		/// <summary>
