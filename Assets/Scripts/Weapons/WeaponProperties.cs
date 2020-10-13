@@ -19,7 +19,7 @@ namespace Weapons{
 		private int _currentAmmo = 0;
 
 		public Action<int> OnAmmoChange;
-		
+
 		public int maxAmmo => _maxAmmo;
 
 		public float fireRate => _fireRate;
@@ -35,10 +35,10 @@ namespace Weapons{
 		public void SetMaxAmmo(int newMaxAmmo){
 			_maxAmmo = newMaxAmmo;
 		}
-		
+
 		public void AddAmmo(int ammo){
 			_currentAmmo += ammo;
-			
+
 			// only add up to the max ammo for this weapon
 			if (_currentAmmo > _maxAmmo){
 				_currentAmmo = _maxAmmo;
@@ -50,11 +50,16 @@ namespace Weapons{
 		public bool HasAmmo(){
 			return _currentAmmo != 0;
 		}
-		
+
 		public void DecrementAmmo(){
-		_currentAmmo--;
-		
-		OnAmmoChange?.Invoke(_currentAmmo);
-	}
+			_currentAmmo--;
+
+			OnAmmoChange?.Invoke(_currentAmmo);
+		}
+
+		public int CurrentAmmo(){
+			return _currentAmmo;
+		}
+	
 	}
 }
