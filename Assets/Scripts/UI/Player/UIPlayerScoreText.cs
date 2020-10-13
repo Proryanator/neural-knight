@@ -1,7 +1,9 @@
-﻿namespace UI.Player {
+﻿using Player;
+
+namespace UI.Player {
 	public class UIPlayerScoreText : UISimpleTextListener {
 		public override void AttachTextListener(){
-			throw new System.NotImplementedException();
+			FindObjectOfType<PlayerPoints>().OnScoreChange += UpdateText;
 		}
 	}
 }
