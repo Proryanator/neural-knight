@@ -34,12 +34,12 @@ Transform:
   m_GameObject: {fileID: 1526640807747819263}
   m_LocalRotation: {x: 0, y: 0, z: -0.21972694, w: 0.9755615}
   m_LocalPosition: {x: -0.063547, y: -0.016912, z: 0}
-  m_LocalScale: {x: 0.06546597, y: 0.06546597, z: 0.16366495}
+  m_LocalScale: {x: 0.0472756, y: 0.0472756, z: 0.11818901}
   m_Children:
   - {fileID: 8077619731766110964}
   - {fileID: 7467871314515637696}
   - {fileID: 7467871314026679091}
-  - {fileID: 1678115297}
+  - {fileID: 3339605170377153294}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -25.386002}
@@ -202,7 +202,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea1333c7de7f4abe88985e1c717f6582, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingHealth: 3
+  _maxHealth: 3
   _invulnerabilityPeriod: 1
 --- !u!114 &1526640808184733633
 MonoBehaviour:
@@ -290,7 +290,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Size: {x: 22.21223, y: 12.3465605}
   m_Direction: 1
---- !u!1001 &3339605169990324856
+--- !u!1001 &2100398231
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -359,11 +359,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9dfd1e7558bb53240b47a5ccc7474ff4, type: 3}
---- !u!4 &1678115297 stripped
+--- !u!4 &3339605170377153294 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3339605169386214297, guid: 9dfd1e7558bb53240b47a5ccc7474ff4,
     type: 3}
-  m_PrefabInstance: {fileID: 3339605169990324856}
+  m_PrefabInstance: {fileID: 2100398231}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4302854849873632931
 PrefabInstance:
