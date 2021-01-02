@@ -1,5 +1,8 @@
-﻿using UnityEngine;
-using Utils;
+﻿using System;
+using Systems.Levels;
+using Maps.PlayerBoundaries.States;
+using POCO.StateMachines;
+using UnityEngine;
 
 namespace Maps.PlayerBoundaries{
 	/// <summary>
@@ -13,28 +16,51 @@ namespace Maps.PlayerBoundaries{
 
 		// holds reference of player boundary located as child
 		private PlayerBoundary _playerBoundary;
+		private LevelManager _levelManager;
 
+		private StateMachine _stateMachine;
+		private BlockPlayerState _blockPlayerState;
+		private State _notifyLevelManagerState;
+		private State _waitForDeLoadState;
+
+		private Collider2D _currentCollider2D;
+		
 		private void Awake(){
 			_playerBoundary = GetComponentInChildren<PlayerBoundary>();
 		}
 
+		private void Start(){
+			_levelManager = LevelManager.GetInstance();
+			SetupAndCreateStates();
+		}
+
+		private void SetupAndCreateStates(){
+			_stateMachine = new StateMachine();
+			
+			// TODO: turn these into proper states, can we store a reference to the collider and change it at will?
+			_blockPlayerState = new BlockPlayerState(_playerBoundary);
+			_notifyLevelManagerState = new NotifyLevelManagerState(_levelManager);
+			_waitForDeLoadState = new WaitForDeLoadState();
+			
+			_blockPlayerState.AddTransition(_notifyLevelManagerState, CanPlayerExit());
+			_notifyLevelManagerState.AddTransition(_waitForDeLoadState, DidNotify());
+			_stateMachine.SetState(_blockPlayerState);
+		}
+		
+		private Func<bool> CanPlayerExit() => () => _levelManager.CanPlayerExitTheRoom();
+		private Func<bool> DidNotify() => () => true;
+		
 		private void OnTriggerEnter2D(Collider2D other){
-			TriggerWallIfPlayer(other, true);
+			Tick(other);
 		}
 
 		private void OnTriggerExit2D(Collider2D other){
-			TriggerWallIfPlayer(other, false);
+			Tick(other);
 		}
 
-		private void TriggerWallIfPlayer(Collider2D other, bool enableCollider){
-			if (other.gameObject.tag.Equals(AllTags.PLAYER)){
-				if (enableCollider){
-					_playerBoundary.EnableCollider();
-				}
-				else{
-					_playerBoundary.DisableCollider();
-				}
-			}
+		private void Tick(Collider2D other){
+			_blockPlayerState.SetCollider2D(other);
+			_stateMachine.Tick();
 		}
 	}
 }

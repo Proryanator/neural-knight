@@ -17,7 +17,7 @@ namespace POCO.StateMachines{
 		}
 
 		public void SetState(State state){
-			if (state == currentState){
+			if (IsState(state)){
 				return;
 			}
 
@@ -27,6 +27,10 @@ namespace POCO.StateMachines{
 			currentState.OnEnter();
 		}
 
+		public bool IsState(State state){
+			return currentState == state;
+		}
+		
 		public void AddAnyTransition(State state, Func<bool> predicate){
 			transitionFromAnyState.Add(new Transition(state, predicate));
 		}

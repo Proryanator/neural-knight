@@ -40,7 +40,7 @@ namespace Entities.MovementPatterns{
 		
 		private void OnDrawGizmos(){
 			// draw this circle as a gizmo so we can see how large this circle is
-			Gizmos.DrawWireSphere(_rotationPoint.position, _rotationPoint.GetComponent<CircleCollider2D>().radius);
+			// Gizmos.DrawWireSphere(_rotationPoint.position, _rotationPoint.GetComponent<CircleCollider2D>().radius);
 		}
 
 		public override void Move(){
