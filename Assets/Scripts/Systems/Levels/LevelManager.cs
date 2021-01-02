@@ -56,13 +56,13 @@ namespace Systems.Levels{
 			_startLevelState = new StartLevelState(this);
 			State collectDataState = new CollectDataState();
 			State enemyCleanupState = new EnemyCleanupState();
-			State endOfLevelState = new EndOfLevelState(this);
+			State waitForPlayerActionState = new WaitForPlayerActionState(this);
 			
 			_startLevelState.AddTransition(collectDataState, HasGameStarted());
 			collectDataState.AddTransition(enemyCleanupState, IsDataCollectedButEnemiesLeft());
-			collectDataState.AddTransition(endOfLevelState, AreAllEntitiesGone());
-			enemyCleanupState.AddTransition(endOfLevelState, AreAllEntitiesGone());
-			endOfLevelState.AddTransition(_startLevelState, HasGameStarted());
+			collectDataState.AddTransition(waitForPlayerActionState, AreAllEntitiesGone());
+			enemyCleanupState.AddTransition(waitForPlayerActionState, AreAllEntitiesGone());
+			// TODO: add a check for whether the player has moved into an other map (relies on map sliding mechanic)
 		}
 		
 		private Func<bool> HasGameStarted() => () => true;

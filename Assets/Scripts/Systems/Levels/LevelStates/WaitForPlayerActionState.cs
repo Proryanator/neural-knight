@@ -1,11 +1,11 @@
 ﻿using POCO.StateMachines;
 
 namespace Systems.Levels.LevelStates{
-	public class EndOfLevelState : State{
+	public class WaitForPlayerActionState : State{
 
 		private LevelManager _levelManager;
 		
-		public EndOfLevelState(LevelManager levelManager){
+		public WaitForPlayerActionState(LevelManager levelManager){
 			_levelManager = levelManager;
 		}
 		
