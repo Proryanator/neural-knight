@@ -24,8 +24,6 @@ namespace Maps.PlayerBoundaries{
 		private NotifyLevelManagerState _notifyLevelManagerState;
 		private State _waitForDeLoadState;
 
-		private Collider2D _currentCollider2D;
-		
 		private static readonly ArrayList _allPlayerBoundaryTriggers = new ArrayList();
 
 		private static bool _hasFinalTicked;
@@ -54,19 +52,20 @@ namespace Maps.PlayerBoundaries{
 		}
 		
 		private Func<bool> CanPlayerExit() => () => _levelManager.CanPlayerExitTheRoom();
-		private Func<bool> DidNotify() => () => true;
+		private Func<bool> DidNotify() => () => _levelManager.HasPlayerExitedTheRoom();
 		
 		private void OnTriggerEnter2D(Collider2D other){
-			Tick(other);
+			Tick(other, true);
 		}
 
 		private void OnTriggerExit2D(Collider2D other){
-			Tick(other);
+			Tick(other, false);
 		}
 
-		private void Tick(Collider2D other){
+		private void Tick(Collider2D other, bool hasEntered){
+			Debug.Log("Has entered collider: " + hasEntered);
 			_blockPlayerState.SetCollider2D(other);
-			_notifyLevelManagerState.SetCollider2D(other);
+			_notifyLevelManagerState.SetCollider2D(other, hasEntered, transform.position);
 			_stateMachine.Tick();
 		}
 
