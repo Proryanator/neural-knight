@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 namespace Maps.PlayerBoundaries{
 	public class PlayerBoundary : MonoBehaviour{
@@ -7,6 +8,9 @@ namespace Maps.PlayerBoundaries{
 
 		private Transform _childSpriteAnimation;
 	
+		// all player boundaries in the scene, useful for turning off all boundaries in one shot
+		private static ArrayList _allPlayerBoundaries = new ArrayList();
+		
 		private void Awake(){
 			_collider2D = gameObject.GetComponent<Collider2D>();
 
@@ -14,12 +18,22 @@ namespace Maps.PlayerBoundaries{
 		
 			// when awoken, initially disable the collider
 			DisableCollider();
+			
+			// add myself to the list of current player boundaries
+			_allPlayerBoundaries.Add(this);
+		}
+
+		public static void DisableAllPlayerBoundaries(){
+			// for each one in the list, disable them
+			foreach (PlayerBoundary boundary in _allPlayerBoundaries){
+				boundary.DisableCollider();
+			}
+
+			_allPlayerBoundaries.Clear();
 		}
 
 		public void DisableCollider(){
 			_collider2D.enabled = false;
-		
-			// disable all children
 			_childSpriteAnimation.gameObject.SetActive(false);
 		}
 

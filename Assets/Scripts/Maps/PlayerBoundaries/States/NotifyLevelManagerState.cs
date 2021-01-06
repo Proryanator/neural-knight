@@ -14,13 +14,20 @@ namespace Maps.PlayerBoundaries.States{
 		private Collider2D _collider2D;
 		
 		public override void Tick(){
+			// if the player has already left, do nothing
+			if (_levelManager.HasPlayerExitedTheRoom()){
+				return;
+			}
+			
+			// otherwise, if this is the player, we'll want to 
 			if (_collider2D.tag.Equals(AllTags.PLAYER)){
 				_levelManager.PlayerHasExited();	
 			}
 		}
 
 		public override void OnEnter(){
-			
+			// disable all triggers, no longer in a blocking state
+			PlayerBoundary.DisableAllPlayerBoundaries();
 		}
 
 		public override void OnExit(){

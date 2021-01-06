@@ -26,6 +26,8 @@ namespace Maps.PlayerBoundaries.States{
 		}
 
 		public override void OnExit(){
+			// tick all other states along
+			PlayerBoundaryTrigger.ForceAllToNextState();
 		}
 		
 		private void TriggerWall(){

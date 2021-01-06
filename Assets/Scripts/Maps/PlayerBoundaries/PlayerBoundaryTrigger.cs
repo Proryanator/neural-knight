@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Systems.Levels;
 using Maps.PlayerBoundaries.States;
 using POCO.StateMachines;
@@ -25,8 +26,14 @@ namespace Maps.PlayerBoundaries{
 
 		private Collider2D _currentCollider2D;
 		
+		private static readonly ArrayList _allPlayerBoundaryTriggers = new ArrayList();
+
+		private static bool _hasFinalTicked;
+		
 		private void Awake(){
 			_playerBoundary = GetComponentInChildren<PlayerBoundary>();
+
+			_allPlayerBoundaryTriggers.Add(this);
 		}
 
 		private void Start(){
@@ -61,6 +68,20 @@ namespace Maps.PlayerBoundaries{
 			_blockPlayerState.SetCollider2D(other);
 			_notifyLevelManagerState.SetCollider2D(other);
 			_stateMachine.Tick();
+		}
+
+		public void ForceToNotifyState(){
+			_stateMachine.SetState(_notifyLevelManagerState);
+		}
+		
+		public static void ForceAllToNextState(){
+			if (!_hasFinalTicked){
+				_hasFinalTicked = true;
+				
+				foreach (PlayerBoundaryTrigger trigger in _allPlayerBoundaryTriggers){
+					trigger.ForceToNotifyState();
+				}
+			}
 		}
 	}
 }

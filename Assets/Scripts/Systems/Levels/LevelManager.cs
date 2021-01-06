@@ -131,7 +131,7 @@ namespace Systems.Levels{
 			return true;
 		}
 
-		private bool HasPlayerExitedTheRoom(){
+		public bool HasPlayerExitedTheRoom(){
 			return _waitForPlayerToLeaveRoomState.HasPlayerExitedTheRoom();
 		}
 	}
