@@ -37,7 +37,6 @@ namespace Maps.PlayerBoundaries{
 		private void SetupAndCreateStates(){
 			_stateMachine = new StateMachine();
 			
-			// TODO: turn these into proper states, can we store a reference to the collider and change it at will?
 			_blockPlayerState = new BlockPlayerState(_playerBoundary);
 			_notifyLevelManagerState = new NotifyLevelManagerState(_levelManager);
 			_waitForDeLoadState = new WaitForDeLoadState();
