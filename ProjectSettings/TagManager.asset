@@ -8,6 +8,7 @@ TagManager:
   - AITracker
   - MapCentralPoint
   - DataFocusPoint
+  - Room
   layers:
   - Default
   - TransparentFX

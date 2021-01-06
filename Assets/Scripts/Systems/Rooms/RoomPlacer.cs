@@ -12,6 +12,8 @@ namespace Systems.Rooms {
 		
 		private float _roomLength = 19.2f;
 		private int _roomHeight = 11;
+
+		private Vector2 _directionOfRoomExit;
 		
 		private void Awake(){
 			if (_instance == null){
@@ -28,9 +30,9 @@ namespace Systems.Rooms {
 		}
 		
 		public GameObject SpawnRoomInMovementDirection(){
-			Vector2 directionOfRoomExit = GetPlayerDirection(_playerTransform);
+			_directionOfRoomExit = GetPlayerDirection(_playerTransform);
 			
-			Vector2 roomLocation = new Vector2(directionOfRoomExit.x * _roomLength, directionOfRoomExit.y * _roomHeight);
+			Vector2 roomLocation = new Vector2(_directionOfRoomExit.x * _roomLength, _directionOfRoomExit.y * _roomHeight);
 			
 			// normalize the direction given to one of 4 directions, north/south/east/west
 			GameObject newRoom = Instantiate(_roomPrefab, roomLocation, Quaternion.identity);
@@ -40,7 +42,7 @@ namespace Systems.Rooms {
 		}
 
 		private Vector2 GetPlayerDirection(Transform playerTransform){
-			Vector2[] allDirections = new [] {Vector2.up, Vector2.down, Vector2.left, Vector2.right};
+			Vector2[] allDirections = {Vector2.up, Vector2.down, Vector2.left, Vector2.right};
 			foreach (Vector2 possibleDirection in allDirections){
 				if (Mathf.Abs(Vector2.Angle(playerTransform.position, possibleDirection)) < 45){
 					return possibleDirection;
@@ -49,6 +51,10 @@ namespace Systems.Rooms {
 			
 			// something went wrong here, shouldn't happen!
 			return Vector2.zero;
+		}
+
+		public Vector2 GetSlideDirection(){
+			return _directionOfRoomExit * -1;
 		}
 	}
 }

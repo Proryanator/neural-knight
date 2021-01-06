@@ -7,5 +7,6 @@ namespace Utils{
 		public const string AI_TRACKER = "AITracker";
 		public const string MAP_CENTRAL_POINT = "MapCentralPoint";
 		public const string DATA_FOCUS_POINT = "DataFocusPoint";
+		public const string ROOM = "Room";
 	}
 }

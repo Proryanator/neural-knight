@@ -33,6 +33,7 @@ namespace Systems.Levels{
 		private StateMachine _stateMachine;
 		private State _startLevelState;
 		private WaitForPlayerToLeaveRoomState _waitForPlayerToLeaveRoomState;
+		private RoomTransitionState _roomTransitionState;
 		
 		private void Awake(){
 			if (_instance == null){
@@ -58,20 +59,21 @@ namespace Systems.Levels{
 			State collectDataState = new CollectDataState();
 			State enemyCleanupState = new EnemyCleanupState();
 			_waitForPlayerToLeaveRoomState = new WaitForPlayerToLeaveRoomState(this);
-			RoomTransitionState roomTransitionState = new RoomTransitionState(RoomPlacer.GetInstance());
+			_roomTransitionState = new RoomTransitionState(RoomPlacer.GetInstance());
 			
 			_startLevelState.AddTransition(collectDataState, HasGameStarted());
 			collectDataState.AddTransition(enemyCleanupState, IsDataCollectedButEnemiesLeft());
 			collectDataState.AddTransition(_waitForPlayerToLeaveRoomState, AreAllEntitiesGone());
 			enemyCleanupState.AddTransition(_waitForPlayerToLeaveRoomState, AreAllEntitiesGone());
-			_waitForPlayerToLeaveRoomState.AddTransition(roomTransitionState, HasPlayerLeftTheRoom());
-			// TODO: add a check for whether the player has moved into an other map (relies on map sliding mechanic)
+			_waitForPlayerToLeaveRoomState.AddTransition(_roomTransitionState, HasPlayerLeftTheRoom());
+			_roomTransitionState.AddTransition(_startLevelState, HasRoomTransitionFinished());
 		}
 		
 		private Func<bool> HasGameStarted() => () => true;
 		private Func<bool> IsDataCollectedButEnemiesLeft() => () => AreAllSpawnersDoneSpawning() && IsAllDataCollected() && AreThereEnemiesLeft();
 		private Func<bool> AreAllEntitiesGone() => () => AreAllSpawnersDoneSpawning() && IsAllDataCollected() && !AreThereEnemiesLeft();
 		private Func<bool> HasPlayerLeftTheRoom() => () => HasPlayerExitedTheRoom();
+		private Func<bool> HasRoomTransitionFinished() => () => _roomTransitionState.HasTransitionFinished();
 		
 		public static LevelManager GetInstance(){
 			return _instance;
