@@ -37,11 +37,6 @@ namespace Entities.MovementPatterns{
 		private Transform GetCenterOfMap(){
 			return FindObjectOfType<PlayArea>().transform;
 		}
-		
-		private void OnDrawGizmos(){
-			// draw this circle as a gizmo so we can see how large this circle is
-			// Gizmos.DrawWireSphere(_rotationPoint.position, _rotationPoint.GetComponent<CircleCollider2D>().radius);
-		}
 
 		public override void Move(){
 			CircleAroundCenterPointPattern(transform, _rotationPoint, _radius, _moveSpeed);
