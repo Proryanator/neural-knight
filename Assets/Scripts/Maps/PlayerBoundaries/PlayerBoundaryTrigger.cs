@@ -20,7 +20,7 @@ namespace Maps.PlayerBoundaries{
 
 		private StateMachine _stateMachine;
 		private BlockPlayerState _blockPlayerState;
-		private State _notifyLevelManagerState;
+		private NotifyLevelManagerState _notifyLevelManagerState;
 		private State _waitForDeLoadState;
 
 		private Collider2D _currentCollider2D;
@@ -59,6 +59,7 @@ namespace Maps.PlayerBoundaries{
 
 		private void Tick(Collider2D other){
 			_blockPlayerState.SetCollider2D(other);
+			_notifyLevelManagerState.SetCollider2D(other);
 			_stateMachine.Tick();
 		}
 	}
