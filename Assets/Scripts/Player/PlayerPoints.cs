@@ -16,7 +16,6 @@ namespace Player{
 		/// Adds the given points to the current score.
 		/// </summary>
 		public void AddPoints(int points){
-			Debug.Log("Adding [" + points + "] points to the player's score!");
 			_points += points;
 
 			if (OnScoreChange != null){

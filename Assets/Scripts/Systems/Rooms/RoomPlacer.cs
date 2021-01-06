@@ -10,7 +10,7 @@ namespace Systems.Rooms {
 
 		private Transform _playerTransform;
 		
-		private int _roomLength = 20;
+		private float _roomLength = 19.2f;
 		private int _roomHeight = 11;
 		
 		private void Awake(){
@@ -28,7 +28,7 @@ namespace Systems.Rooms {
 		}
 		
 		public GameObject SpawnRoomInMovementDirection(){
-			Vector2 directionOfRoomExit = GetPlayerDirection();
+			Vector2 directionOfRoomExit = GetPlayerDirection(_playerTransform);
 			
 			Vector2 roomLocation = new Vector2(directionOfRoomExit.x * _roomLength, directionOfRoomExit.y * _roomHeight);
 			
@@ -39,8 +39,16 @@ namespace Systems.Rooms {
 			return newRoom;
 		}
 
-		private Vector2 GetPlayerDirection(){
-			return Vector2.down;
+		private Vector2 GetPlayerDirection(Transform playerTransform){
+			Vector2[] allDirections = new [] {Vector2.up, Vector2.down, Vector2.left, Vector2.right};
+			foreach (Vector2 possibleDirection in allDirections){
+				if (Mathf.Abs(Vector2.Angle(playerTransform.position, possibleDirection)) < 45){
+					return possibleDirection;
+				}
+			}
+			
+			// something went wrong here, shouldn't happen!
+			return Vector2.zero;
 		}
 	}
 }
