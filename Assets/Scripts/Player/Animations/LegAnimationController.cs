@@ -13,6 +13,7 @@ namespace Player.Animations{
 
 		// we'll need a reference to the animator on this object
 		private Animator _animator;
+		private Quaternion _originalRotation;
 
 		// also needing a reference to the controller! Will be in the parent
 		private TDC_FaceMouse _faceMouseController;
@@ -44,6 +45,7 @@ namespace Player.Animations{
 
 		private void Awake(){
 			_animator = GetComponent<Animator>();
+			_originalRotation = transform.rotation;
 			_faceMouseController = GetComponentInParent<TDC_FaceMouse>();
 			_movePlayerController = GetComponentInParent<MovePlayerController>();
 			_currentController = _movePlayerController;
@@ -75,6 +77,8 @@ namespace Player.Animations{
 
 		public void UseFaceMouseController(){
 			_currentController = _faceMouseController;
+			// this resets any left-over rotation from the other controller
+			transform.rotation = _originalRotation;
 		}
 		
 		/// <summary>
