@@ -1,14 +1,18 @@
-﻿using Player.PlayerControllers;
+﻿using Proryanator.Controllers2D;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Player{
-	public class MovePlayerController : NewTopDownController{
+	public class MovePlayerController : TopDownController{
 
 		private new void Start(){
 			base.Start();
 		}
-		
+
+		private new void FixedUpdate() {
+			base.FixedUpdate();
+		}
+
 		public override void SetDirection(InputAction.CallbackContext context) {
 			// do nothing with player input here
 		}
