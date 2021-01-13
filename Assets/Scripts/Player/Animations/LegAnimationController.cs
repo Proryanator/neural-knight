@@ -16,7 +16,9 @@ namespace Player.Animations{
 
 		// also needing a reference to the controller! Will be in the parent
 		private TDC_FaceMouse _faceMouseController;
-
+		private MovePlayerController _movePlayerController;
+		private Base2DController _currentController;
+		
 		[Tooltip(
 			"The lower the number, the slower the rotation lerping. The higher the number, the quicker it'll lerp. Only applies when moving.")]
 		[SerializeField]
@@ -43,6 +45,8 @@ namespace Player.Animations{
 		private void Awake(){
 			_animator = GetComponent<Animator>();
 			_faceMouseController = GetComponentInParent<TDC_FaceMouse>();
+			_movePlayerController = GetComponentInParent<MovePlayerController>();
+			_currentController = _movePlayerController;
 			_spriteFacingDirection = _faceMouseController.GetStartingDirection();
 		}
 
@@ -65,13 +69,23 @@ namespace Player.Animations{
 			}
 		}
 
+		public void UseMoveController(){
+			_currentController = _movePlayerController;
+		}
+
+		public void UseFaceMouseController(){
+			_currentController = _faceMouseController;
+		}
+		
 		/// <summary>
 		/// Reads + calculates some information about current facing direction + movement.
 		///
 		/// All used later to calculate the direction of the legs.
 		/// </summary>
 		private void GetMovementInfo(){
-			_moveDirection = _faceMouseController.GetDirection();
+			_moveDirection = GetDirectionOfCurrentController();
+			
+			// TODO: might need to disable this too, or just prevent turning the legs
 			_facingDirection = _faceMouseController.GetFacingDirection();
 
 			// new rotation, defaults to the direction of the facing direction
@@ -112,6 +126,10 @@ namespace Player.Animations{
 			}
 		}
 
+		private Vector2 GetDirectionOfCurrentController(){
+			return _currentController.GetDirection();
+		}
+		
 		/// <summary>
 		/// If there's no movement, point your legs in the facing direction.
 		///
