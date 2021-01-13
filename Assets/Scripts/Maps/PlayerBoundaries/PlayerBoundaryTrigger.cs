@@ -27,7 +27,7 @@ namespace Maps.PlayerBoundaries{
 		private static readonly ArrayList _allPlayerBoundaryTriggers = new ArrayList();
 
 		private static bool _hasFinalTicked;
-		
+
 		private void Awake(){
 			_playerBoundary = GetComponentInChildren<PlayerBoundary>();
 

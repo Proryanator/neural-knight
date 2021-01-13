@@ -4,17 +4,11 @@ using UnityEngine;
 namespace Entities.Movement{
 	public class PlayArea : MonoBehaviour{
 
-		private static PlayArea _instance;
+		private Collider2D _collider2D;
 
 		private void Awake(){
-			if (_instance == null){
-				_instance = this;
-			}
-			else if (_instance != this){
-				Destroy(gameObject);
-			}
+			_collider2D = GetComponent<Collider2D>();
 		}
-		
 
 		private void OnTriggerEnter2D(Collider2D other){
 			AbstractEntityMovementController controller = other.gameObject.GetComponent<AbstractEntityMovementController>();
@@ -22,6 +16,10 @@ namespace Entities.Movement{
 			if (controller != null){
 				controller.SetInsidePlayArea();
 			}
+		}
+
+		public bool IsInPlayArea(GameObject obj){
+			return _collider2D.bounds.Contains(obj.transform.position);
 		}
 	}
 }

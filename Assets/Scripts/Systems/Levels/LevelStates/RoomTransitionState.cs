@@ -39,27 +39,18 @@ namespace Systems.Levels.LevelStates{
 		}
 
 		public override void OnEnter(){
-			_roomPlacer.SpawnRoomInMovementDirection();
+			_oldMap = GameObject.FindGameObjectWithTag(AllTags.ROOM);
+			_newMap = _roomPlacer.SpawnRoomInMovementDirection();
 			
 			_player = GameObject.FindWithTag(AllTags.PLAYER);
 			_player.SetActive(false);
-
-			// do a one-time room lookup
-			GameObject[] allRooms = GameObject.FindGameObjectsWithTag(AllTags.ROOM);
-			foreach (GameObject gameObject in allRooms){
-				if (gameObject.transform.position.Equals(Vector2.zero)){
-					_oldMap = gameObject;
-				}
-				else{
-					_newMap = gameObject;
-				}
-			}
 
 			_distanceBetweenMaps = Vector2.Distance(_oldMap.transform.position, _newMap.transform.position);
 			_distanceBetweenPlayerAndMap = Vector2.Distance(_oldMap.transform.position, _player.transform.position);
 		}
 
 		public override void OnExit(){
+			Debug.Log("Now exiting the room transition state");
 			GameObject.Destroy(_oldMap);
 			
 			_player.SetActive(true);

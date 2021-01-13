@@ -31,6 +31,7 @@ namespace Systems.Levels{
 		private SpawnManager[] _spawnManagers;
 		
 		private StateMachine _stateMachine;
+		private WaitForPlayerToEnterRoomState _waitForPlayerToEnterRoomState;
 		private State _startLevelState;
 		private WaitForPlayerToLeaveRoomState _waitForPlayerToLeaveRoomState;
 		private RoomTransitionState _roomTransitionState;
@@ -45,7 +46,7 @@ namespace Systems.Levels{
 
 		private void Start(){
 			CreateAndSetupStates();
-			_stateMachine.SetState(_startLevelState);
+			_stateMachine.SetState(_waitForPlayerToEnterRoomState);
 		}
 
 		private void Update(){
@@ -55,26 +56,30 @@ namespace Systems.Levels{
 		private void CreateAndSetupStates(){
 			_stateMachine = new StateMachine();
 			
+			// TODO: might need to handle multiple player objects here one day when multi-player is added
+			_waitForPlayerToEnterRoomState = new WaitForPlayerToEnterRoomState();
 			_startLevelState = new StartLevelState(this);
 			State collectDataState = new CollectDataState();
 			State enemyCleanupState = new EnemyCleanupState();
 			_waitForPlayerToLeaveRoomState = new WaitForPlayerToLeaveRoomState(this);
 			_roomTransitionState = new RoomTransitionState(RoomPlacer.GetInstance());
 			
+			_waitForPlayerToEnterRoomState.AddTransition(_startLevelState, HasPlayerEnteredPlayArea());
 			_startLevelState.AddTransition(collectDataState, HasGameStarted());
 			collectDataState.AddTransition(enemyCleanupState, IsDataCollectedButEnemiesLeft());
 			collectDataState.AddTransition(_waitForPlayerToLeaveRoomState, AreAllEntitiesGone());
 			enemyCleanupState.AddTransition(_waitForPlayerToLeaveRoomState, AreAllEntitiesGone());
 			_waitForPlayerToLeaveRoomState.AddTransition(_roomTransitionState, HasPlayerLeftTheRoom());
-			_roomTransitionState.AddTransition(_startLevelState, HasRoomTransitionFinished());
+			_roomTransitionState.AddTransition(_waitForPlayerToEnterRoomState, HasRoomTransitionFinished());
 		}
 		
+		private Func<bool> HasPlayerEnteredPlayArea() => () => _waitForPlayerToEnterRoomState.HasPlayerEnteredPlayArea();
 		private Func<bool> HasGameStarted() => () => true;
 		private Func<bool> IsDataCollectedButEnemiesLeft() => () => AreAllSpawnersDoneSpawning() && IsAllDataCollected() && AreThereEnemiesLeft();
 		private Func<bool> AreAllEntitiesGone() => () => AreAllSpawnersDoneSpawning() && IsAllDataCollected() && !AreThereEnemiesLeft();
 		private Func<bool> HasPlayerLeftTheRoom() => () => HasPlayerExitedTheRoom();
 		private Func<bool> HasRoomTransitionFinished() => () => _roomTransitionState.HasTransitionFinished();
-		
+
 		public static LevelManager GetInstance(){
 			return _instance;
 		}
