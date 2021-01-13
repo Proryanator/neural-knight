@@ -1031,7 +1031,7 @@ PrefabInstance:
     - target: {fileID: 1526640807747819261, guid: 7d9ea9d5ddff58341a64d253a3db5466,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -10.95
+      value: -10.985
       objectReference: {fileID: 0}
     - target: {fileID: 1526640807747819261, guid: 7d9ea9d5ddff58341a64d253a3db5466,
         type: 3}
@@ -1087,6 +1087,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Perceptron
+      objectReference: {fileID: 0}
+    - target: {fileID: 6289452813130889033, guid: 7d9ea9d5ddff58341a64d253a3db5466,
+        type: 3}
+      propertyPath: _maxVelocity
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7d9ea9d5ddff58341a64d253a3db5466, type: 3}
