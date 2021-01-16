@@ -9,6 +9,7 @@ namespace Weapons{
 		[SerializeField] private int _shotDamage = 1;
 		[SerializeField] private float _shotForce = 5f;
 		[SerializeField] private int _maxAmmo = 100;
+		[SerializeField] private int _ammoBoxCount = 10;
 
 		private void Awake(){
 			// this initialization can be done through some orchestrator system later on but, make sure this is called
@@ -21,6 +22,8 @@ namespace Weapons{
 		public Action<int> OnAmmoChange;
 
 		public int maxAmmo => _maxAmmo;
+		
+		public int ammoBoxCount => _ammoBoxCount;
 
 		public float fireRate => _fireRate;
 
@@ -31,7 +34,7 @@ namespace Weapons{
 		public int shotDamage => _shotDamage;
 
 		public float shotForce => _shotForce;
-
+		
 		public void SetMaxAmmo(int newMaxAmmo){
 			_maxAmmo = newMaxAmmo;
 		}
@@ -51,6 +54,10 @@ namespace Weapons{
 			return _currentAmmo != 0;
 		}
 
+		public bool HasSpaceForMoreAmmo(){
+			return _currentAmmo < _maxAmmo;
+		}
+		
 		public void DecrementAmmo(){
 			_currentAmmo--;
 

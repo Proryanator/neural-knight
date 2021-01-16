@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 3450372240070498939}
   - component: {fileID: 3450372240070498936}
   - component: {fileID: 3450372240070498937}
+  - component: {fileID: -5691643898049035276}
   m_Layer: 0
   m_Name: Head
   m_TagString: Enemy
@@ -154,7 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b90d27841cf4aa284dffb9fe29c58e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingHealth: 3
+  _maxHealth: 3
   _invulnerabilityPeriod: 0
   _parentDeath: 1
 --- !u!114 &3450372240070498880
@@ -279,3 +280,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f43543e19214e94ba685fcdf8aef877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-5691643898049035276
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3450372240070498942}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62eaabd84d6a45438608bc824ebf639d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _chanceToDrop: 0.8
+  _ammoBoxPrefab: {fileID: 8586346240443773544, guid: 1fe9c17c39a21f2458815a6c4b36ed64,
+    type: 3}
