@@ -11,7 +11,7 @@ namespace Systems.Rooms {
 		private Transform _playerTransform;
 		
 		private float _roomLength = 19.2f;
-		private int _roomHeight = 11;
+		private float _roomHeight = 10.8f;
 
 		private Vector2 _directionOfRoomExit;
 		
