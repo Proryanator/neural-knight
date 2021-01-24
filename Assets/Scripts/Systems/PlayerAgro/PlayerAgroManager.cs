@@ -22,6 +22,8 @@ namespace Systems.PlayerAgro{
 
 		[Tooltip("Trigger agro increase every X levels")]
 		[SerializeField] private int _agroLevelBoundary = 2;
+
+		[SerializeField] private bool _isEnabled = true;
 		
 		// holds list of unique ids of enemy listeners
 		private List<EnemyMovementController> _listOfAgroListeners = new List<EnemyMovementController>();
@@ -35,8 +37,10 @@ namespace Systems.PlayerAgro{
 		}
 
 		private void Start(){
-			// let's register this method to the 'OnLevelFinish' method, to increase/adjust agro level
-			LevelManager.GetInstance().OnLevelFinish += IncreaseAgroAmount;
+			if (_isEnabled){
+				// let's register this method to the 'OnLevelFinish' method, to increase/adjust agro level
+				LevelManager.GetInstance().OnLevelFinish += IncreaseAgroAmount;
+			}
 		}
 
 		public static PlayerAgroManager Instance(){
@@ -81,7 +85,7 @@ namespace Systems.PlayerAgro{
 		/// True if there is space left for enemies to agro the player, false if not.
 		/// </summary>
 		public bool CanAgroPlayer(){
-			return _maxAgro == 0 || _currentAgro < _maxAgro;
+			return !_isEnabled || _maxAgro == 0 || _currentAgro < _maxAgro;
 		}
 		
 		/// <summary>
