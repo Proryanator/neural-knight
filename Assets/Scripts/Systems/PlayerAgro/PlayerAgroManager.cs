@@ -81,7 +81,7 @@ namespace Systems.PlayerAgro{
 		/// True if there is space left for enemies to agro the player, false if not.
 		/// </summary>
 		public bool CanAgroPlayer(){
-			return _currentAgro < _maxAgro;
+			return _maxAgro == 0 || _currentAgro < _maxAgro;
 		}
 		
 		/// <summary>

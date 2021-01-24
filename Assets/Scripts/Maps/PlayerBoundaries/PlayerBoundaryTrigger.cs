@@ -63,7 +63,6 @@ namespace Maps.PlayerBoundaries{
 		}
 
 		private void Tick(Collider2D other, bool hasEntered){
-			Debug.Log("Has entered collider: " + hasEntered);
 			_blockPlayerState.SetCollider2D(other);
 			_notifyLevelManagerState.SetCollider2D(other, hasEntered, transform.position);
 			_stateMachine.Tick();

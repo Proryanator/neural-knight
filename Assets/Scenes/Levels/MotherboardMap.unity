@@ -681,7 +681,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 903043133, guid: dfa05f94e7af05e48aff5f58b2ac6be4, type: 3}
       propertyPath: _maxAgro
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1462546619155307732, guid: dfa05f94e7af05e48aff5f58b2ac6be4,
         type: 3}
