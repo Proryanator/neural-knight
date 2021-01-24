@@ -41,7 +41,20 @@ namespace Entities {
 			// calculate normalized direction away from the player
 			Vector2 directionOfMovement = (pointStartPosition - playerPosition).normalized;
 
-			return directionOfMovement * speed;
+			// generate random angle between the maximum allowed
+			float angle = Random.Range(-_angleModifier, _angleModifier);
+			return RotateAroundAngle(directionOfMovement, angle) * speed;
+		}
+		
+		private static Vector2 RotateAroundAngle(Vector2 v, float degrees) {
+			float sin = Mathf.Sin(degrees * Mathf.Deg2Rad);
+			float cos = Mathf.Cos(degrees * Mathf.Deg2Rad);
+         
+			float tx = v.x;
+			float ty = v.y;
+			v.x = (cos * tx) - (sin * ty);
+			v.y = (sin * tx) + (cos * ty);
+			return v;
 		}
 	}
 }
