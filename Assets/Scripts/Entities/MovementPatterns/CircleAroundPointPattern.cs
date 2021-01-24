@@ -13,6 +13,8 @@ namespace Entities.MovementPatterns{
 		[SerializeField] private float _moveSpeed = 5f;
 
 		[SerializeField] private bool _useCenterPoint;
+
+		[SerializeField] private bool _faceMovementDirection;
 		
 		// point to rotate around
 		private Transform _rotationPoint;
@@ -39,10 +41,10 @@ namespace Entities.MovementPatterns{
 		}
 
 		public override void Move(){
-			CircleAroundCenterPointPattern(transform, _rotationPoint, _radius, _moveSpeed);
+			CircleAroundCenterPointPattern(transform, _rotationPoint, _radius, _moveSpeed, _faceMovementDirection);
 		}
 
-		public static void CircleAroundCenterPointPattern(Transform transform, Transform rotationPoint, float radius, float moveSpeed){
+		public static void CircleAroundCenterPointPattern(Transform transform, Transform rotationPoint, float radius, float moveSpeed, bool faceMovementDirection){
 			// use the circle collider if there is one, or add one if not
 			CircleCollider2D circleCollider2D = AddCircleColliderIfNone(rotationPoint, radius);
 
@@ -55,8 +57,10 @@ namespace Entities.MovementPatterns{
 				directionOfMovement = MoveToCircle(transform, rotationPoint, moveSpeed);
 			}
 
-			// no matter what, you'll want to face your movement direction
-			transform.rotation = Utils2D.GetRotationTowardsDirection(directionOfMovement, FacingDirection.UP);
+			if (faceMovementDirection){
+				transform.rotation = Utils2D.GetRotationTowardsDirection(directionOfMovement, FacingDirection.UP);
+			}
+			
 		}
 
 		private static Vector2 MoveToCircle(Transform transform, Transform rotationPoint, float moveSpeed){
@@ -72,7 +76,9 @@ namespace Entities.MovementPatterns{
 			Vector2 oldPosition = transform.position;
 			
 			transform.RotateAround(rotationPoint.position, Vector3.back, Time.deltaTime * (moveSpeed * 20));
-			
+			// reset any actual rotation of the object to 0
+			transform.rotation = Quaternion.identity;
+
 			// now, let's calculate the direction from one point to another
 			return (Vector2) transform.position - oldPosition;
 		}
