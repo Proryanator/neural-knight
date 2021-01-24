@@ -310,3 +310,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _pointPrefab: {fileID: 5264578937482094800, guid: c2524d58d4336ec4ba84371d1e90800a,
     type: 3}
+  _angleModifier: 30
+  _speed: 5

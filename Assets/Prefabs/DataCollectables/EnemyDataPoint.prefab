@@ -7,6 +7,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 492845938, guid: 831c0ad8f4af8394b897e02c1aef4a32, type: 3}
+      propertyPath: m_LinearDrag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5279645652737427392, guid: 831c0ad8f4af8394b897e02c1aef4a32,
         type: 3}
       propertyPath: m_Color.r
