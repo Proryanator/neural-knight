@@ -29,8 +29,6 @@ namespace Systems.Rooms {
 			_playerTransform = GameObject.FindGameObjectWithTag(AllTags.PLAYER).transform;
 			
 			_mapSO.Init();
-			
-			// TODO: somehow turn on doors from where the player just entered too
 		}
 
 		public static RoomPlacer GetInstance(){

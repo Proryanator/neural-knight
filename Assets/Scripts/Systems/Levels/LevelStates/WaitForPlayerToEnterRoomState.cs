@@ -1,4 +1,5 @@
-﻿using Systems.Spawning;
+﻿using Systems.Rooms;
+using Systems.Spawning;
 using Entities.Movement;
 using Maps.PlayerBoundaries;
 using Player;
@@ -44,6 +45,9 @@ namespace Systems.Levels.LevelStates{
 			foreach (SpawnManager manager in managers){
 				manager.UseSpawnPointsIn(GameObject.FindGameObjectWithTag(AllTags.ROOM));
 			}
+			
+			// close all doors behind the player (and after a new map spawn)
+			RoomPlacer.GetInstance().EnableDoorsInCorrectPlaces(GameObject.FindGameObjectWithTag(AllTags.ROOM));
 		}
 
 		private void SetTriggers(bool enable){
