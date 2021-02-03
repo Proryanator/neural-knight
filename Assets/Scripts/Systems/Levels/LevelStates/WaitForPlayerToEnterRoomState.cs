@@ -24,6 +24,7 @@ namespace Systems.Levels.LevelStates{
 		}
 
 		public override void OnEnter(){
+			Debug.Log("Waiting on the player to enter the room!");
 			_playArea = GameObject.FindObjectOfType<PlayArea>();
 			_player = GameObject.FindGameObjectWithTag(AllTags.PLAYER);
 			_playerControllerSwapper = _player.GetComponent<PlayerControllerSwapper>();
