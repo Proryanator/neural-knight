@@ -34,12 +34,12 @@ namespace Maps.PlayerBoundaries{
 
 		public void DisableCollider(){
 			_collider2D.enabled = false;
-			_childSpriteAnimation.gameObject.SetActive(false);
+			// _childSpriteAnimation.gameObject.SetActive(false);
 		}
 
 		public void EnableCollider(){
 			_collider2D.enabled = true;
-			_childSpriteAnimation.gameObject.SetActive(true);
+			// _childSpriteAnimation.gameObject.SetActive(true);
 		}
 	}
 }
