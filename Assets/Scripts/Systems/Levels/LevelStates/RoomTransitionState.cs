@@ -42,6 +42,10 @@ namespace Systems.Levels.LevelStates{
 			_oldMap = GameObject.FindGameObjectWithTag(AllTags.ROOM);
 			_newMap = _roomPlacer.SpawnRoomInMovementDirection();
 			
+			// now let's move the player in the map SO
+			_roomPlacer.MovePlayerInMapSO();
+			_roomPlacer.EnableDoorsInCorrectPlaces(_newMap);
+
 			_player = GameObject.FindWithTag(AllTags.PLAYER);
 			_player.SetActive(false);
 

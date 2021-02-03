@@ -1,4 +1,5 @@
-﻿using Entities.Movement;
+﻿using Systems.Spawning;
+using Entities.Movement;
 using Maps.PlayerBoundaries;
 using Player;
 using POCO.StateMachines;
@@ -37,6 +38,12 @@ namespace Systems.Levels.LevelStates{
 		public override void OnExit(){
 			SetTriggers(true);
 			_playerControllerSwapper.EnablePlayerControl();
+			
+			// do a re-lookup of all spawn points in the new map
+			SpawnManager[] managers = GameObject.FindObjectsOfType<SpawnManager>();
+			foreach (SpawnManager manager in managers){
+				manager.UseSpawnPointsIn(GameObject.FindGameObjectWithTag(AllTags.ROOM));
+			}
 		}
 
 		private void SetTriggers(bool enable){

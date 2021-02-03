@@ -1,8 +1,10 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using Systems.Levels;
 using Systems.Spawning.Rules;
 using Systems.Spawning.SpawnAdjusters;
 using UnityEngine;
+using Utils;
 
 namespace Systems.Spawning{
 	/// <summary>
@@ -26,13 +28,14 @@ namespace Systems.Spawning{
 		[Tooltip("Choose what rule will be applied when increasing spawning/spawn counts.")]
 		[SerializeField] private SpawnAdjusterEnum _spawnAdjusterEnum = SpawnAdjusterEnum.NoAdjustment;
 		private AbstractSpawnAdjuster _spawnAdjuster;
-	
-		[Tooltip("The object that holds spawn points that all have the same kind of spawned object.")]
-		[SerializeField] private SpawnCollection _spawnCollection;
 
 		[Tooltip("If you want this spawner to prevent level progression until it's finished spawning ALL of it's objects, this is true.")]
 		[SerializeField] private bool _affectsLevelProgression;
 
+		[SerializeField] private SpawnType _spawnType;
+		
+		private List<SpawnPoint> _spawnPoints = new List<SpawnPoint>();
+		
 		// this is accessed upon awake! Gets initial values for the script
 		private SpawnProperties _initialProps;
 
@@ -47,10 +50,9 @@ namespace Systems.Spawning{
 
 			// we'll start with the initial properties
 			_props = _initialProps;
-		
-			if (_spawnCollection == null){
-				Debug.LogWarning("The SpawnCollector was not set for this spawn manager, did you forget?");
-			}
+
+			// initial lookup is with the room object
+			LookUpSpawnPoints(GameObject.FindGameObjectWithTag(AllTags.ROOM));
 		}
 
 		private void Start(){
@@ -61,6 +63,27 @@ namespace Systems.Spawning{
 			LevelManager.GetInstance().OnLevelStart += StartSpawning;
 		}
 
+		public void UseSpawnPointsIn(GameObject obj){
+			LookUpSpawnPoints(obj);
+		}
+		
+		private void LookUpSpawnPoints(GameObject obj){
+			// wipe any previous spawn points
+			_spawnPoints.Clear();
+			SpawnPoint[] allSpawnPoints = FindObjectsOfType<SpawnPoint>();
+
+			foreach (var spawnPoint in allSpawnPoints){
+				if (spawnPoint.spawnType.Equals(_spawnType)){
+					_spawnPoints.Add(spawnPoint);
+				}
+			}
+
+			if (_spawnRule != null){
+				// also set the spawn rule (required to update spawn points)
+				_spawnRule.ReSetSpawnPoints(_spawnPoints.ToArray());
+			}
+		}
+		
 		/// <summary>
 		/// Starts the spawning. Intended to be setup externally!
 		///
@@ -101,16 +124,16 @@ namespace Systems.Spawning{
 		private void SetSpawnRule(){
 			// destroy old rule if it existed
 			if (_spawnRule != null){
-				ScriptableObject.Destroy(_spawnRule);
+				Destroy(_spawnRule);
 			}
 
-			_spawnRule = AbstractSpawnRule.GetRule(_spawnRuleEnum, _spawnPrefab, _spawnCollection.GetActiveSpawnPoints(), _props.sceneLimit);
+			_spawnRule = AbstractSpawnRule.GetRule(_spawnRuleEnum, _spawnPrefab, _spawnPoints, _props.sceneLimit);
 		}
 
 		private void SetSpawnAdjuster(){
 			// also destroy the old rule if exists
 			if (_spawnAdjuster != null){
-				ScriptableObject.Destroy(_spawnAdjuster);
+				Destroy(_spawnAdjuster);
 			}
 
 			_spawnAdjuster = AbstractSpawnAdjuster.GetSpawnAdjuster(_spawnAdjusterEnum);

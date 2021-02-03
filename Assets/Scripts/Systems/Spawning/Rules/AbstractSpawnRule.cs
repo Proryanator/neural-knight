@@ -1,4 +1,5 @@
-﻿using Entities.Events;
+﻿using System.Collections.Generic;
+using Entities.Events;
 using UnityEngine;
 using Random = System.Random;
 
@@ -14,10 +15,10 @@ namespace Systems.Spawning.Rules{
 	public abstract class AbstractSpawnRule : ScriptableObject{
 
 		private Transform prefab;
-		private Transform[] spawnPoints;
+		private SpawnPoint[] spawnPoints;
 		protected int maxSpawnCount;
 
-		public void Init(Transform prefab, Transform[] spawnPoints, int maxSpawnCount){
+		public void Init(Transform prefab, SpawnPoint[] spawnPoints, int maxSpawnCount){
 			this.prefab = prefab;
 			this.spawnPoints = spawnPoints;
 			this.maxSpawnCount = maxSpawnCount;
@@ -55,7 +56,7 @@ namespace Systems.Spawning.Rules{
 
 		protected Transform GetRandomSpawnPoint(){
 			Random random = new Random();
-			return spawnPoints[random.Next(spawnPoints.Length)];
+			return spawnPoints[random.Next(spawnPoints.Length)].transform;
 		}
 	
 		/// <summary>
@@ -63,28 +64,32 @@ namespace Systems.Spawning.Rules{
 		///
 		/// NOTE: it's up to the caller to cleanup their own objects before getting a new one.
 		/// </summary>
-		public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum, Transform prefab, Transform[] spawnPoints, int maxSpawnCount){
+		public static AbstractSpawnRule GetRule(SpawnRuleEnum ruleEnum, Transform prefab, List<SpawnPoint> spawnPoints, int maxSpawnCount){
 			AbstractSpawnRule rule = null;
 
-			if (spawnPoints == null || spawnPoints.Length == 0){
+			if (spawnPoints == null || spawnPoints.Count == 0){
 				Debug.LogWarning("You passed in a null or empty array of spawn points, spawning won't work.");
 				return null;
 			}
 		
 			switch (ruleEnum){
 				case SpawnRuleEnum.Random:
-					rule = ScriptableObject.CreateInstance<RandomSpawnRule>();
+					rule = CreateInstance<RandomSpawnRule>();
 					break;
 				case SpawnRuleEnum.Bulk:
-					rule = ScriptableObject.CreateInstance<BulkSpawnRule>();
+					rule = CreateInstance<BulkSpawnRule>();
 					break;
 			}
 
 			if (rule != null){
-				rule.Init(prefab, spawnPoints, maxSpawnCount);
+				rule.Init(prefab, spawnPoints.ToArray(), maxSpawnCount);
 			}
 
 			return rule;
+		}
+
+		public void ReSetSpawnPoints(SpawnPoint[] points){
+			spawnPoints = points;
 		}
 	}
 }

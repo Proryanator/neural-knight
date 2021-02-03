@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Maps;
+using UnityEngine;
 using Utils;
 
 namespace Systems.Rooms {
@@ -8,6 +9,9 @@ namespace Systems.Rooms {
 		[SerializeField] private GameObject _roomPrefab;
 		[SerializeField] private Transform _parentWorldObject;
 
+		// holds all the meta data information about the map, where the player is, etc.
+		[SerializeField] private RectangleMapSO _mapSO;
+		
 		private Transform _playerTransform;
 		
 		private float _roomLength = 19.2f;
@@ -23,6 +27,10 @@ namespace Systems.Rooms {
 			}
 
 			_playerTransform = GameObject.FindGameObjectWithTag(AllTags.PLAYER).transform;
+			
+			_mapSO.Init();
+			
+			// TODO: somehow turn on doors from where the player just entered too
 		}
 
 		public static RoomPlacer GetInstance(){
@@ -41,6 +49,10 @@ namespace Systems.Rooms {
 			return newRoom;
 		}
 
+		public void EnableDoorsInCorrectPlaces(GameObject newMap){
+			_mapSO.EnableDoorsInCorrectPlaces(newMap);
+		}
+
 		private Vector2 GetPlayerDirection(Transform playerTransform){
 			Vector2[] allDirections = {Vector2.up, Vector2.down, Vector2.left, Vector2.right};
 			foreach (Vector2 possibleDirection in allDirections){
@@ -55,6 +67,10 @@ namespace Systems.Rooms {
 
 		public Vector2 GetSlideDirection(){
 			return _directionOfRoomExit * -1;
+		}
+
+		public void MovePlayerInMapSO(){
+			_mapSO.MoveToNextRoom(_directionOfRoomExit);
 		}
 	}
 }
