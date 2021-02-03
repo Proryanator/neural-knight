@@ -54,7 +54,6 @@ namespace Systems.Levels.LevelStates{
 		}
 
 		public override void OnExit(){
-			Debug.Log("Now exiting the room transition state");
 			GameObject.Destroy(_oldMap);
 			
 			_player.SetActive(true);
