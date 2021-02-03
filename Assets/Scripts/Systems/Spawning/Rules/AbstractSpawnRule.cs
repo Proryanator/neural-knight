@@ -55,8 +55,20 @@ namespace Systems.Spawning.Rules{
 		}
 
 		protected Transform GetRandomSpawnPoint(){
+			SpawnPoint[] activePoints = GetOnlyActiveSpawnPoints();
 			Random random = new Random();
-			return spawnPoints[random.Next(spawnPoints.Length)].transform;
+			return activePoints[random.Next(activePoints.Length)].transform;
+		}
+
+		private SpawnPoint[] GetOnlyActiveSpawnPoints(){
+			List<SpawnPoint> activePoints = new List<SpawnPoint>();
+			foreach (SpawnPoint spawnPoint in spawnPoints){
+				if (spawnPoint.gameObject.activeSelf){
+					activePoints.Add(spawnPoint);
+				}
+			}
+
+			return activePoints.ToArray();
 		}
 	
 		/// <summary>
