@@ -17,11 +17,18 @@ namespace Player{
 		private BodyAnimationController _bodyAnimationController;
 		private ProjectileSpawnPoint _projectileSpawnPoint;
 
+		[SerializeField] private GameObject _cursorPrefab;
+		
 		private void Start(){
 			_weaponManager = GetComponent<WeaponManager>();
 			_faceMouseController = GetComponent<TDC_FaceMouse>();
 			_bodyAnimationController = GetComponentInChildren<BodyAnimationController>();
 			_projectileSpawnPoint = GetComponentInChildren<ProjectileSpawnPoint>();
+			
+			// set the player's cursor to that of a unique icon!
+			Texture2D cursorTexture = _cursorPrefab.GetComponent<SpriteRenderer>().sprite.texture;
+			Vector2 centerOfTexture = new Vector2(cursorTexture.width / 2, cursorTexture.height / 2);
+			Cursor.SetCursor(cursorTexture, centerOfTexture, CursorMode.ForceSoftware);
 		}
 
 		/// <summary>
